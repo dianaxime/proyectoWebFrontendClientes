@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Select } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TextInput, View, Button, Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { reset, Field, reduxForm, formValueSelector } from 'redux-form';
+import { reset, Field, reduxForm } from 'redux-form';
 
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/auth';
@@ -18,9 +18,6 @@ const RegisterForm = ({
   const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
     return <TextInput onChangeText={onChange} {...restInput} {...rest} />
   }
-  const typeOptions = [
-    {label: 'Cliente', value: 'Cliente'},
-    {label: 'Empleado', value: 'Empleado'}]
   if (isAuthenticated) {
     return (
       <View style={styles.container}>
@@ -28,6 +25,7 @@ const RegisterForm = ({
       </View>
     );
   }
+  const [typeSelected, changeTypeSelected] = useState('Cliente');
   return (
     <View style={styles.container}>
       {
@@ -46,14 +44,6 @@ const RegisterForm = ({
         name={'username'}
         props={{
           placeholder: 'Nombre de Usuario',
-        }}
-        component={renderInput}
-      />
-      <Field
-        name={'tipo'}
-        props={{
-          placeholder: 'Nombre de Usuario',
-          options: {typeOptions},
         }}
         component={renderInput}
       />
@@ -94,8 +84,7 @@ export default reduxForm({form: 'Register'})(
     }),
     dispatch => ({
       onSubmit(values) {
-        const {email, username, password, password2, tipo} = values;
-        console.log(values);
+        const {email, username, password, password2} = values;
         //dispatch(actions.startRegister(email, username, password, password2));
         dispatch(reset('Register'));
       },
