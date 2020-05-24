@@ -54,9 +54,6 @@ import {
   function* refreshToken(action) {
     const expiration = yield select(selectors.getAuthExpiration);
     const now =  parseInt(new Date().getTime() / 1000);
-    console.log(expiration-now);
-    console.log(expiration);
-    console.log(now);
     if (expiration - now < 300) {
       try {
         const token = yield select(selectors.getAuthToken);

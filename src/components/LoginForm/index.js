@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
+import { reset, Field, reduxForm } from 'redux-form';
 
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/auth';
@@ -70,6 +70,7 @@ export default reduxForm({form: 'Login'})(
       onSubmit(values) {
         const {username, password} = values;
         dispatch(actions.startLogin(username, password));
+        dispatch(reset('Login'));
       },
     }),
   )(LoginForm)
