@@ -1,13 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Select } from 'react-native';
 import { connect } from 'react-redux';
-import { reset, Field, reduxForm } from 'redux-form';
+import { reset, Field, reduxForm, formValueSelector } from 'redux-form';
 
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/auth';
 
 
-const LoginForm = ({
+const RegisterForm = ({
   onSubmit,
   isLoading,
   error = null,
@@ -18,6 +18,9 @@ const LoginForm = ({
   const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
     return <TextInput onChangeText={onChange} {...restInput} {...rest} />
   }
+  const typeOptions = [
+    {label: 'Cliente', value: 'Cliente'},
+    {label: 'Empleado', value: 'Empleado'}]
   if (isAuthenticated) {
     return (
       <View style={styles.container}>
@@ -33,9 +36,24 @@ const LoginForm = ({
         )
       }
       <Field
-        name={'username'}
+        name={'email'}
         props={{
           placeholder: 'Correo',
+        }}
+        component={renderInput}
+      />
+      <Field
+        name={'username'}
+        props={{
+          placeholder: 'Nombre de Usuario',
+        }}
+        component={renderInput}
+      />
+      <Field
+        name={'tipo'}
+        props={{
+          placeholder: 'Nombre de Usuario',
+          options: {typeOptions},
         }}
         component={renderInput}
       />
@@ -47,18 +65,26 @@ const LoginForm = ({
           }}
           component={renderInput}
         />
+        <Field
+        name={'password2'}
+        props={{
+          placeholder: 'Confirmar Contraseña',
+          secureTextEntry: true,
+          }}
+          component={renderInput}
+        />
         {
           isLoading ? (
             <Text>{'Cargando...'}</Text>
           ) : (
-            <Button onPress={handleSubmit(onSubmit)} title='Ingresar'></Button>
+            <Button onPress={handleSubmit(onSubmit)} title='Registrar'></Button>
           )
         }
     </View>
   );
 } 
 
-export default reduxForm({form: 'Login'})(
+export default reduxForm({form: 'Register'})(
   connect(
     state => ({
       isLoading: selectors.getIsAuthenticating(state),
@@ -68,12 +94,13 @@ export default reduxForm({form: 'Login'})(
     }),
     dispatch => ({
       onSubmit(values) {
-        const {username, password} = values;
-        dispatch(actions.startLogin(username, password));
-        dispatch(reset('Login'));
+        const {email, username, password, password2, tipo} = values;
+        console.log(values);
+        //dispatch(actions.startRegister(email, username, password, password2));
+        dispatch(reset('Register'));
       },
     }),
-  )(LoginForm)
+  )(RegisterForm)
 );
 
 const styles = StyleSheet.create({

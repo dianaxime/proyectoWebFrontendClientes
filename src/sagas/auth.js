@@ -14,6 +14,41 @@ import {
   
   import { API_BASE_URL } from '../settings';
   
+  function* register(action) {
+    try {
+      // const {username, password, password2, email, tipo} = action.payload;
+      const response = yield call(
+        fetch,
+        `${API_BASE_URL}/usuarios/`,
+        {
+          method: 'POST',
+          body: JSON.stringify(action.payload),
+          headers:{
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+  
+      if (response.status === 201) {
+        const { token } = yield response.json();
+        yield put(actions.completeRegister(token));
+      } else {
+        const { non_field_errors } = yield response.json();
+        console.log(non_field_errors);
+        yield put(actions.failRegister(non_field_errors[0]));
+      }
+    } catch (error) {
+      yield put(actions.failRegister('Falló horrible la conexión mano'));
+      console.log(error);
+    }
+  }
+
+  export function* watchRegisterStarted() {
+    yield takeEvery(
+      types.REGISTER_STARTED,
+      register,
+    );
+  }
   
   function* login(action) {
     try {
