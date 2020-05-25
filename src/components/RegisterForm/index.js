@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Picker } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { Picker, Item } from "native-base";
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
 
@@ -25,7 +26,6 @@ const RegisterForm = ({
       </View>
     );
   }
-  const [typeSelected, changeTypeSelected] = useState('Cliente');
   return (
     <View style={styles.container}>
       {
@@ -46,6 +46,13 @@ const RegisterForm = ({
           placeholder: 'Nombre de Usuario',
         }}
         component={renderInput}
+      />
+      <Field
+        name={'tipoUsuario'}
+        props={{
+          placeholder: 'Cliente/Empleado',
+        }}
+        component={ renderInput }
       />
       <Field
         name={'password'}
@@ -84,8 +91,8 @@ export default reduxForm({form: 'Register'})(
     }),
     dispatch => ({
       onSubmit(values) {
-        const {email, username, password, password2} = values;
-        //dispatch(actions.startRegister(email, username, password, password2));
+        const {email, username, password, password2, tipoUsuario} = values;
+        //dispatch(actions.startRegister(username, password, password2, email, tipoUsuario));
         dispatch(reset('Register'));
       },
     }),

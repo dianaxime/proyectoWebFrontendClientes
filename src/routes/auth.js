@@ -5,11 +5,17 @@ import Login from '../components/LoginForm';
 import Register from '../components/RegisterForm';
 
 const screens = {
-    Register: {
-        screen: Register
-    },
     Login: {
-        screen: Login
+        screen: Login,
+        navigationOptions: {
+            title: 'Inicio de sesión'
+        },
+    },
+    Register: {
+        screen: Register,
+        navigationOptions: {
+            title: 'Crea una cuenta'
+        },
     }
 }
 

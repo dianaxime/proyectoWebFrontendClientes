@@ -14,9 +14,13 @@ const LoginForm = ({
   isAuthenticated = false,
   authUsername = '',
   handleSubmit,
+  navigation,
 }) => {
   const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
     return <TextInput onChangeText={onChange} {...restInput} {...rest} />
+  }
+  const goRegister = () =>{
+    navigation.push('Register')
   }
   if (isAuthenticated) {
     return (
@@ -54,6 +58,7 @@ const LoginForm = ({
             <Button onPress={handleSubmit(onSubmit)} title='Ingresar'></Button>
           )
         }
+        <Button title='¿Aún no tienes una cuenta?' onPress={goRegister}></Button>
     </View>
   );
 } 
