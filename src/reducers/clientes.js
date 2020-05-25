@@ -135,8 +135,7 @@ export default combineReducers({
   updatingError,
 });
 
-export const getCliente = (state, id) => state.byId[id];
-export const getCliente = state => state.order.map(id => getCliente(state, id));
+export const getCliente = state => state.byId;
 export const isFetchingCliente = state => state.isFetching;
 export const getFetchingClienteError = state => state.error;
 export const getAddingClienteError = state => state.addingError;

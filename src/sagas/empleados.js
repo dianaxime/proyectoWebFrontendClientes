@@ -10,11 +10,11 @@ import {
   
 import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
-import * as actions from '../actions/clientes';
-import * as types from '../types/clientes';
+import * as actions from '../actions/empleados';
+import * as types from '../types/empleados';
   
   
-function* fetchCliente(action) {
+function* fetchEmpleado(action) {
     try {
       const isAuth = yield select(selectors.isAuthenticated);
   
@@ -23,7 +23,7 @@ function* fetchCliente(action) {
         const usuario = jwtDecode(token);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/usuarios/${usuario['user_id']}/cliente/`,
+          `${API_BASE_URL}/usuarios/${usuario['user_id']}/empleado/`,
           {
             method: 'GET',
             headers:{
@@ -36,30 +36,30 @@ function* fetchCliente(action) {
         if (response.status === 200) {
           const jsonResult = yield response.json();
           yield put(
-            actions.completeFetchingCliente(
+            actions.completeFetchingEmpleado(
               jsonResult['id'],
               jsonResult,
             ),
           );
         } else {
           const { non_field_errors } = yield response.json();
-          yield put(actions.failFetchingCliente(non_field_errors[0]));
+          yield put(actions.failFetchingEmpleado(non_field_errors[0]));
         }
       }
     } catch (error) {
-      yield put(actions.failFetchingCliente('Falló horrible la conexión mano'));
+      yield put(actions.failFetchingEmpleado('Falló horrible la conexión mano'));
       console.log("ERROR", error)
     }
 }
   
-export function* watchClienteFetch() {
+export function* watchEmpleadoFetch() {
     yield takeEvery(
-      types.CLIENTE_FETCH_STARTED,
-      fetchCliente,
+      types.EMPLEADO_FETCH_STARTED,
+      fetchEmpleado,
     );
 }
   
-function* addCliente(action) {
+function* addEmpleado(action) {
     try {
       const isAuth = yield select(selectors.isAuthenticated);
   
@@ -67,7 +67,7 @@ function* addCliente(action) {
         const token = yield select(selectors.getAuthToken);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/clientes/`,
+          `${API_BASE_URL}/empleados/`,
           {
             method: 'POST',
             body: JSON.stringify(action.payload),
@@ -81,30 +81,30 @@ function* addCliente(action) {
         if (response.status === 201) {
           const jsonResult = yield response.json();
           yield put(
-            actions.completeAddingCliente(
+            actions.completeAddingEmpleado(
               action.payload.id,
               jsonResult,
             ),
           );
         } else {
           const { non_field_errors } = yield response.json();
-          yield put(actions.failAddingCliente(non_field_errors[0]));
+          yield put(actions.failAddingEmpleado(non_field_errors[0]));
         }
       }
     } catch (error) {
-      yield put(actions.failAddingCliente('Falló horrible la conexión mano'));
+      yield put(actions.failAddingEmpleado('Falló horrible la conexión mano'));
       console.log("ERROR", error)
     }
 }
   
-export function* watchAddCliente() {
+export function* watchAddEmpleado() {
     yield takeEvery(
-      types.CLIENTE_ADD_STARTED,
-      addCliente,
+      types.EMPLEADO_ADD_STARTED,
+      addEmpleado,
     );
 }
   
-function* updateCliente(action) {
+function* updateEmpleado(action) {
     try {
       const isAuth = yield select(selectors.isAuthenticated);
   
@@ -112,7 +112,7 @@ function* updateCliente(action) {
         const token = yield select(selectors.getAuthToken);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/clientes/${action.payload.id}/modificar-cliente/`,
+          `${API_BASE_URL}/empleados/${action.payload.id}/modificar-empleado/`,
           {
             method: 'PATCH',
             body: JSON.stringify(action.payload),
@@ -124,25 +124,25 @@ function* updateCliente(action) {
         );
   
         if (response.status === 200) {
-          const jsonResult = yield response.json();
-          yield put(actions.completeUpdatingCliente(
+            const jsonResult = yield response.json();
+          yield put(actions.completeUpdatingEmpleado(
             jsonResult['id'],
             jsonResult,
           ));
         } else {
           const { non_field_errors } = yield response.json();
-          yield put(actions.failUpdatingCliente(non_field_errors[0]));
+          yield put(actions.failUpdatingEmpleado(non_field_errors[0]));
         }
       }
     } catch (error) {
-      yield put(actions.failUpdatingCliente('Falló horrible la conexión mano'));
+      yield put(actions.failUpdatingEmpleado('Falló horrible la conexión mano'));
       console.log("ERROR", error)
     }
 }
   
-export function* watchUpdateCliente() {
+export function* watchUpdateEmpleado() {
     yield takeEvery(
-      types.CLIENTE_UPDATE_STARTED,
-      updateCliente,
+      types.EMPLEADO_UPDATE_STARTED,
+      updateEmpleado,
     );
 }

@@ -4,11 +4,11 @@ import * as types from '../types/empleados';
 export const startFetchingEmpleado = () => ({
   type: types.EMPLEADO_FETCH_STARTED,
 });
-export const completeFetchingEmpleado = (id, Empleado) => ({
+export const completeFetchingEmpleado = (id, empleado) => ({
   type: types.EMPLEADO_FETCH_COMPLETED,
   payload: {
     id,
-    EMPLEADO,
+    empleado,
   },
 });
 export const failFetchingEmpleado = error => ({
@@ -18,7 +18,7 @@ export const failFetchingEmpleado = error => ({
   },
 });
 
-export const startAddingEMPLEADO = (nombreEmpleado, telefonoEmpleado, direccionEmpleado, nitEmpleado, idUsuario) => ({
+export const startAddingEmpleado = (nombreEmpleado, telefonoEmpleado, direccionEmpleado, nitEmpleado, idUsuario) => ({
   type: types.EMPLEADO_ADD_STARTED,
   payload: {
     nombreEmpleado,
@@ -35,7 +35,7 @@ export const completeAddingEmpleado = (oldId, empleado) => ({
     empleado,
   },
 });
-export const failAddingEMPLEADO = (oldId, error) => ({
+export const failAddingEmpleado = (oldId, error) => ({
   type: types.EMPLEADO_ADD_FAILED,
   payload: {
     oldId,
@@ -51,14 +51,14 @@ export const startUpdatingEmpleado = (id, direccionEmpleado, telefonoEmpleado) =
     telefonoEmpleado,
   },
 });
-export const completeUpdatingEMPLEADO = (id, empleado) => ({
+export const completeUpdatingEmpleado = (id, empleado) => ({
   type: types.EMPLEADO_UPDATE_COMPLETED,
   payload: {
     id,
     empleado,
   },
 });
-export const failUpdatingEMPLEADO = (id, error) => ({
+export const failUpdatingEmpleado = (id, error) => ({
   type: types.EMPLEADO_UPDATE_FAILED,
   payload: {
     id,

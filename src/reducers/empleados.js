@@ -135,8 +135,7 @@ export default combineReducers({
   updatingError,
 });
 
-export const getEmpleado = (state, id) => state.byId[id];
-export const getEmpleado = state => state.order.map(id => getEmpleado(state, id));
+export const getEmpleado = state => state.byId;
 export const isFetchingEmpleado = state => state.isFetching;
 export const getFetchingEmpleadoError = state => state.error;
 export const getAddingEmpleadoError = state => state.addingError;

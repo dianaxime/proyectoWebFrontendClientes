@@ -3,10 +3,14 @@ import {reducer as formReducer} from 'redux-form';
 
 import auth, * as authSelectors from './auth';
 import usuarios, * as usuariosSelectors from './usuarios';
+import clientes, * as clientesSelectors from './clientes';
+import empleados, * as empleadosSelectors from './empleados';
 
 const reducer = combineReducers({
   auth,
   usuarios,
+  clientes,
+  empleados,
   form: formReducer,
 });
 
@@ -27,3 +31,13 @@ export const getRegisteringCompleted = state => authSelectors.getRegisteringComp
 export const getUsuario = state => usuariosSelectors.getUsuario(state.usuarios);
 export const isFetchingUsuario = state => usuariosSelectors.isFetchingUsuario(state.usuarios);
 export const getFetchingUsuarioError = state => usuariosSelectors.getFetchingUsuarioError(state.usuarios);
+export const getCliente = state => clientesSelectors.getCliente(state.clientes);
+export const isFetchingCliente = state => clientesSelectors.isFetchingCliente(state.clientes);
+export const getFetchingClienteError = state => clientesSelectors.getFetchingClienteError(state.clientes);
+export const getAddingClienteError = state => clientesSelectors.getAddingClienteError(state.clientes);
+export const getUpdatingClienteError = state => clientesSelectors.getUpdatingClienteError(state.clientes);
+export const getEmpleado = state => empleadosSelectors.getEmpleado(state.empleados);
+export const isFetchingEmpleado = state => empleadosSelectors.isFetchingEmpleado(state.empleados);
+export const getFetchingEmpleadoError = state => empleadosSelectors.getFetchingEmpleadoError(state.empleados);
+export const getAddingEmpleadoError = state => empleadosSelectors.getAddingEmpleadoError(state.empleados);
+export const getUpdatingEmpleadoError = state => empleadosSelectors.getUpdatingEmpleadoError(state.empleados);
