@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/auth';
 
 
-const TokenRefresh = ({ onRefresh, reviewTime = 10000 }) => {
+const TokenRefresh = ({ onRefresh, reviewTime = 60000 }) => {
   useEffect(
     () => {
       const interval = setInterval(onRefresh, reviewTime);

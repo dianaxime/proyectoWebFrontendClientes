@@ -10,13 +10,13 @@ import {
   
   import * as selectors from '../reducers';
   import * as actions from '../actions/auth';
+  import * as actionsUsuarios from '../actions/usuarios';
   import * as types from '../types/auth';
   
   import { API_BASE_URL } from '../settings';
   
   function* register(action) {
     try {
-      // const {username, password, password2, email, tipo} = action.payload;
       console.log(action.payload);
       const response = yield call(
         fetch,
@@ -31,16 +31,13 @@ import {
       );
       console.log(response);
       if (response.status === 201) {
-        console.log("hola, si funciona");
         yield put(actions.completeRegister());
       } else {
         const { non_field_errors } = yield response.json();
-        console.log(non_field_errors);
         yield put(actions.failRegister(non_field_errors[0]));
       }
     } catch (error) {
       yield put(actions.failRegister('Falló horrible la conexión mano'));
-      console.log(error);
     }
   }
 
@@ -69,6 +66,7 @@ import {
       if (response.status === 200) {
         const { token } = yield response.json();
         yield put(actions.completeLogin(token));
+        yield put(actionsUsuarios.startFetchingUsuario());
       } else {
         const { non_field_errors } = yield response.json();
         console.log(non_field_errors);
@@ -121,9 +119,9 @@ import {
     }
   }
   
-  export function* watchRefreshTokenStarted() {
-    yield takeEvery(
-      types.TOKEN_REFRESH_STARTED,
-      refreshToken,
-    );
-  }
+export function* watchRefreshTokenStarted() {
+  yield takeEvery(
+    types.TOKEN_REFRESH_STARTED,
+    refreshToken,
+  );
+}

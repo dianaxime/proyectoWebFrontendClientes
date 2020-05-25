@@ -2,9 +2,11 @@ import { combineReducers } from 'redux';
 import {reducer as formReducer} from 'redux-form';
 
 import auth, * as authSelectors from './auth';
+import usuarios, * as usuariosSelectors from './usuarios';
 
 const reducer = combineReducers({
   auth,
+  usuarios,
   form: formReducer,
 });
 
@@ -21,3 +23,6 @@ export const getAuthExpiration = state => authSelectors.getAuthExpiration(state.
 export const getAuthUsername = state => authSelectors.getAuthUsername(state.auth);
 export const getIsRefreshingToken = state => authSelectors.getIsRefreshingToken(state.auth);
 export const getRefreshingError = state => authSelectors.getRefreshingError(state.auth);
+export const getUsuario = state => usuariosSelectors.getUsuario(state.usuarios);
+export const isFetchingUsuario = state => usuariosSelectors.isFetchingUsuario(state.usuarios);
+export const getFetchingUsuarioError = state => usuariosSelectors.getFetchingUsuarioError(state.usuarios);

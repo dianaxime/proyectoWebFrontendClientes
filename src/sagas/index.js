@@ -6,11 +6,14 @@ import {
   watchRegisterStarted,
 } from './auth';
 
+import { watchFetchUsuarioStarted } from './usuarios';
+
 function* mainSaga() {
   yield all([
     fork(watchLoginStarted),
     fork(watchRefreshTokenStarted),
     fork(watchRegisterStarted),
+    fork(watchFetchUsuarioStarted),
   ]);
 }
 

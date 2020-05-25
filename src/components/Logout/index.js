@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, Text } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/auth';
 
 
-const Logout = ({ onClick, isHidden = false }) => (
+const Logout = ({ onClick, isHidden = false, tipo }) => (
   <View style={styles.container}>
     {
       !isHidden && (
@@ -13,6 +13,7 @@ const Logout = ({ onClick, isHidden = false }) => (
         </Button>
       )
     }
+    <Text>{tipo}</Text>
   </View>
 );
 
@@ -20,6 +21,7 @@ const Logout = ({ onClick, isHidden = false }) => (
 export default connect(
   state => ({
     isHidden: !selectors.isAuthenticated(state),
+    tipo: selectors.getUsuario(state),
   }),
   dispatch => ({
     onClick() {
