@@ -14,7 +14,7 @@ const App = () => (
     <PersistGate persistor={persistor} loading={null}>
       <AuthNavigator />
       <Logout />
-      <TokenRefresh reviewTime={120000} />
+      <TokenRefresh />
     </PersistGate>
   </Provider>
 );

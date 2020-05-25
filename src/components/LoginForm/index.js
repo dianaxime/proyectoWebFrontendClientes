@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
+import { Spinner } from 'native-base';
 
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/auth';
@@ -53,7 +54,7 @@ const LoginForm = ({
         />
         {
           isLoading ? (
-            <Text>{'Cargando...'}</Text>
+            <Spinner color='blue' />
           ) : (
             <Button onPress={handleSubmit(onSubmit)} title='Ingresar'></Button>
           )

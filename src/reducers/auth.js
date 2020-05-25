@@ -12,15 +12,6 @@ const token = (state = null, action) => {
     case types.AUTHENTICATION_COMPLETED: {
       return action.payload.token;
     }
-    case types.REGISTER_STARTED: {
-      return null;
-    }
-    case types.REGISTER_COMPLETED: {
-      return action.payload.token;
-    }
-    case types.AUTHENTICATION_FAILED: {
-      return null;
-    }
     case types.TOKEN_REFRESH_COMPLETED: {
       return action.payload.newToken;
     }
@@ -42,15 +33,6 @@ const decoded = (state = null, action) => {
       return jwtDecode(action.payload.token);
     }
     case types.AUTHENTICATION_FAILED: {
-      return null;
-    }
-    case types.REGISTER_STARTED: {
-      return null;
-    }
-    case types.REGISTER_COMPLETED: {
-      return jwtDecode(action.payload.token);
-    }
-    case types.REGISTER_FAILED: {
       return null;
     }
     case types.TOKEN_REFRESH_COMPLETED: {

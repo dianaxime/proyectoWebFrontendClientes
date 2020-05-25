@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
-import { Picker, Item } from "native-base";
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
+import { Spinner } from 'native-base';
 
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/auth';
@@ -12,19 +12,10 @@ const RegisterForm = ({
   onSubmit,
   isLoading,
   error = null,
-  isAuthenticated = false,
-  authUsername = '',
   handleSubmit,
 }) => {
   const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
     return <TextInput onChangeText={onChange} {...restInput} {...rest} />
-  }
-  if (isAuthenticated) {
-    return (
-      <View style={styles.container}>
-        <Text>{`Bienvenido ${authUsername} nuevamente!`}</Text>
-      </View>
-    );
   }
   return (
     <View style={styles.container}>
@@ -48,7 +39,7 @@ const RegisterForm = ({
         component={renderInput}
       />
       <Field
-        name={'tipoUsuario'}
+        name={'tipo'}
         props={{
           placeholder: 'Cliente/Empleado',
         }}
@@ -72,7 +63,7 @@ const RegisterForm = ({
         />
         {
           isLoading ? (
-            <Text>{'Cargando...'}</Text>
+            <Spinner color='blue' />
           ) : (
             <Button onPress={handleSubmit(onSubmit)} title='Registrar'></Button>
           )
@@ -84,15 +75,13 @@ const RegisterForm = ({
 export default reduxForm({form: 'Register'})(
   connect(
     state => ({
-      isLoading: selectors.getIsAuthenticating(state),
-      error: selectors.getAuthenticatingError(state),
-      isAuthenticated: selectors.isAuthenticated(state),
-      authUsername: selectors.getAuthUsername(state),
+      isLoading: selectors.getIsRegistering(state),
+      error: selectors.getRegisteringError(state),
     }),
     dispatch => ({
       onSubmit(values) {
-        const {email, username, password, password2, tipoUsuario} = values;
-        //dispatch(actions.startRegister(username, password, password2, email, tipoUsuario));
+        const {email, username, password, password2, tipo} = values;
+        dispatch(actions.startRegister(username, password, password2, email, tipo));
         dispatch(reset('Register'));
       },
     }),

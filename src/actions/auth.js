@@ -5,9 +5,8 @@ export const startRegister = (username, password, password2, email, tipo) => ({
   payload: { username, password, password2, email, tipo },
 });
 
-export const completeRegister = token => ({
+export const completeRegister = () => ({
   type: types.REGISTER_COMPLETED,
-  payload: { token },
 });
 
 export const failRegister = error => ({

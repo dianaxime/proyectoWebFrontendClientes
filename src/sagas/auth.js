@@ -17,6 +17,7 @@ import {
   function* register(action) {
     try {
       // const {username, password, password2, email, tipo} = action.payload;
+      console.log(action.payload);
       const response = yield call(
         fetch,
         `${API_BASE_URL}/usuarios/`,
@@ -28,10 +29,10 @@ import {
           },
         },
       );
-  
+      console.log(response);
       if (response.status === 201) {
-        const { token } = yield response.json();
-        yield put(actions.completeRegister(token));
+        console.log("hola, si funciona");
+        yield put(actions.completeRegister());
       } else {
         const { non_field_errors } = yield response.json();
         console.log(non_field_errors);
