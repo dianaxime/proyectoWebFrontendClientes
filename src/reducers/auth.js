@@ -81,6 +81,23 @@ const isRegistering = (state = false, action) => {
   }
 };
 
+const registeringCompleted = (state = false, action) => {
+  switch(action.type) {
+    case types.REGISTER_STARTED: {
+      return flase;
+    }
+    case types.REGISTER_COMPLETED: {
+      return true;
+    }
+    case types.REGISTER_FAILED: {
+      return false;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const error = (state = null, action) => {
   switch(action.type) {
     case types.AUTHENTICATION_STARTED: {
@@ -158,6 +175,7 @@ const auth = combineReducers({
   refreshingError,
   isRegistering,
   registeringError,
+  registeringCompleted,
 });
 
 
@@ -173,4 +191,5 @@ export const getAuthUserID = state => state.decoded ? state.decoded.user_id : nu
 export const getAuthExpiration = state => state.decoded ? state.decoded.exp : null;
 export const getAuthUsername = state => state.decoded ? state.decoded.username : null;
 export const getIsRefreshingToken = state => state.isRefreshing;
+export const getRegisteringCompleted = state => state.registeringCompleted;
 export const getRefreshingError = state => state.refreshingError;
