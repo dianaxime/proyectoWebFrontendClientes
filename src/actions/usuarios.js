@@ -3,7 +3,7 @@ import * as types from '../types/usuarios';
 export const startFetchingUsuario = () => ({
     type: types.USUARIO_FETCH_STARTED,
 });
-export const completeFetchingUsuario = (usuario) => ({
+export const completeFetchingUsuario = usuario => ({
     type: types.USUARIO_FETCH_COMPLETED,
     payload: {
       usuario,

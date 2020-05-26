@@ -6,12 +6,15 @@ import usuarios, * as usuariosSelectors from './usuarios';
 import clientes, * as clientesSelectors from './clientes';
 import empleados, * as empleadosSelectors from './empleados';
 import ofertas, * as ofertasSelectors from './ofertas';
+import valoraciones, * as valoracionesSelectors from './valoraciones';
 
 const reducer = combineReducers({
   auth,
   usuarios,
   clientes,
   empleados,
+  ofertas,
+  valoraciones,
   form: formReducer,
 });
 
@@ -30,7 +33,7 @@ export const getAuthUsername = state => authSelectors.getAuthUsername(state.auth
 export const getIsRefreshingToken = state => authSelectors.getIsRefreshingToken(state.auth);
 export const getRefreshingError = state => authSelectors.getRefreshingError(state.auth);
 export const getRegisteringCompleted = state => authSelectors.getRegisteringCompleted(state.auth);
-/* Usuarios */
+/* Usuario */
 export const getUsuario = state => usuariosSelectors.getUsuario(state.usuarios);
 export const isFetchingUsuario = state => usuariosSelectors.isFetchingUsuario(state.usuarios);
 export const getFetchingUsuarioError = state => usuariosSelectors.getFetchingUsuarioError(state.usuarios);
@@ -51,3 +54,19 @@ export const getOferta = (state, id) => ofertasSelectors.getOferta(state.ofertas
 export const getOfertas = state => ofertasSelectors.getOfertas(state.ofertas);
 export const isFetchingOfertas = state => ofertasSelectors.isFetchingOfertas(state.ofertas);
 export const getFetchingOfertasError = state => ofertasSelectors.getFetchingOfertasError(state.ofertas);
+/* Valoracion */
+
+/* Compra */
+
+/* Factura */
+
+/* Lista */
+
+/* Pedido */
+
+/* Producto */
+
+/* Registro */
+
+/* Tienda */
+
