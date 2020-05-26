@@ -9,6 +9,7 @@ import ofertas, * as ofertasSelectors from './ofertas';
 import valoraciones, * as valoracionesSelectors from './valoraciones';
 import tiendas, * as tiendasSelectors from './tiendas';
 import registros, * as registrosSelectors from './registros';
+import productos, * as productosSelectors from './productos';
 
 const reducer = combineReducers({
   auth,
@@ -19,6 +20,7 @@ const reducer = combineReducers({
   valoraciones,
   tiendas,
   registros,
+  productos,
   form: formReducer,
 });
 
@@ -69,7 +71,10 @@ export const getFetchingOfertasError = state => ofertasSelectors.getFetchingOfer
 /* Pedido */
 
 /* Producto */
-
+export const getProducto = state => productosSelectors.getProducto(state.productos);
+export const isFetchingProducto = state => productosSelectors.isFetchingProducto(state.productos);
+export const getFetchingProductoError = state => productosSelectors.getFetchingProductoError(state.productos);
+export const getAddingProductoError = state => productosSelectors.getAddingProductoError(state.productos);
 /* Registro */
 export const getRegistro = state => registrosSelectors.getRegistro(state.registros);
 export const getAddingRegistroError = state => registrosSelectors.getAddingRegistroError(state.registros);
