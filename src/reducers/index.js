@@ -7,6 +7,7 @@ import clientes, * as clientesSelectors from './clientes';
 import empleados, * as empleadosSelectors from './empleados';
 import ofertas, * as ofertasSelectors from './ofertas';
 import valoraciones, * as valoracionesSelectors from './valoraciones';
+import tiendas, * as tiendasSelectors from './tiendas';
 
 const reducer = combineReducers({
   auth,
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   empleados,
   ofertas,
   valoraciones,
+  tiendas,
   form: formReducer,
 });
 
@@ -69,4 +71,8 @@ export const getFetchingOfertasError = state => ofertasSelectors.getFetchingOfer
 /* Registro */
 
 /* Tienda */
-
+export const getTienda = state => tiendasSelectors.getTienda(state.tiendas);
+export const isFetchingTienda = state => tiendasSelectors.isFetchingTienda(state.tiendas);
+export const getFetchingTiendaError = state => tiendasSelectors.getFetchingTiendaError(state.tiendas);
+export const getAddingTiendaError = state => tiendasSelectors.getAddingTiendaError(state.tiendas);
+export const getUpdatingTiendaError = state => tiendasSelectors.getUpdatingTiendaError(state.tiendas);
