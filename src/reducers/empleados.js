@@ -26,10 +26,10 @@ const byId = (state = {}, action) => {
       return newState;
     }
     case types.EMPLEADO_ADD_COMPLETED: {
-      const { oldId, cliente } = action.payload;
+      const { oldId, empleado } = action.payload;
       const newState = omit(state, oldId);
-      newState[cliente.id] = {
-        ...cliente,
+      newState[empleado.id] = {
+        ...empleado,
         isConfirmed: true,
       };
       return newState;
@@ -44,10 +44,10 @@ const byId = (state = {}, action) => {
         };
       }
     case types.EMPLEADO_UPDATE_COMPLETED: {
-        const { id, cliente } = action.payload;
+        const { id, empleado } = action.payload;
         const newState = omit(state, oldId);
-        newState[cliente.id] = {
-          ...cliente,
+        newState[empleado.id] = {
+          ...empleado,
           isConfirmed: true,
         };
         return newState;

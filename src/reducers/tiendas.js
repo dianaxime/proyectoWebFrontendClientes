@@ -17,7 +17,7 @@ const byId = (state = {}, action) => {
       });
       return newState;
     }
-    case types.TIENDAS_ADD_STARTED: {
+    case types.TIENDA_ADD_STARTED: {
       const newState = { ...state };
       newState[action.payload.id] = {
         ...action.payload,
@@ -25,7 +25,7 @@ const byId = (state = {}, action) => {
       };
       return newState;
     }
-    case types.TIENDAS_ADD_COMPLETED: {
+    case types.TIENDA_ADD_COMPLETED: {
       const { oldId, tienda } = action.payload;
       const newState = omit(state, oldId);
       newState[tienda.id] = {
@@ -60,13 +60,13 @@ const byId = (state = {}, action) => {
 
 const isFetching = (state = false, action) => {
   switch(action.type) {
-    case types.TIENDA_FETCH_STARTED: {
+    case types.TIENDAS_FETCH_STARTED: {
       return true;
     }
-    case types.TIENDA_FETCH_COMPLETED: {
+    case types.TIENDAS_FETCH_COMPLETED: {
       return false;
     }
-    case types.TIENDA_FETCH_FAILED: {
+    case types.TIENDAS_FETCH_FAILED: {
       return false;
     }
     default: {
@@ -77,13 +77,13 @@ const isFetching = (state = false, action) => {
 
 const error = (state = null, action) => {
   switch(action.type) {
-    case types.TIENDA_FETCH_FAILED: {
+    case types.TIENDAS_FETCH_FAILED: {
       return action.payload.error;
     }
-    case types.TIENDA_FETCH_STARTED: {
+    case types.TIENDAS_FETCH_STARTED: {
       return null;
     }
-    case types.TIENDA_FETCH_COMPLETED: {
+    case types.TIENDAS_FETCH_COMPLETED: {
       return null;
     }
     default: {
