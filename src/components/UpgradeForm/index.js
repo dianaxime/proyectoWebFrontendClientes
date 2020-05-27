@@ -8,14 +8,13 @@ import * as selectors from '../../reducers';
 import * as actions from '../../actions/auth';
 
 
-const RegisterForm = ({
+const UpgradeForm = ({
   onSubmit,
   isLoading,
   error = null,
   handleSubmit,
   onDisplay,
   onHand,
-  isRegister,
   kindOfTyte,
 }) => {
   const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
@@ -24,73 +23,13 @@ const RegisterForm = ({
   return (
     <View>
       {
-        !isRegister ? (
-          <View style={styles.container}>
-            {
-              error && (
-                <Text>{error}</Text>
-              )
-            }
-            <Field
-              name={'email'}
-              props={{
-                placeholder: 'Correo',
-              }}
-              component={renderInput}
-            />
-            <Field
-              name={'username'}
-              props={{
-                placeholder: 'Nombre de Usuario',
-              }}
-              component={renderInput}
-            />
-            <Field
-              name={'tipo'}
-              props={{
-                placeholder: 'Cliente/Empleado',
-              }}
-              component={ renderInput }
-            />
-            <Field
-              name={'password'}
-              props={{
-                placeholder: 'Contraseña',
-                secureTextEntry: true,
-                }}
-                component={renderInput}
-              />
-              <Field
-              name={'password2'}
-              props={{
-                placeholder: 'Confirmar Contraseña',
-                secureTextEntry: true,
-                }}
-                component={renderInput}
-              />
-              {
-                isLoading ? (
-                  <Spinner color='blue' />
-                ) : (
-                  <Button onPress={handleSubmit(onSubmit)} title='Siguiente'></Button>
-                )
-              }
-          </View>
-        ) : (
-          kindOfTyte === 'Cliente' ? (
+        kindOfTyte === 'Cliente' ? (
             <View style={styles.container}>
               {
                 error && (
                   <Text>{error}</Text>
                 )
               }
-              <Field
-                name={'nombreCliente'}
-                props={{
-                  placeholder: 'Nombre',
-                }}
-                component={renderInput}
-              />
               <Field
                 name={'telefonoCliente'}
                 props={{
@@ -105,14 +44,6 @@ const RegisterForm = ({
                 }}
                 component={ renderInput }
               />
-              <Field
-                name={'nitCliente'}
-                props={{
-                  placeholder: 'Número de NIT',
-                  secureTextEntry: true,
-                  }}
-                  component={renderInput}
-                />
                 {
                   isLoading ? (
                     <Spinner color='blue' />
@@ -121,20 +52,13 @@ const RegisterForm = ({
                   )
                 }
             </View>
-          ) : (
+        ) : (
             <View style={styles.container}>
               {
                 error && (
                   <Text>{error}</Text>
                 )
               }
-              <Field
-                name={'nombreEmpleado'}
-                props={{
-                  placeholder: 'Nombre',
-                }}
-                component={renderInput}
-              />
               <Field
                 name={'telefonoEmpleado'}
                 props={{
@@ -166,13 +90,12 @@ const RegisterForm = ({
                 }
             </View>
           )
-        )
-      }
+        }
     </View>
   );
 } 
 
-export default reduxForm({form: 'Register'})(
+export default reduxForm({form: 'Actualizar'})(
   connect(
     state => ({
       isLoading: selectors.getIsRegistering(state),
@@ -182,10 +105,10 @@ export default reduxForm({form: 'Register'})(
       onSubmit(values) {
         const {email, username, password, password2, tipo} = values;
         dispatch(actions.startRegister(username, password, password2, email, tipo));
-        dispatch(reset('Register'));
+        dispatch(reset('Actualizar'));
       },
     }),
-  )(RegisterForm)
+  )(UpgradeForm)
 );
 
 const styles = StyleSheet.create({

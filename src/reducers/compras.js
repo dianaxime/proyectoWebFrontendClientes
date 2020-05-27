@@ -1,12 +1,11 @@
 import omit from 'lodash/omit';
 import { combineReducers } from 'redux';
 
-import * as types from '../types/productos';
-
+import * as types from '../types/compras';
 
 const byId = (state = {}, action) => {
   switch(action.type) {
-    case types.PRODUCTOS_FETCH_COMPLETED: {
+    case types.COMPRAS_FETCH_COMPLETED: {
       const { entities, order } = action.payload;
       const newState = { ...state };
       order.forEach(id => {
@@ -17,7 +16,7 @@ const byId = (state = {}, action) => {
       });
       return newState;
     }
-    case types.PRODUCTO_ADD_STARTED: {
+    case types.COMPRA_ADD_STARTED: {
       const newState = { ...state };
       newState[action.payload.id] = {
         ...action.payload,
@@ -25,11 +24,11 @@ const byId = (state = {}, action) => {
       };
       return newState;
     }
-    case types.PRODUCTO_ADD_COMPLETED: {
-      const { oldId, producto } = action.payload;
+    case types.COMPRA_ADD_COMPLETED: {
+      const { oldId, compra } = action.payload;
       const newState = omit(state, oldId);
-      newState[producto.id] = {
-        ...producto,
+      newState[compra.id] = {
+        ...compra,
         isConfirmed: true,
       };
       return newState;
@@ -42,13 +41,13 @@ const byId = (state = {}, action) => {
 
 const isFetching = (state = false, action) => {
   switch(action.type) {
-    case types.PRODUCTOS_FETCH_STARTED: {
+    case types.COMPRAS_FETCH_STARTED: {
       return true;
     }
-    case types.PRODUCTOS_FETCH_COMPLETED: {
+    case types.COMPRAS_FETCH_COMPLETED: {
       return false;
     }
-    case types.PRODUCTOS_FETCH_FAILED: {
+    case types.COMPRAS_FETCH_FAILED: {
       return false;
     }
     default: {
@@ -59,13 +58,13 @@ const isFetching = (state = false, action) => {
 
 const error = (state = null, action) => {
   switch(action.type) {
-    case types.PRODUCTOS_FETCH_FAILED: {
+    case types.COMPRAS_FETCH_FAILED: {
       return action.payload.error;
     }
-    case types.PRODUCTOS_FETCH_STARTED: {
+    case types.COMPRAS_FETCH_STARTED: {
       return null;
     }
-    case types.PRODUCTOS_FETCH_COMPLETED: {
+    case types.COMPRAS_FETCH_COMPLETED: {
       return null;
     }
     default: {
@@ -76,13 +75,13 @@ const error = (state = null, action) => {
 
 const addingError = (state = null, action) => {
     switch(action.type) {
-      case types.PRODUCTO_ADD_FAILED: {
+      case types.COMPRA_ADD_FAILED: {
         return action.payload.error;
       }
-      case types.PRODUCTO_ADD_STARTED: {
+      case types.COMPRA_ADD_STARTED: {
         return null;
       }
-      case types.PRODUCTO_ADD_COMPLETED: {
+      case types.COMPRA_ADD_COMPLETED: {
         return null;
       }
       default: {
@@ -98,7 +97,7 @@ export default combineReducers({
   addingError,
 });
 
-export const getProducto = state => state.byId;
-export const isFetchingProducto = state => state.isFetching;
-export const getFetchingProductoError = state => state.error;
-export const getAddingProductoError = state => state.addingError;
+export const getCompra = state => state.byId;
+export const isFetchingCompras = state => state.isFetching;
+export const getFetchingComprasError = state => state.error;
+export const getAddingCompraError = state => state.addingError;

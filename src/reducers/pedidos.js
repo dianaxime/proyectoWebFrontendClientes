@@ -1,12 +1,12 @@
 import omit from 'lodash/omit';
 import { combineReducers } from 'redux';
 
-import * as types from '../types/productos';
+import * as types from '../types/pedidos';
 
 
 const byId = (state = {}, action) => {
   switch(action.type) {
-    case types.PRODUCTOS_FETCH_COMPLETED: {
+    case types.LISTAS_FETCH_COMPLETED: {
       const { entities, order } = action.payload;
       const newState = { ...state };
       order.forEach(id => {
@@ -17,7 +17,7 @@ const byId = (state = {}, action) => {
       });
       return newState;
     }
-    case types.PRODUCTO_ADD_STARTED: {
+    case types.LISTA_ADD_STARTED: {
       const newState = { ...state };
       newState[action.payload.id] = {
         ...action.payload,
@@ -25,11 +25,11 @@ const byId = (state = {}, action) => {
       };
       return newState;
     }
-    case types.PRODUCTO_ADD_COMPLETED: {
-      const { oldId, producto } = action.payload;
+    case types.LISTA_ADD_COMPLETED: {
+      const { oldId, lista } = action.payload;
       const newState = omit(state, oldId);
-      newState[producto.id] = {
-        ...producto,
+      newState[lista.id] = {
+        ...lista,
         isConfirmed: true,
       };
       return newState;
@@ -42,13 +42,13 @@ const byId = (state = {}, action) => {
 
 const isFetching = (state = false, action) => {
   switch(action.type) {
-    case types.PRODUCTOS_FETCH_STARTED: {
+    case types.LISTAS_FETCH_STARTED: {
       return true;
     }
-    case types.PRODUCTOS_FETCH_COMPLETED: {
+    case types.LISTAS_FETCH_COMPLETED: {
       return false;
     }
-    case types.PRODUCTOS_FETCH_FAILED: {
+    case types.LISTAS_FETCH_FAILED: {
       return false;
     }
     default: {
@@ -59,13 +59,13 @@ const isFetching = (state = false, action) => {
 
 const error = (state = null, action) => {
   switch(action.type) {
-    case types.PRODUCTOS_FETCH_FAILED: {
+    case types.LISTAS_FETCH_FAILED: {
       return action.payload.error;
     }
-    case types.PRODUCTOS_FETCH_STARTED: {
+    case types.LISTAS_FETCH_STARTED: {
       return null;
     }
-    case types.PRODUCTOS_FETCH_COMPLETED: {
+    case types.LISTAS_FETCH_COMPLETED: {
       return null;
     }
     default: {
@@ -76,13 +76,13 @@ const error = (state = null, action) => {
 
 const addingError = (state = null, action) => {
     switch(action.type) {
-      case types.PRODUCTO_ADD_FAILED: {
+      case types.LISTA_ADD_FAILED: {
         return action.payload.error;
       }
-      case types.PRODUCTO_ADD_STARTED: {
+      case types.LISTA_ADD_STARTED: {
         return null;
       }
-      case types.PRODUCTO_ADD_COMPLETED: {
+      case types.LISTA_ADD_COMPLETED: {
         return null;
       }
       default: {
@@ -98,7 +98,8 @@ export default combineReducers({
   addingError,
 });
 
-export const getProducto = state => state.byId;
-export const isFetchingProducto = state => state.isFetching;
-export const getFetchingProductoError = state => state.error;
-export const getAddingProductoError = state => state.addingError;
+export const getLista = state => state.byId;
+export const isFetchingLista = state => state.isFetching;
+export const getFetchingListaError = state => state.error;
+export const getAddingListaError = state => state.addingError;
+export const getUpdatingListaError = state => state.updatingError;
