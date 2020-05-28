@@ -10,8 +10,8 @@ const ProductRow = ({ nombreProducto, descripcionProducto, precioProducto, descu
     <TouchableOpacity>
         <Text>{ nombreProducto }</Text>
         <Text>{ descripcionProducto }</Text>
-        <Text>{ precioProducto }</Text>
-        <Text> { descuentoProducto}</Text>
+        <Text>Q{ precioProducto }</Text>
+        <Text>Q{ descuentoProducto}</Text>
         <Button title='+'/>
         <Button title='-'/>
         <Button title='Añadir'/>

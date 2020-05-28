@@ -3,16 +3,15 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, Button, TouchableOpacity } from 'react-native';
 import './styles.css';
 import * as selectors from '../../reducers';
-import * as actions from '../../actions/compras';
+import * as actions from '../../actions/facturas';
 
 
-const CompraRow = ({ nombreProducto, cantidadCompra, precioProducto, subtotalCompra }) => (
+const FacturaRow = ({ fechaFactura, subtotalFactura, ivaFactura, totalFactura }) => (
     <TouchableOpacity>
-        <Text>{ nombreProducto }</Text>
-        <Text>{ cantidadCompra }</Text>
-        <Text>Q{ precioProducto }</Text>
-        <Text>Q{ subtotalCompra }</Text>
-        <Button title='x'/>
+        <Text>{ fechaFactura }</Text>
+        <Text>Q{ subtotalFactura }</Text>
+        <Text>Q{ ivaFactura }</Text>
+        <Text>Q{ totalFactura }</Text>
     </TouchableOpacity>
 );
 
@@ -25,4 +24,4 @@ export default connect(
       dispatch(actions.startRemovingPetOwner(id));
     }
   }),
-)(CompraRow);
+)(FacturaRow);
