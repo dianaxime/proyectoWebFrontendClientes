@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/productos';
-import ProductRow from '../ProductRow';
+import ProductRow from '../ProductoRow';
 
 
 const ProductList = ({ productos, isLoading, onLoad }) => {
@@ -11,7 +11,7 @@ const ProductList = ({ productos, isLoading, onLoad }) => {
   return (
     <View>
       {
-        petOwners.length === 0 && !isLoading && (
+        productos.length === 0 && !isLoading && (
           <Text>{'No hay Productos'}</Text>
         )
       }
@@ -34,7 +34,7 @@ const ProductList = ({ productos, isLoading, onLoad }) => {
 
 export default connect(
   state => ({
-    petOwners: selectors.getPetOwners(state),
+    productos: selectors.getPetOwners(state),
     isLoading: selectors.isFetchingPetOwners(state),
   }),
   dispatch => ({

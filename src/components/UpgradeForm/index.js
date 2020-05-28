@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
-import { Spinner } from 'native-base';
 
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/auth';
@@ -46,7 +45,7 @@ const UpgradeForm = ({
               />
                 {
                   isLoading ? (
-                    <Spinner color='blue' />
+                    <ActivityIndicator />
                   ) : (
                     <Button onPress={handleSubmit(onDisplay)} title='Registrar'></Button>
                   )
@@ -83,7 +82,7 @@ const UpgradeForm = ({
                 />
                 {
                   isLoading ? (
-                    <Spinner color='blue' />
+                    <ActivityIndicator />
                   ) : (
                     <Button onPress={handleSubmit(onHand)} title='Registrar'></Button>
                   )
