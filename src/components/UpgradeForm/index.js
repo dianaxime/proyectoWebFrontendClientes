@@ -94,7 +94,7 @@ const UpgradeForm = ({
   );
 } 
 
-export default reduxForm({form: 'Actualizar'})(
+/*export default reduxForm({form: 'Actualizar'})(
   connect(
     state => ({
       isLoading: selectors.getIsRegistering(state),
@@ -108,6 +108,23 @@ export default reduxForm({form: 'Actualizar'})(
       },
     }),
   )(UpgradeForm)
+);*/
+
+export default connect(
+    state => ({
+      isLoading: selectors.getIsRegistering(state),
+      error: selectors.getRegisteringError(state),
+    }),
+    (
+      reduxForm ({
+        form: 'Actualizar',
+        /*onSubmit(values) {
+          const {email, username, password, password2, tipo} = values;
+          dispatch(actions.startRegister(username, password, password2, email, tipo));
+          dispatch(reset('Actualizar'));
+        },*/
+      })
+    ) (UpgradeForm)
 );
 
 const styles = StyleSheet.create({
