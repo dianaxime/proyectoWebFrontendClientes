@@ -13,6 +13,7 @@ import Logout from './src/components/Logout';
 import TokenRefresh from './src/components/TokenRefresh';
 import Login from './src/components/LoginForm';
 import Register from './src/components/RegisterForm';
+import DataForm from './src/components/DataForm';
 
 const Stack = createStackNavigator();
 const MainApp = ({
@@ -31,6 +32,7 @@ const MainApp = ({
           <>
             <Logout />
             <TokenRefresh />
+            <DataForm />
           </>
         )
       }
