@@ -28,7 +28,7 @@ const byId = (state = {}, action) => {
     case types.EMPLEADO_ADD_COMPLETED: {
       const { oldId, empleado } = action.payload;
       const newState = omit(state, oldId);
-      newState[empleado.id] = {
+      newState[empleado.idUsuario] = {
         ...empleado,
         isConfirmed: true,
       };

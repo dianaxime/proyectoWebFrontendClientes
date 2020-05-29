@@ -18,9 +18,10 @@ export const failFetchingCliente = error => ({
   },
 });
 
-export const startAddingCliente = (nombreCliente, telefonoCliente, direccionCliente, nitCliente, idUsuario) => ({
+export const startAddingCliente = (id, nombreCliente, telefonoCliente, direccionCliente, nitCliente, idUsuario) => ({
   type: types.CLIENTE_ADD_STARTED,
   payload: {
+    id,
     nombreCliente,
     telefonoCliente,
     direccionCliente,

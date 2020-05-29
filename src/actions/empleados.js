@@ -18,9 +18,10 @@ export const failFetchingEmpleado = error => ({
   },
 });
 
-export const startAddingEmpleado = (nombreEmpleado, telefonoEmpleado, direccionEmpleado, puestoEmpleado, idUsuario) => ({
+export const startAddingEmpleado = (id, nombreEmpleado, telefonoEmpleado, direccionEmpleado, puestoEmpleado, idUsuario) => ({
   type: types.EMPLEADO_ADD_STARTED,
   payload: {
+    id,
     nombreEmpleado,
     telefonoEmpleado,
     direccionEmpleado,
@@ -43,10 +44,9 @@ export const failAddingEmpleado = (oldId, error) => ({
   },
 });
 
-export const startUpdatingEmpleado = (id, direccionEmpleado, telefonoEmpleado, puestoEmpleado) => ({
+export const startUpdatingEmpleado = (direccionEmpleado, telefonoEmpleado, puestoEmpleado) => ({
   type: types.EMPLEADO_UPDATE_STARTED,
   payload: {
-    id,
     direccionEmpleado,
     telefonoEmpleado,
     puestoEmpleado,

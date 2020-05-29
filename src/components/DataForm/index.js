@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
@@ -78,9 +79,9 @@ export default reduxForm({form: 'Update'})(
           nit,
         } = values;
         tipo === 'Cliente' ? (
-            dispatch(actionsCliente.startAddingCliente(nombre, telefono, direccion, nit, idUsuario))
+            dispatch(actionsCliente.startAddingCliente(uuidv4(), nombre, telefono, direccion, nit, idUsuario))
         ) : (
-            dispatch(actionsEmpleado.startAddingEmpleado(nombre, telefono, direccion, nit, idUsuario))
+            dispatch(actionsEmpleado.startAddingEmpleado(uuidv4(), nombre, telefono, direccion, nit, idUsuario))
         )
         dispatch(reset('Update'));
       },

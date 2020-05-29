@@ -26,9 +26,10 @@ const byId = (state = {}, action) => {
       return newState;
     }
     case types.CLIENTE_ADD_COMPLETED: {
+      console.log(action.payload);
       const { oldId, cliente } = action.payload;
       const newState = omit(state, oldId);
-      newState[cliente.id] = {
+      newState[cliente.idUsuario] = {
         ...cliente,
         isConfirmed: true,
       };
