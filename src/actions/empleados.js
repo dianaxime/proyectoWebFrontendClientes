@@ -44,12 +44,13 @@ export const failAddingEmpleado = (oldId, error) => ({
   },
 });
 
-export const startUpdatingEmpleado = (id, direccionEmpleado, telefonoEmpleado) => ({
+export const startUpdatingEmpleado = (id, direccionEmpleado, telefonoEmpleado, idUsuario) => ({
   type: types.EMPLEADO_UPDATE_STARTED,
   payload: {
     id,
     direccionEmpleado,
     telefonoEmpleado,
+    idUsuario,
   },
 });
 export const completeUpdatingEmpleado = (id, empleado) => ({

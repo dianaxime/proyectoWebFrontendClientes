@@ -44,12 +44,13 @@ export const failAddingCliente = (oldId, error) => ({
   },
 });
 
-export const startUpdatingCliente = (id, direccionCliente, telefonoCliente) => ({
+export const startUpdatingCliente = (id, direccionCliente, telefonoCliente, idUsuario) => ({
   type: types.CLIENTE_UPDATE_STARTED,
   payload: {
     id,
     direccionCliente,
     telefonoCliente,
+    idUsuario,
   },
 });
 export const completeUpdatingCliente = (id, cliente) => ({

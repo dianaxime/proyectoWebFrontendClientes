@@ -53,20 +53,20 @@ export default reduxForm({form: 'Update'})(
     state => ({
       idUsuario: selectors.getAuthUserID(state),
       tipo: selectors.getUsuario(state),
-      cliente: selectors.getCliente(state),
-      empleado: selectors.getEmpleado(state),
+      cliente: selectors.getCliente(state, selectors.getAuthUserID(state)),
+      empleado: selectors.getEmpleado(state, selectors.getAuthUserID(state)),
     }),
     dispatch => ({
-      onSubmit(values, tipo, cliente, empleado) {
+      onSubmit(values, tipo, cliente, empleado, idUsuario) {
         const {
           telefono,
           direccion,
         } = values;
-        /*tipo === 'Cliente' ? (
-            dispatch(actionsCliente.startUpdatingCliente(telefono, direccion))
+        tipo === 'Cliente' ? (
+            dispatch(actionsCliente.startUpdatingCliente(cliente['id'], direccion, telefono, idUsuario))
         ) : (
-            dispatch(actionsEmpleado.startUpdatingEmpleado(telefono, direccion))
-        )*/
+            dispatch(actionsEmpleado.startUpdatingEmpleado(empleado['id'], direccion, telefono, idUsuario))
+        )
         dispatch(reset('Update'));
       },
     }),
@@ -75,8 +75,7 @@ export default reduxForm({form: 'Update'})(
       ...stateProps,
       ...dispatchProps,
       onSubmit(values) {
-        console.log("Hola", stateProps.cliente, stateProps.empleado, stateProps.tipo);
-        dispatchProps.onSubmit(values, stateProps.tipo, stateProps.cliente, stateProps.empleado);
+        dispatchProps.onSubmit(values, stateProps.tipo, stateProps.cliente, stateProps.empleado, stateProps.idUsuario);
       },
     })
   )(UpgradeForm)

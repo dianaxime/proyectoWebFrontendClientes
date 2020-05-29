@@ -36,16 +36,16 @@ const byId = (state = {}, action) => {
     case types.CLIENTE_UPDATE_STARTED: {
         return {
             ...state,
-            [action.payload.id]: {
-            ...state[action.payload.id],
+            [action.payload.idUsuario]: {
+            ...state[action.payload.idUsuario],
             ...action.payload,
             },
         };
       }
     case types.CLIENTE_UPDATE_COMPLETED: {
         const { id, cliente } = action.payload;
-        const newState = omit(state, oldId);
-        newState[cliente.id] = {
+        const newState = omit(state, id);
+        newState[cliente.idUsuario] = {
           ...cliente,
           isConfirmed: true,
         };
@@ -108,33 +108,14 @@ const addingError = (state = null, action) => {
     }
 };
 
-const updatingError = (state = null, action) => {
-    switch(action.type) {
-      case types.CLIENTE_UPDATE_FAILED: {
-        return action.payload.error;
-      }
-      case types.CLIENTE_UPDATE_STARTED: {
-        return null;
-      }
-      case types.CLIENTE_UPDATE_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
-    }
-};
-
-
 export default combineReducers({
   byId,
   isFetching,
   error,
   addingError,
-  updatingError,
 });
 
-export const getCliente = state => state.byId;
+export const getCliente = (state, id) => state.byId[id];
 export const isFetchingCliente = state => state.isFetching;
 export const getFetchingClienteError = state => state.error;
 export const getAddingClienteError = state => state.addingError;

@@ -110,12 +110,13 @@ function* updateCliente(action) {
   
       if (isAuth) {
         const token = yield select(selectors.getAuthToken);
+        console.log(action.payload.direccionCliente, action.payload.telefonoCliente);
         const response = yield call(
           fetch,
           `${API_BASE_URL}/clientes/${action.payload.id}/modificar-cliente/`,
           {
             method: 'PATCH',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({direccionCliente: action.payload.direccionCliente, telefonoCliente: action.payload.telefonoCliente}),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,
@@ -126,7 +127,7 @@ function* updateCliente(action) {
         if (response.status === 200) {
           const jsonResult = yield response.json();
           yield put(actions.completeUpdatingCliente(
-            jsonResult['id'],
+            action.payload.idUsuario,
             jsonResult,
           ));
         } else {

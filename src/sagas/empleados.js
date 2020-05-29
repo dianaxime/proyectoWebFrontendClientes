@@ -115,22 +115,23 @@ function* updateEmpleado(action) {
           `${API_BASE_URL}/empleados/${action.payload.id}/modificar-empleado/`,
           {
             method: 'PATCH',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({direccion: action.payload.direccionEmpleado, telefono: action.payload.telefonoEmpleado}),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,
             },
           }
         );
-  
+        console.log(response);
         if (response.status === 200) {
             const jsonResult = yield response.json();
           yield put(actions.completeUpdatingEmpleado(
-            jsonResult['id'],
+            action.payload.idUsuario,
             jsonResult,
           ));
         } else {
           const { non_field_errors } = yield response.json();
+          console.log(non_field_errors);
           yield put(actions.failUpdatingEmpleado(non_field_errors[0]));
         }
       }

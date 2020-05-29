@@ -52,17 +52,15 @@ export const getUsuario = state => usuariosSelectors.getUsuario(state.usuarios);
 export const isFetchingUsuario = state => usuariosSelectors.isFetchingUsuario(state.usuarios);
 export const getFetchingUsuarioError = state => usuariosSelectors.getFetchingUsuarioError(state.usuarios);
 /* Cliente */
-export const getCliente = state => clientesSelectors.getCliente(state.clientes);
+export const getCliente = (state, id) => clientesSelectors.getCliente(state.clientes, id);
 export const isFetchingCliente = state => clientesSelectors.isFetchingCliente(state.clientes);
 export const getFetchingClienteError = state => clientesSelectors.getFetchingClienteError(state.clientes);
 export const getAddingClienteError = state => clientesSelectors.getAddingClienteError(state.clientes);
-export const getUpdatingClienteError = state => clientesSelectors.getUpdatingClienteError(state.clientes);
 /* Empleado */
-export const getEmpleado = state => empleadosSelectors.getEmpleado(state.empleados);
+export const getEmpleado = (state, id) => empleadosSelectors.getEmpleado(state.empleados, id);
 export const isFetchingEmpleado = state => empleadosSelectors.isFetchingEmpleado(state.empleados);
 export const getFetchingEmpleadoError = state => empleadosSelectors.getFetchingEmpleadoError(state.empleados);
 export const getAddingEmpleadoError = state => empleadosSelectors.getAddingEmpleadoError(state.empleados);
-export const getUpdatingEmpleadoError = state => empleadosSelectors.getUpdatingEmpleadoError(state.empleados);
 /* Oferta */
 export const getOferta = (state, id) => ofertasSelectors.getOferta(state.ofertas, id);
 export const getOfertas = state => ofertasSelectors.getOfertas(state.ofertas);
