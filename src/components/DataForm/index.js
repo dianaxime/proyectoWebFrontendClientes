@@ -49,7 +49,6 @@ const DataForm = ({
             name={'nit'}
             props={{
             placeholder: 'NIT/Puesto',
-            secureTextEntry: true,
             }}
             component={renderInput}
         />

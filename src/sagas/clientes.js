@@ -7,7 +7,7 @@ import {
     delay,
     select,
 } from 'redux-saga/effects';
-  
+import jwtDecode from 'jwt-decode';
 import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/clientes';
@@ -37,8 +37,8 @@ function* fetchCliente(action) {
           const jsonResult = yield response.json();
           yield put(
             actions.completeFetchingCliente(
-              jsonResult['id'],
-              jsonResult,
+              jsonResult[0]['idUsuario'],
+              jsonResult[0],
             ),
           );
         } else {

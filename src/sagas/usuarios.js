@@ -12,6 +12,8 @@ import {
 import * as selectors from '../reducers';
 import * as actions from '../actions/usuarios';
 import * as types from '../types/usuarios';
+import * as actionsClientes from '../actions/clientes';
+import * as actionsEmpleados from '../actions/empleados';
   
 import { API_BASE_URL } from '../settings';
 
@@ -37,6 +39,11 @@ function* fetchUsuarioStarted() {
         if (response.status === 200) {
             const { tipo } = yield response.json();
             yield put(actions.completeFetchingUsuario(tipo));
+            tipo === 'Cliente' ? (
+              yield put(actionsClientes.startFetchingCliente())
+            ) : (
+              yield put(actionsEmpleados.startFetchingEmpleado())
+            )
         } else {
             const { non_field_errors } = yield response.json();
             yield put(actions.failFetchingUsuario(non_field_errors[0]));

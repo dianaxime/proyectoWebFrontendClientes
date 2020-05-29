@@ -7,14 +7,12 @@ import * as types from '../types/clientes';
 const byId = (state = {}, action) => {
   switch(action.type) {
     case types.CLIENTE_FETCH_COMPLETED: {
-      const { entities, order } = action.payload;
-      const newState = { ...state };
-      order.forEach(id => {
-        newState[id] = {
-          ...entities[id],
-          isConfirmed: true,
-        };
-      });
+      const { id, cliente } = action.payload;
+      const newState = omit(state, id);
+      newState[cliente.idUsuario] = {
+        ...cliente,
+        isConfirmed: true,
+      };
       return newState;
     }
     case types.CLIENTE_ADD_STARTED: {

@@ -4,127 +4,82 @@ import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
 
 import * as selectors from '../../reducers';
-import * as actions from '../../actions/auth';
-
+import * as actionsCliente from '../../actions/clientes';
+import * as actionsEmpleado from '../../actions/empleados';
 
 const UpgradeForm = ({
   onSubmit,
   isLoading,
   error = null,
   handleSubmit,
-  onDisplay,
-  onHand,
-  kindOfTyte,
 }) => {
   const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
     return <TextInput onChangeText={onChange} {...restInput} {...rest} />
   }
   return (
-    <View>
+    <View style={styles.container}>
       {
-        kindOfTyte === 'Cliente' ? (
-            <View style={styles.container}>
-              {
-                error && (
-                  <Text>{error}</Text>
-                )
-              }
-              <Field
-                name={'telefonoCliente'}
-                props={{
-                  placeholder: 'Número de telefóno',
-                }}
-                component={renderInput}
-              />
-              <Field
-                name={'direccionCliente'}
-                props={{
-                  placeholder: 'Dirección',
-                }}
-                component={ renderInput }
-              />
-                {
-                  isLoading ? (
-                    <ActivityIndicator />
-                  ) : (
-                    <Button onPress={handleSubmit(onDisplay)} title='Registrar'></Button>
-                  )
-                }
-            </View>
+        error && (
+          <Text>{error}</Text>
+        )
+      }
+        <Field
+            name={'telefono'}
+            props={{
+            placeholder: 'Número de telefóno',
+            }}
+            component={renderInput}
+        />
+        <Field
+            name={'direccion'}
+            props={{
+            placeholder: 'Dirección',
+            }}
+            component={ renderInput }
+        />
+        {
+        isLoading ? (
+          <ActivityIndicator/>
         ) : (
-            <View style={styles.container}>
-              {
-                error && (
-                  <Text>{error}</Text>
-                )
-              }
-              <Field
-                name={'telefonoEmpleado'}
-                props={{
-                  placeholder: 'Número de telefóno',
-                }}
-                component={renderInput}
-              />
-              <Field
-                name={'direccionEmpleado'}
-                props={{
-                  placeholder: 'Dirección',
-                }}
-                component={ renderInput }
-              />
-              <Field
-                name={'puestoEmpleado'}
-                props={{
-                  placeholder: 'Puesto de trabajo',
-                  secureTextEntry: true,
-                  }}
-                  component={renderInput}
-                />
-                {
-                  isLoading ? (
-                    <ActivityIndicator />
-                  ) : (
-                    <Button onPress={handleSubmit(onHand)} title='Registrar'></Button>
-                  )
-                }
-            </View>
-          )
-        }
+          <Button onPress={handleSubmit(onSubmit)} title='Actualizar'></Button>
+        )
+      }
     </View>
   );
 } 
 
-/*export default reduxForm({form: 'Actualizar'})(
+export default reduxForm({form: 'Update'})(
   connect(
     state => ({
-      isLoading: selectors.getIsRegistering(state),
-      error: selectors.getRegisteringError(state),
+      idUsuario: selectors.getAuthUserID(state),
+      tipo: selectors.getUsuario(state),
+      cliente: selectors.getCliente(state),
+      empleado: selectors.getEmpleado(state),
     }),
     dispatch => ({
-      onSubmit(values) {
-        const {email, username, password, password2, tipo} = values;
-        dispatch(actions.startRegister(username, password, password2, email, tipo));
-        dispatch(reset('Actualizar'));
+      onSubmit(values, tipo, cliente, empleado) {
+        const {
+          telefono,
+          direccion,
+        } = values;
+        /*tipo === 'Cliente' ? (
+            dispatch(actionsCliente.startUpdatingCliente(telefono, direccion))
+        ) : (
+            dispatch(actionsEmpleado.startUpdatingEmpleado(telefono, direccion))
+        )*/
+        dispatch(reset('Update'));
       },
     }),
+    (stateProps, dispatchProps, ownProps) => ({
+      ...ownProps,
+      ...stateProps,
+      ...dispatchProps,
+      onSubmit(values) {
+        console.log("Hola", stateProps.cliente, stateProps.empleado, stateProps.tipo);
+        dispatchProps.onSubmit(values, stateProps.tipo, stateProps.cliente, stateProps.empleado);
+      },
+    })
   )(UpgradeForm)
-);*/
-
-export default connect(
-    state => ({
-      isLoading: selectors.getIsRegistering(state),
-      error: selectors.getRegisteringError(state),
-    }),
-    (
-      reduxForm ({
-        form: 'Actualizar',
-        /*onSubmit(values) {
-          const {email, username, password, password2, tipo} = values;
-          dispatch(actions.startRegister(username, password, password2, email, tipo));
-          dispatch(reset('Actualizar'));
-        },*/
-      })
-    ) (UpgradeForm)
 );
 
 const styles = StyleSheet.create({
@@ -134,4 +89,5 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
-  });
+});
+
