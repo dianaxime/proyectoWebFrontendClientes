@@ -56,6 +56,24 @@ const isFetching = (state = false, action) => {
   }
 };
 
+const order = (state = [], action) => {
+  switch(action.type) {
+    case types.COMPRAS_FETCH_COMPLETED: {
+      return [...action.payload.order];
+    }
+    case types.COMPRA_ADD_STARTED: {
+      return [...state, action.payload.id];
+    }
+    case types.COMPRA_ADD_COMPLETED: {
+      const { oldId, compra } = action.payload;
+      return state.map(id => id === oldId ? compra.id : id);
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const error = (state = null, action) => {
   switch(action.type) {
     case types.COMPRAS_FETCH_FAILED: {
@@ -73,31 +91,15 @@ const error = (state = null, action) => {
   }
 };
 
-const addingError = (state = null, action) => {
-    switch(action.type) {
-      case types.COMPRA_ADD_FAILED: {
-        return action.payload.error;
-      }
-      case types.COMPRA_ADD_STARTED: {
-        return null;
-      }
-      case types.COMPRA_ADD_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
-    }
-};
-
 export default combineReducers({
   byId,
   isFetching,
+  order,
   error,
-  addingError,
 });
 
-export const getCompra = state => state.byId;
+export const getCompra = (state, id) => state.byId[id];
+export const getCompras = state => state.order.map(id => getCompra(state, id));
 export const isFetchingCompras = state => state.isFetching;
 export const getFetchingComprasError = state => state.error;
-export const getAddingCompraError = state => state.addingError;
+

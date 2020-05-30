@@ -7,12 +7,13 @@ import {
     // delay,
     select,
 } from 'redux-saga/effects';
-  
+
+import { normalize } from 'normalizr';
 import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/compras';
 import * as types from '../types/compras';
-  
+import * as schemas from '../schemas/productos';   
   
 function* fetchCompras(action) {
     try {
@@ -35,10 +36,14 @@ function* fetchCompras(action) {
   
         if (response.status === 200) {
           const jsonResult = yield response.json();
+          const {
+            entities: { compras },
+            result,
+          } = normalize(jsonResult, schemas.compra);
           yield put(
             actions.completeFetchingCompras(
-              jsonResult['id'],
-              jsonResult,
+              result,
+              compras,
             ),
           );
         } else {
@@ -70,7 +75,12 @@ function* addCompra(action) {
           `${API_BASE_URL}/compras/`,
           {
             method: 'POST',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({cantidadCompra: action.payload.cantidadCompra,
+            estadoCompra: action.payload.estadoCompra,
+            subtotalCompra: parseFloat(action.payload.subtotalCompra),
+            descuentoCompra: parseFloat(action.payload.descuentoCompra),
+            idProducto: action.payload.idProducto,
+            idCliente: action.payload.idCliente}),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,

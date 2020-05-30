@@ -23,6 +23,11 @@ import {
   watchAddProducto,
 } from './productos';
 
+import {
+  watchFetchCompras,
+  watchAddCompra,
+} from './compras';
+
 import { watchFetchUsuarioStarted } from './usuarios';
 
 function* mainSaga() {
@@ -39,6 +44,8 @@ function* mainSaga() {
     fork(watchUpdateEmpleado),
     fork(watchProductosFetch),
     fork(watchAddProducto),
+    fork(watchFetchCompras),
+    fork(watchAddCompra),
   ]);
 }
 

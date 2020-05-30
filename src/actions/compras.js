@@ -4,11 +4,11 @@ import * as types from '../types/compras';
 export const startFetchingCompras = () => ({
   type: types.COMPRAS_FETCH_STARTED,
 });
-export const completeFetchingCompras = (id, compras) => ({
+export const completeFetchingCompras = (order, entities) => ({
   type: types.COMPRAS_FETCH_COMPLETED,
   payload: {
-    id,
-    compras,
+    order,
+    entities,
   },
 });
 export const failFetchingCompras = error => ({
@@ -18,11 +18,11 @@ export const failFetchingCompras = error => ({
   },
 });
 
-export const startAddingCompra = (cantidadCompra, fechaCompra, estadoCompra, subtotalCompra, descuentoCompra, idProducto, idCliente) => ({
+export const startAddingCompra = (id, cantidadCompra, estadoCompra, subtotalCompra, descuentoCompra, idProducto, idCliente) => ({
   type: types.COMPRA_ADD_STARTED,
   payload: {
+    id,
     cantidadCompra,
-    fechaCompra,
     estadoCompra,
     subtotalCompra,
     descuentoCompra,
