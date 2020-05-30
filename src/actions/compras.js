@@ -1,8 +1,10 @@
 import * as types from '../types/compras';
 
-
-export const startFetchingCompras = () => ({
+export const startFetchingCompras = cliente => ({
   type: types.COMPRAS_FETCH_STARTED,
+  payload: {
+    cliente
+  },
 });
 export const completeFetchingCompras = (order, entities) => ({
   type: types.COMPRAS_FETCH_COMPLETED,

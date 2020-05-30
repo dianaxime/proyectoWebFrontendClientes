@@ -17,6 +17,7 @@ import DataForm from './src/components/DataForm';
 import UpgradeForm from './src/components/UpgradeForm';
 import ProductoForm from './src/components/ProductoForm';
 import ProductoList from './src/components/ProductoList';
+import CompraList from './src/components/CompraList';
 
 const Stack = createStackNavigator();
 const MainApp = ({
@@ -38,8 +39,9 @@ const MainApp = ({
             {/*<DataForm />
             <UpgradeForm />
             <ProductoForm />
-            */}
             <ProductoList />
+            */}
+            <CompraList />
           </>
         )
       }

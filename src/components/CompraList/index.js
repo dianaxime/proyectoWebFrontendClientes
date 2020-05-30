@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView } from 'react-native';
 import * as selectors from '../../reducers';
-import * as actions from '../../actions/productos';
+import * as actions from '../../actions/compras';
+import * as actionsClientes from '../../actions/clientes';
+import * as actionsProductos from '../../actions/productos';
 import CompraRow from '../CompraRow';
 
 
@@ -22,10 +24,14 @@ const CompraList = ({ compras, isLoading, onLoad }) => {
       }
       {
         compras.length > 0 && !isLoading && (
-          <FlatList
-            data={compras}
-            renderItem={({ id }) => <CompraRow key={id} id={id} />}
-          />
+          <ScrollView>
+            {compras && compras.map((item, i) => (
+              <CompraRow
+                key={i}
+                item={item} 
+              />
+            ))}
+          </ScrollView>
         )
       }
     </View>
@@ -34,12 +40,39 @@ const CompraList = ({ compras, isLoading, onLoad }) => {
 
 export default connect(
   state => ({
-    compras: selectors.getPetOwners(state),
-    isLoading: selectors.isFetchingPetOwners(state),
+    compras: selectors.getCompras(state),
+    isLoading: selectors.isFetchingCompras(state),
+    cliente: selectors.getCliente(state, selectors.getAuthUserID(state)),
   }),
   dispatch => ({
-    onLoad() {
-      dispatch(actions.startFetchingPetOwners());
+    onLoad(cliente) {
+      dispatch(actions.startFetchingCompras(cliente));
     },
+    onCharge(){
+      dispatch(actionsProductos.startFetchingProductos());
+    },
+    onPile(){
+      dispatch(actionsClientes.startFetchingCliente());
+    }
   }),
+  (stateProps, dispatchProps, ownProps) => ({
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
+    onLoad() {
+      setTimeout(() => {
+        dispatchProps.onPile();
+      }, 1000);
+      setTimeout(() => {
+        dispatchProps.onCharge();
+      }, 1000);
+      setTimeout(() => {
+        console.log("-----",stateProps.cliente),
+        stateProps.cliente != null && (
+          console.log("Hola mundo!"),
+          dispatchProps.onLoad(stateProps.cliente['id'])  
+        );
+      }, 1000);    
+    },
+  })
 )(CompraList);

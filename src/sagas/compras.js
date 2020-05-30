@@ -13,7 +13,7 @@ import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/compras';
 import * as types from '../types/compras';
-import * as schemas from '../schemas/productos';   
+import * as schemas from '../schemas/compras';   
   
 function* fetchCompras(action) {
     try {
@@ -21,10 +21,9 @@ function* fetchCompras(action) {
   
       if (isAuth) {
         const token = yield select(selectors.getAuthToken);
-        const usuario = jwtDecode(token);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/compras/`,
+          `${API_BASE_URL}/clientes/${action.payload.cliente}/mis-compras/`,
           {
             method: 'GET',
             headers:{
