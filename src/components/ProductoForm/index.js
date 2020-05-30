@@ -68,7 +68,7 @@ export default reduxForm({form: 'Producto'})(
           descripcion,
           precio,
         } = values;
-        dispatch(actions.startAddingProducto(uuidv4(), nombre, descripcion, precio, 0));
+        dispatch(actions.startAddingProducto(uuidv4(), nombre, precio, descripcion, 0));
         dispatch(reset('Producto'));
       },
     }),

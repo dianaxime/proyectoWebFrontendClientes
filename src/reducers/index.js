@@ -96,9 +96,8 @@ export const getAddingPedidoError = state => pedidosSelectors.getAddingPedidoErr
 /* Producto */
 export const getProducto = (state, id) => productosSelectors.getProducto(state.productos, id);
 export const getProductos = state => productosSelectors.getProductos(state.productos);
-export const isFetchingProductos = state => productosSelectors.isFetchingProducto(state.productos);
-export const getFetchingProductosError = state => productosSelectors.getFetchingProductoError(state.productos);
-export const getAddingProductoError = state => productosSelectors.getAddingProductoError(state.productos);
+export const isFetchingProductos = state => productosSelectors.isFetchingProductos(state.productos);
+export const getFetchingProductosError = state => productosSelectors.getFetchingProductosError(state.productos);
 /* SelectedProducto */
 export const getSelectedProducto = state => selectedProductoSelectors.getSelectedProducto(state.selectedProducto);
 /* Registro */

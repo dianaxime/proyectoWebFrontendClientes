@@ -92,33 +92,14 @@ const error = (state = null, action) => {
   }
 };
 
-const addingError = (state = null, action) => {
-    switch(action.type) {
-      case types.PRODUCTO_ADD_FAILED: {
-        return action.payload.error;
-      }
-      case types.PRODUCTO_ADD_STARTED: {
-        return null;
-      }
-      case types.PRODUCTO_ADD_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
-    }
-};
-
 export default combineReducers({
   byId,
   isFetching,
   error,
   order,
-  addingError,
 });
 
 export const getProducto = (state, id) => state.byId[id];
 export const getProductos = state => state.order.map(id => getProducto(state, id));
 export const isFetchingProductos = state => state.isFetching;
 export const getFetchingProductosError = state => state.error;
-export const getAddingProductoError = state => state.addingError;

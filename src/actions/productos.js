@@ -3,11 +3,11 @@ import * as types from '../types/productos';
 export const startFetchingProductos = () => ({
   type: types.PRODUCTOS_FETCH_STARTED,
 });
-export const completeFetchingProductos = (id, productos) => ({
+export const completeFetchingProductos = (order, entities) => ({
   type: types.PRODUCTOS_FETCH_COMPLETED,
   payload: {
-    id,
-    productos,
+    order,
+    entities,
   },
 });
 export const failFetchingProductos = error => ({

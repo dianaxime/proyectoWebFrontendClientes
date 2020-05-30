@@ -7,12 +7,13 @@ import {
     //delay,
     select,
 } from 'redux-saga/effects';
-  
+
+import { normalize } from 'normalizr';
 import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/productos';
 import * as types from '../types/productos';
-  
+import * as schemas from '../schemas/productos';  
   
 function* fetchProductos(action) {
     try {
@@ -20,12 +21,11 @@ function* fetchProductos(action) {
   
       if (isAuth) {
         const token = yield select(selectors.getAuthToken);
-        const usuario = jwtDecode(token);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/productos/`,
+          `${API_BASE_URL}/productos/aplicar-descuento/`,
           {
-            method: 'GET',
+            method: 'PATCH',
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,
@@ -35,10 +35,14 @@ function* fetchProductos(action) {
   
         if (response.status === 200) {
           const jsonResult = yield response.json();
+          const {
+            entities: { productos },
+            result,
+          } = normalize(jsonResult, schemas.producto);
           yield put(
             actions.completeFetchingProductos(
-              jsonResult['id'],
-              jsonResult,
+              result,
+              productos,
             ),
           );
         } else {
@@ -70,16 +74,16 @@ function* addProducto(action) {
           `${API_BASE_URL}/productos/`,
           {
             method: 'POST',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({nombreProducto: action.payload.nombreProducto, precioProducto: parseFloat(action.payload.precioProducto), descripcionProducto: action.payload.descripcionProducto, descuentoProducto: parseFloat(action.payload.descuentoProducto)}),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,
             },
           }
         );
-  
         if (response.status === 201) {
           const jsonResult = yield response.json();
+          console.log(jsonResult);
           yield put(
             actions.completeAddingProducto(
               action.payload.id,
@@ -99,7 +103,7 @@ function* addProducto(action) {
   
 export function* watchAddProducto() {
     yield takeEvery(
-      types.EMPLEADO_ADD_STARTED,
+      types.PRODUCTO_ADD_STARTED,
       addProducto,
     );
 }

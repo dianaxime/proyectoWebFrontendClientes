@@ -15,6 +15,8 @@ import Login from './src/components/LoginForm';
 import Register from './src/components/RegisterForm';
 import DataForm from './src/components/DataForm';
 import UpgradeForm from './src/components/UpgradeForm';
+import ProductoForm from './src/components/ProductoForm';
+import ProductoList from './src/components/ProductoList';
 
 const Stack = createStackNavigator();
 const MainApp = ({
@@ -35,7 +37,9 @@ const MainApp = ({
             <TokenRefresh />
             {/*<DataForm />
             <UpgradeForm />
+            <ProductoForm />
             */}
+            <ProductoList />
           </>
         )
       }

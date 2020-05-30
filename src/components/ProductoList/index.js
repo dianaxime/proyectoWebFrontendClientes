@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/productos';
-import ProductRow from '../ProductoRow';
+import ProductoRow from '../ProductoRow';
 
 
 const ProductList = ({ productos, isLoading, onLoad }) => {
@@ -22,10 +22,14 @@ const ProductList = ({ productos, isLoading, onLoad }) => {
       }
       {
         productos.length > 0 && !isLoading && (
-          <FlatList
-            data={productos}
-            renderItem={({ id }) => <ProductRow key={id} id={id} />}
-          />
+          <ScrollView>
+            {productos && productos.map((item, i) => (
+              <ProductoRow
+                key={i}
+                item={item} 
+              />
+            ))}
+          </ScrollView>
         )
       }
     </View>
