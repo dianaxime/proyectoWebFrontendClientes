@@ -14,6 +14,7 @@ import listas, * as listasSelectors from './listas';
 import compras, * as comprasSelectors from './compras';
 import facturas, * as facturasSelectors from './facturas';
 import pedidos, * as pedidosSelectors from './pedidos';
+import selectedProducto, * as selectedProductoSelectors from './selectedProducto';
 
 const reducer = combineReducers({
   auth,
@@ -29,6 +30,7 @@ const reducer = combineReducers({
   compras,
   facturas,
   pedidos,
+  selectedProducto,
   form: formReducer,
 });
 
@@ -92,10 +94,13 @@ export const isFetchingPedidos = state => pedidosSelectors.isFetchingPedidos(sta
 export const getFetchingPedidosError = state => pedidosSelectors.getFetchingPedidosError(state.pedidos);
 export const getAddingPedidoError = state => pedidosSelectors.getAddingPedidoError(state.pedidos);
 /* Producto */
-export const getProducto = state => productosSelectors.getProducto(state.productos);
-export const isFetchingProducto = state => productosSelectors.isFetchingProducto(state.productos);
-export const getFetchingProductoError = state => productosSelectors.getFetchingProductoError(state.productos);
+export const getProducto = (state, id) => productosSelectors.getProducto(state.productos, id);
+export const getProductos = state => productosSelectors.getProductos(state.productos);
+export const isFetchingProductos = state => productosSelectors.isFetchingProducto(state.productos);
+export const getFetchingProductosError = state => productosSelectors.getFetchingProductoError(state.productos);
 export const getAddingProductoError = state => productosSelectors.getAddingProductoError(state.productos);
+/* SelectedProducto */
+export const getSelectedProducto = state => selectedProductoSelectors.getSelectedProducto(state.selectedProducto);
 /* Registro */
 export const getRegistro = state => registrosSelectors.getRegistro(state.registros);
 export const getAddingRegistroError = state => registrosSelectors.getAddingRegistroError(state.registros);

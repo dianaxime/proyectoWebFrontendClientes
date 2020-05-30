@@ -57,6 +57,24 @@ const isFetching = (state = false, action) => {
   }
 };
 
+const order = (state = [], action) => {
+  switch(action.type) {
+    case types.PRODUCTOS_FETCH_COMPLETED: {
+      return [...action.payload.order];
+    }
+    case types.PRODUCTO_ADD_STARTED: {
+      return [...state, action.payload.id];
+    }
+    case types.PRODUCTO_ADD_COMPLETED: {
+      const { oldId, producto } = action.payload;
+      return state.map(id => id === oldId ? producto.id : id);
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const error = (state = null, action) => {
   switch(action.type) {
     case types.PRODUCTOS_FETCH_FAILED: {
@@ -95,10 +113,12 @@ export default combineReducers({
   byId,
   isFetching,
   error,
+  order,
   addingError,
 });
 
-export const getProducto = state => state.byId;
-export const isFetchingProducto = state => state.isFetching;
-export const getFetchingProductoError = state => state.error;
+export const getProducto = (state, id) => state.byId[id];
+export const getProductos = state => state.order.map(id => getProducto(state, id));
+export const isFetchingProductos = state => state.isFetching;
+export const getFetchingProductosError = state => state.error;
 export const getAddingProductoError = state => state.addingError;

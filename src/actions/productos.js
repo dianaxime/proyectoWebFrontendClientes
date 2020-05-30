@@ -17,9 +17,10 @@ export const failFetchingProductos = error => ({
   },
 });
 
-export const startAddingProducto = (nombreProducto, precioProducto, descripcionProducto, descuentoProducto) => ({
+export const startAddingProducto = (id, nombreProducto, precioProducto, descripcionProducto, descuentoProducto) => ({
   type: types.PRODUCTO_ADD_STARTED,
   payload: {
+    id,
     nombreProducto,
     precioProducto,
     descripcionProducto,

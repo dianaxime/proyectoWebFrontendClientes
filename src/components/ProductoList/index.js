@@ -34,12 +34,12 @@ const ProductList = ({ productos, isLoading, onLoad }) => {
 
 export default connect(
   state => ({
-    productos: selectors.getPetOwners(state),
-    isLoading: selectors.isFetchingPetOwners(state),
+    productos: selectors.getProductos(state),
+    isLoading: selectors.isFetchingProductos(state),
   }),
   dispatch => ({
     onLoad() {
-      dispatch(actions.startFetchingPetOwners());
+      dispatch(actions.startFetchingProductos());
     },
   }),
 )(ProductList);
