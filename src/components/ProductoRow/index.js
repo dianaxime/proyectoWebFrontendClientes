@@ -6,7 +6,7 @@ import * as selectors from '../../reducers';
 import * as actions from '../../actions/compras';
 import * as selectedActions from '../../actions/selectedProducto';
 
-const ProductRow = ({ item, onSelect, onShop }) => {
+const ProductRow = ({ item, onSelect, onShop, tipo }) => {
   const [cant, changeCant] = useState(0);
   const sum = () => changeCant(cant+1);
   const res = () => {
@@ -23,10 +23,16 @@ const ProductRow = ({ item, onSelect, onShop }) => {
           <Text>{ item.descripcionProducto }</Text>
           <Text>Q{ item.precioProducto }</Text>
           <Text>Q{ item.descuentoProducto}</Text>
-          <Button title='+' onPress={sum}/>
-          <Button title='-' onPress={res}/>
-          <Text>{ cant }</Text>
-          <Button title='Añadir' onPress={() => onShop(cant)}/>
+          {
+            (tipo === 'Cliente') && (
+              <>
+                <Button title='+' onPress={sum}/>
+                <Button title='-' onPress={res}/>
+                <Text>{ cant }</Text>
+                <Button title='Añadir' onPress={() => onShop(cant)}/>
+              </>
+            )
+          }
       </TouchableOpacity>
     </View>
 );
@@ -36,6 +42,7 @@ export default connect(
   (state, { item }) => ({
     ...selectors.getProducto(state, item),
     cliente: selectors.getCliente(state, selectors.getAuthUserID(state)),
+    tipo: selectors.getUsuario(state),
   }),
   (dispatch, { item }) => ({
     onSelect() {
