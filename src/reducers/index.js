@@ -15,6 +15,7 @@ import compras, * as comprasSelectors from './compras';
 import facturas, * as facturasSelectors from './facturas';
 import pedidos, * as pedidosSelectors from './pedidos';
 import selectedProducto, * as selectedProductoSelectors from './selectedProducto';
+import selectedCompra, * as selectedCompraSelectors from './selectedCompra';
 
 const reducer = combineReducers({
   auth,
@@ -31,6 +32,7 @@ const reducer = combineReducers({
   facturas,
   pedidos,
   selectedProducto,
+  selectedCompra,
   form: formReducer,
 });
 
@@ -76,6 +78,8 @@ export const getCompras = state => comprasSelectors.getCompras(state.compras);
 export const isFetchingCompras = state => comprasSelectors.isFetchingCompras(state.compras);
 export const getFetchingComprasError = state => comprasSelectors.getFetchingComprasError(state.compras);
 export const getAddingCompraError = state => comprasSelectors.getAddingCompraError(state.compras);
+/* SelectedCompra */
+export const getSelectedCompra = state => selectedCompraSelectors.getSelectedCompra(state.selectedCompra);
 /* Factura */
 export const getFactura = (state, id) => facturasSelectors.getFactura(state.facturas, id);
 export const getFacturas = state => facturasSelectors.getFacturas(state.facturas);

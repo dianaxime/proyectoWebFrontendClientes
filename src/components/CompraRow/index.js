@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/compras';
+import * as selectedActions from '../../actions/selectedCompra';
 
-
-const CompraRow = ({ item, producto }) => (
-    <TouchableOpacity>
+const CompraRow = ({ item, producto, onSelect }) => (
+    <TouchableOpacity onPress={onSelect}>
         <Text>{ producto.nombreProducto }</Text>
         <Text>{ item.cantidadCompra }</Text>
         <Text>Q{ item.subtotalCompra }</Text>
@@ -20,8 +20,9 @@ export default connect(
     producto: selectors.getProducto(state, item.idProducto)
   }),
   (dispatch, { item }) => ({
-    /*onDelete() {
-      dispatch(actions.startRemovingPetOwner(id));
-    }*/
+    onSelect() {
+      console.log(item.id);
+      dispatch(selectedActions.selectCompra(item.id));
+    },
   }),
 )(CompraRow);

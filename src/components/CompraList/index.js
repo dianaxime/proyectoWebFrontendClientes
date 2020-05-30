@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Button } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/compras';
 import * as actionsClientes from '../../actions/clientes';
@@ -24,14 +24,17 @@ const CompraList = ({ compras, isLoading, onLoad }) => {
       }
       {
         compras.length > 0 && !isLoading && (
-          <ScrollView>
-            {compras && compras.map((item, i) => (
-              <CompraRow
-                key={i}
-                item={item} 
-              />
-            ))}
-          </ScrollView>
+          <>
+            <ScrollView>
+              {compras && compras.map((item, i) => (
+                <CompraRow
+                  key={i}
+                  item={item} 
+                />
+              ))}
+            </ScrollView>
+            <Button title='Finalizar'/>
+          </>
         )
       }
     </View>
@@ -72,7 +75,7 @@ export default connect(
           console.log("Hola mundo!"),
           dispatchProps.onLoad(stateProps.cliente['id'])  
         );
-      }, 1000);    
+      }, 2000);    
     },
   })
 )(CompraList);
