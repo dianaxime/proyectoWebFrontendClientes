@@ -4,11 +4,11 @@ export const startFetchingTiendas = () => ({
   type: types.TIENDAS_FETCH_STARTED,
 });
 
-export const completeFetchingTiendas = (id, tienda) => ({
+export const completeFetchingTiendas = (order, entities) => ({
   type: types.TIENDAS_FETCH_COMPLETED,
   payload: {
-    id,
-    tienda,
+    order,
+    entities,
   },
 });
 

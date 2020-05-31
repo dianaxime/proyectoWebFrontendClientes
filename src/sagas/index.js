@@ -30,6 +30,12 @@ import {
   watchExpireCompra,
 } from './compras';
 
+import {
+  watchFetchTiendas,
+  watchAddTienda,
+  watchUpdateTienda,
+} from './tiendas';
+
 import { watchFetchUsuarioStarted } from './usuarios';
 
 function* mainSaga() {
@@ -50,6 +56,9 @@ function* mainSaga() {
     fork(watchAddCompra),
     fork(watchExpireCompra),
     fork(watchEndCompras),
+    fork(watchFetchTiendas),
+    fork(watchAddTienda),
+    fork(watchUpdateTienda),
   ]);
 }
 

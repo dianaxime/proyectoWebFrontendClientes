@@ -14,7 +14,7 @@ const UpgradeTienda = ({
     return <TextInput onChangeText={onChange} {...restInput} {...rest} />
   }
   return (
-    <View style={styles.container}>
+    <View >
         <Field
             name={'ubicacionTienda'}
             props={{
@@ -58,6 +58,15 @@ export default reduxForm({form: 'UpgradeTienda'})(
         dispatch(reset('UpgradeTienda'));
       },
     }),
+    (stateProps, dispatchProps, ownProps) => ({
+      ...ownProps,
+      ...stateProps,
+      ...dispatchProps,
+      onSubmit(values) {
+        console.log("Hello world", stateProps.tiendaId);
+        dispatchProps.onSubmit(values, stateProps.tiendaId);
+      },
+    })
   )(UpgradeTienda)
 );
 

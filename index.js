@@ -18,6 +18,8 @@ import UpgradeForm from './src/components/UpgradeForm';
 import ProductoForm from './src/components/ProductoForm';
 import ProductoList from './src/components/ProductoList';
 import CompraList from './src/components/CompraList';
+import TiendaForm from './src/components/TiendaForm';
+import TiendaList from './src/components/TiendaList';
 
 const Stack = createStackNavigator();
 const MainApp = ({
@@ -40,8 +42,10 @@ const MainApp = ({
             <UpgradeForm />
             <ProductoForm />
             <ProductoList />
-            */}
             <CompraList />
+            <TiendaForm />
+            */}
+            <TiendaList />
           </>
         )
       }
