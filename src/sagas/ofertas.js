@@ -4,7 +4,7 @@ import {
     put,
     // race,
     // all,
-    delay,
+    //delay,
     select,
 } from 'redux-saga/effects';
   
@@ -24,7 +24,12 @@ function* addOferta(action) {
           `${API_BASE_URL}/ofertas/`,
           {
             method: 'POST',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({
+              descripcionOferta: action.payload.descripcionOferta,
+              descuentoOferta: action.payload.descuentoOferta,
+              venceOferta: action.payload.venceOferta,
+              idProducto: action.payload.idProducto,
+            }),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,

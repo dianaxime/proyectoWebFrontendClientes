@@ -1,67 +1,44 @@
-import * as types from '../types/empleados';
+import * as types from '../types/listas';
 
-
-export const startFetchingEmpleado = () => ({
-  type: types.EMPLEADO_FETCH_STARTED,
+export const startFetchingListas = () => ({
+  type: types.LISTAS_FETCH_STARTED,
 });
-export const completeFetchingEmpleado = (id, empleado) => ({
-  type: types.EMPLEADO_FETCH_COMPLETED,
+export const completeFetchingListas = (order, entities) => ({
+  type: types.LISTAS_FETCH_COMPLETED,
   payload: {
-    id,
-    empleado,
+    order,
+    entities,
   },
 });
-export const failFetchingEmpleado = error => ({
-  type: types.EMPLEADO_FETCH_FAILED,
+export const failFetchingListas = error => ({
+  type: types.LISTAS_FETCH_FAILED,
   payload: {
     error,
   },
 });
 
-export const startAddingEmpleado = (nombreEmpleado, telefonoEmpleado, direccionEmpleado, nitEmpleado, idUsuario) => ({
-  type: types.EMPLEADO_ADD_STARTED,
+export const startAddingLista = (id, fechaLista, cantidadLista, turnoLista, idProducto, idEncargado) => ({
+  type: types.LISTA_ADD_STARTED,
   payload: {
-    nombreEmpleado,
-    telefonoEmpleado,
-    direccionEmpleado,
-    nitEmpleado,
-    idUsuario,
+    id,
+    fechaLista,
+    cantidadLista,
+    turnoLista,
+    idProducto,
+    idEncargado,
   },
 });
-export const completeAddingEmpleado = (oldId, empleado) => ({
-  type: types.EMPLEADO_ADD_COMPLETED,
+export const completeAddingLista = (oldId, lista) => ({
+  type: types.LISTA_ADD_COMPLETED,
   payload: {
     oldId,
-    empleado,
+    lista,
   },
 });
-export const failAddingEmpleado = (oldId, error) => ({
-  type: types.EMPLEADO_ADD_FAILED,
+export const failAddingLista = error => ({
+  type: types.LISTA_ADD_FAILED,
   payload: {
-    oldId,
     error,
   },
 });
 
-export const startUpdatingEmpleado = (id, direccionEmpleado, telefonoEmpleado) => ({
-  type: types.EMPLEADO_UPDATE_STARTED,
-  payload: {
-    id,
-    direccionEmpleado,
-    telefonoEmpleado,
-  },
-});
-export const completeUpdatingEmpleado = (id, empleado) => ({
-  type: types.EMPLEADO_UPDATE_COMPLETED,
-  payload: {
-    id,
-    empleado,
-  },
-});
-export const failUpdatingEmpleado = (id, error) => ({
-  type: types.EMPLEADO_UPDATE_FAILED,
-  payload: {
-    id,
-    error,
-  },
-});

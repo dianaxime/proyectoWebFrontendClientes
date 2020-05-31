@@ -15,10 +15,10 @@ const byId = (state = {}, action) => {
       return newState;
     }
     case types.OFERTA_ADD_COMPLETED: {
-      const { oldId, Oferta } = action.payload;
+      const { oldId, oferta } = action.payload;
       const newState = omit(state, oldId);
-      newState[Oferta.id] = {
-        ...Oferta,
+      newState[oferta.id] = {
+        ...oferta,
         isConfirmed: true,
       };
       return newState;
@@ -35,8 +35,8 @@ const order = (state = [], action) => {
       return [...state, action.payload.id];
     }
     case types.OFERTA_ADD_COMPLETED: {
-      const { oldId, Oferta } = action.payload;
-      return state.map(id => id === oldId ? Oferta.id : id);
+      const { oldId, oferta } = action.payload;
+      return state.map(id => id === oldId ? oferta.id : id);
     }
     default: {
       return state;
@@ -70,5 +70,3 @@ export default combineReducers({
 
 export const getOferta = (state, id) => state.byId[id];
 export const getOfertas = state => state.order.map(id => getOferta(state, id));
-export const isFetchingOfertas = state => state.isFetching;
-export const getFetchingOfertasError = state => state.error;

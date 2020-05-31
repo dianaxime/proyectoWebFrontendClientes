@@ -36,6 +36,15 @@ import {
   watchUpdateTienda,
 } from './tiendas';
 
+import {
+  watchFetchListas,
+  watchAddLista,
+} from './listas';
+
+import {
+  watchAddOferta,
+} from './ofertas';
+
 import { watchFetchUsuarioStarted } from './usuarios';
 
 function* mainSaga() {
@@ -59,6 +68,9 @@ function* mainSaga() {
     fork(watchFetchTiendas),
     fork(watchAddTienda),
     fork(watchUpdateTienda),
+    fork(watchFetchListas),
+    fork(watchAddLista),
+    fork(watchAddOferta),
   ]);
 }
 

@@ -1,12 +1,13 @@
 import * as types from '../types/ofertas';
 
-export const startAddingOferta = (descripcionOferta, descuentoOferta, venceOferta, idProducto) => ({
+export const startAddingOferta = (id, descripcionOferta, descuentoOferta, venceOferta, idProducto) => ({
     type: types.OFERTA_ADD_STARTED,
     payload: {
-        descripcionOferta,
-        descuentoOferta,
-        venceOferta,
-        idProducto,
+      id,
+      descripcionOferta,
+      descuentoOferta,
+      venceOferta,
+      idProducto,
     },
 });
 
@@ -18,10 +19,9 @@ export const completeAddingOferta = (oldId, oferta) => ({
     },
 });
 
-export const failAddingOferta = (oldId, error) => ({
+export const failAddingOferta = error => ({
     type: types.OFERTA_ADD_FAILED,
     payload: {
-      oldId,
       error,
     },
 });

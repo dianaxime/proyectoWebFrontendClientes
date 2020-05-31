@@ -1,61 +1,70 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
 import { v4 as uuidv4 } from 'uuid';
 
 import * as selectors from '../../reducers';
-import * as actions from '../../actions/ofertas';
+import * as actions from '../../actions/listas';
+import * as actionsEmpleados from '../../actions/empleados';
 
-const OfertaForm = ({
+const ListaForm = ({
   onSubmit,
   handleSubmit,
+  onLoad,
 }) => {
+    useEffect(onLoad, []);
   const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
     return <TextInput onChangeText={onChange} {...restInput} {...rest} />
   }
   return (
     <View >
-      <Field
-        name={'vence'}
+        <Field
+        name={'fecha'}
         props={{
-          placeholder: 'Fecha de Vencimiento',
+          placeholder: 'Fecha',
         }}
         component={renderInput}
       />
       <Field
-        name={'descripcion'}
+        name={'cantidad'}
         props={{
-          placeholder: 'Descripción',
+          placeholder: 'Cantidad',
+        }}
+        component={renderInput}
+      />
+      <Field
+        name={'turno'}
+        props={{
+          placeholder: 'Turno',
         }}
         component={ renderInput }
-      />
-      <Field
-        name={'descuento'}
-        props={{
-          placeholder: '% de Descuento',
-        }}
-        component={renderInput}
       />
       <Button onPress={handleSubmit(onSubmit)} title='Agregar'></Button>
     </View>
   );
 } 
 
-export default reduxForm({form: 'Oferta'})(
+export default reduxForm({form: 'Lista'})(
   connect(
     state => ({
       producto: selectors.getSelectedProducto(state),
+      empleado: selectors.getEmpleado(state, selectors.getAuthUserID(state)),
     }),
     dispatch => ({
-      onSubmit(values, producto) {
+      onSubmit(values, producto, empleado) {
         const {
-          vence,
-          descripcion,
-          descuento,
+          fecha,
+          cantidad,
+          turno,
         } = values;
-        dispatch(actions.startAddingOferta(uuidv4(), descripcion, descuento, vence, producto));
-        dispatch(reset('Oferta'));
+        dispatch(actions.startAddingLista(uuidv4(), fecha, cantidad, turno, producto, empleado));
+        dispatch(reset('Lista'));
+      },
+      onLoad() {
+        setTimeout(() => {
+          dispatch(actionsEmpleados.startFetchingEmpleado());
+        }, 3000); 
       },
     }),
     (stateProps, dispatchProps, ownProps) => ({
@@ -63,10 +72,10 @@ export default reduxForm({form: 'Oferta'})(
         ...stateProps,
         ...dispatchProps,
         onSubmit(values) {
-          dispatchProps.onSubmit(values, stateProps.producto);
+          dispatchProps.onSubmit(values, stateProps.producto, stateProps.empleado['id']);
         },
       })
-  )(OfertaForm)
+  )(ListaForm)
 );
 
 const styles = StyleSheet.create({

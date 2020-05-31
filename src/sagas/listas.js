@@ -4,15 +4,16 @@ import {
     put,
     // race,
     // all,
-    delay,
+    //delay,
     select,
 } from 'redux-saga/effects';
-  
+
+import { normalize } from 'normalizr';
 import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/listas';
 import * as types from '../types/listas';
-  
+import * as schemas from '../schemas/listas';    
   
 function* fetchListas(action) {
     try {
@@ -23,7 +24,7 @@ function* fetchListas(action) {
         const usuario = jwtDecode(token);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/listas/`,
+          `${API_BASE_URL}/listas/obtener-listas/`,
           {
             method: 'GET',
             headers:{
@@ -35,10 +36,14 @@ function* fetchListas(action) {
   
         if (response.status === 200) {
           const jsonResult = yield response.json();
+          const {
+            entities: { listas },
+            result,
+          } = normalize(jsonResult, schemas.lista);
           yield put(
             actions.completeFetchingListas(
-              jsonResult['id'],
-              jsonResult,
+              result,
+              listas,
             ),
           );
         } else {

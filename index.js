@@ -41,11 +41,11 @@ const MainApp = ({
             {/*<DataForm />
             <UpgradeForm />
             <ProductoForm />
-            <ProductoList />
             <CompraList />
             <TiendaForm />
-            */}
             <TiendaList />
+          */}
+          <ProductoList />
           </>
         )
       }

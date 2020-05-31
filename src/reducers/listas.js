@@ -3,7 +3,6 @@ import { combineReducers } from 'redux';
 
 import * as types from '../types/listas';
 
-
 const byId = (state = {}, action) => {
   switch(action.type) {
     case types.LISTAS_FETCH_COMPLETED: {
@@ -74,32 +73,32 @@ const error = (state = null, action) => {
   }
 };
 
-const addingError = (state = null, action) => {
-    switch(action.type) {
-      case types.LISTA_ADD_FAILED: {
-        return action.payload.error;
-      }
-      case types.LISTA_ADD_STARTED: {
-        return null;
-      }
-      case types.LISTA_ADD_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
+const order = (state = [], action) => {
+  switch(action.type) {
+    case types.LISTAS_FETCH_COMPLETED: {
+      return [...action.payload.order];
     }
+    case types.LISTA_ADD_STARTED: {
+      return [...state, action.payload.id];
+    }
+    case types.LISTA_ADD_COMPLETED: {
+      const { oldId, lista } = action.payload;
+      return state.map(id => id === oldId ? lista.id : id);
+    }
+    default: {
+      return state;
+    }
+  }
 };
 
 export default combineReducers({
   byId,
   isFetching,
   error,
-  addingError,
+  order,
 });
 
-export const getLista = state => state.byId;
-export const isFetchingLista = state => state.isFetching;
-export const getFetchingListaError = state => state.error;
-export const getAddingListaError = state => state.addingError;
-export const getUpdatingListaError = state => state.updatingError;
+export const getLista = (state, id) => state.byId[id];
+export const getListas = state => state.order.map(id => getLista(state, id));
+export const isFetchingListas = state => state.isFetching;
+export const getFetchingListasError = state => state.error;
