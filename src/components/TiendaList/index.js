@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/tiendas';
 import TiendaRow from '../TiendaRow';
-
 
 const TiendaList = ({ tiendas, isLoading, onLoad }) => {
   useEffect(onLoad, []);
@@ -22,10 +21,14 @@ const TiendaList = ({ tiendas, isLoading, onLoad }) => {
       }
       {
         tiendas.length > 0 && !isLoading && (
-          <FlatList
-            data={tiendas}
-            renderItem={({ id }) => <TiendaRow key={id} id={id} />}
-          />
+          <ScrollView>
+            {tiendas && tiendas.map((item, i) => (
+              <TiendaRow
+                key={i}
+                item={item} 
+              />
+            ))}
+          </ScrollView>
         )
       }
     </View>
@@ -34,12 +37,12 @@ const TiendaList = ({ tiendas, isLoading, onLoad }) => {
 
 export default connect(
   state => ({
-    tiendas: selectors.getPetOwners(state),
-    isLoading: selectors.isFetchingPetOwners(state),
+    tiendas: selectors.getTiendas(state),
+    isLoading: selectors.isFetchingTiendas(state),
   }),
   dispatch => ({
     onLoad() {
-      dispatch(actions.startFetchingPetOwners());
+      dispatch(actions.startFetchingTiendas());
     },
   }),
 )(TiendaList);

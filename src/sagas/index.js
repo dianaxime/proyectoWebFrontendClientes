@@ -26,6 +26,8 @@ import {
 import {
   watchFetchCompras,
   watchAddCompra,
+  watchEndCompras,
+  watchExpireCompra,
 } from './compras';
 
 import { watchFetchUsuarioStarted } from './usuarios';
@@ -46,8 +48,9 @@ function* mainSaga() {
     fork(watchAddProducto),
     fork(watchFetchCompras),
     fork(watchAddCompra),
+    fork(watchExpireCompra),
+    fork(watchEndCompras),
   ]);
 }
-
 
 export default mainSaga;

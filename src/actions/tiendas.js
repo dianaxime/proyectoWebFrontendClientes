@@ -1,32 +1,35 @@
 import * as types from '../types/tiendas';
 
-
-export const startFetchingTienda = () => ({
+export const startFetchingTiendas = () => ({
   type: types.TIENDAS_FETCH_STARTED,
 });
-export const completeFetchingTienda = (id, tienda) => ({
+
+export const completeFetchingTiendas = (id, tienda) => ({
   type: types.TIENDAS_FETCH_COMPLETED,
   payload: {
     id,
     tienda,
   },
 });
-export const failFetchingTienda = error => ({
+
+export const failFetchingTiendas = error => ({
   type: types.TIENDAS_FETCH_FAILED,
   payload: {
     error,
   },
 });
 
-export const startAddingTienda = (nombreTienda, ubicacionTienda, telefonoTienda, faxTienda) => ({
+export const startAddingTienda = (id, nombreTienda, ubicacionTienda, telefonoTienda, faxTienda) => ({
   type: types.TIENDA_ADD_STARTED,
   payload: {
+    id,
     nombreTienda,
     ubicacionTienda,
     telefonoTienda,
     faxTienda,
   },
 });
+
 export const completeAddingTienda = (oldId, tienda) => ({
   type: types.TIENDA_ADD_COMPLETED,
   payload: {
@@ -34,6 +37,7 @@ export const completeAddingTienda = (oldId, tienda) => ({
     tienda,
   },
 });
+
 export const failAddingTienda = (oldId, error) => ({
   type: types.TIENDA_ADD_FAILED,
   payload: {
@@ -51,6 +55,7 @@ export const startUpdatingTienda = (id, ubicacionTienda, telefonoTienda, faxTien
     faxTienda,
   },
 });
+
 export const completeUpdatingTienda = (id, tienda) => ({
   type: types.TIENDA_UPDATE_COMPLETED,
   payload: {
@@ -58,6 +63,7 @@ export const completeUpdatingTienda = (id, tienda) => ({
     tienda,
   },
 });
+
 export const failUpdatingTienda = (id, error) => ({
   type: types.TIENDA_UPDATE_FAILED,
   payload: {

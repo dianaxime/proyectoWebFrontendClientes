@@ -3,7 +3,6 @@ import { combineReducers } from 'redux';
 
 import * as types from '../types/tiendas';
 
-
 const byId = (state = {}, action) => {
   switch(action.type) {
     case types.TIENDAS_FETCH_COMPLETED: {
@@ -92,51 +91,32 @@ const error = (state = null, action) => {
   }
 };
 
-const addingError = (state = null, action) => {
-    switch(action.type) {
-      case types.TIENDA_ADD_FAILED: {
-        return action.payload.error;
-      }
-      case types.TIENDA_ADD_STARTED: {
-        return null;
-      }
-      case types.TIENDA_ADD_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
+const order = (state = [], action) => {
+  switch(action.type) {
+    case types.TIENDAS_FETCH_COMPLETED: {
+      return [...action.payload.order];
     }
-};
-
-const updatingError = (state = null, action) => {
-    switch(action.type) {
-      case types.TIENDA_UPDATE_FAILED: {
-        return action.payload.error;
-      }
-      case types.TIENDA_UPDATE_STARTED: {
-        return null;
-      }
-      case types.TIENDA_UPDATE_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
+    case types.TIENDA_ADD_STARTED: {
+      return [...state, action.payload.id];
     }
+    case types.TIENDA_ADD_COMPLETED: {
+      const { oldId, tienda } = action.payload;
+      return state.map(id => id === oldId ? tienda.id : id);
+    }
+    default: {
+      return state;
+    }
+  }
 };
-
 
 export default combineReducers({
   byId,
   isFetching,
   error,
-  addingError,
-  updatingError,
+  order,
 });
 
-export const getTienda = state => state.byId;
-export const isFetchingTienda = state => state.isFetching;
-export const getFetchingTiendaError = state => state.error;
-export const getAddingTiendaError = state => state.addingError;
-export const getUpdatingTiendaError = state => state.updatingError;
+export const getTienda = (state, id) => state.byId[id];
+export const getTiendas = state => state.order.map(id => getTienda(state, id));
+export const isFetchingTiendas = state => state.isFetching;
+export const getFetchingTiendasError = state => state.error;

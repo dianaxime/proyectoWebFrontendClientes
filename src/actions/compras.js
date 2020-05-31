@@ -47,3 +47,36 @@ export const failAddingCompra = (oldId, error) => ({
   },
 });
 
+export const startExpiringCompra = id => ({
+  type: types.COMPRA_EXPIRE_STARTED,
+  payload: {
+    id,
+  },
+});
+export const completeExpiringCompra = () => ({
+  type: types.COMPRA_EXPIRE_COMPLETED,
+});
+
+export const failExpiringCompra = error => ({
+  type: types.COMPRA_EXPIRE_FAILED,
+  payload: {
+    error,
+  },
+});
+
+export const startEndingCompras = cliente => ({
+  type: types.COMPRAS_END_STARTED,
+  payload: {
+    cliente,
+  },
+});
+export const completeEndingCompras = () => ({
+  type: types.COMPRAS_END_COMPLETED,
+});
+
+export const failEndingCompras = error => ({
+  type: types.COMPRAS_END_FAILED,
+  payload: {
+    error,
+  },
+});

@@ -34,6 +34,7 @@ const CompraList = ({ compras, isLoading, onLoad }) => {
               ))}
             </ScrollView>
             <Button title='Finalizar'/>
+            <Button title='Quitar Producto'/>
           </>
         )
       }

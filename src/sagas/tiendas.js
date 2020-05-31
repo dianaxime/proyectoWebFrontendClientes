@@ -7,12 +7,13 @@ import {
     delay,
     select,
 } from 'redux-saga/effects';
-  
+
+import { normalize } from 'normalizr';
 import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/tiendas';
 import * as types from '../types/tiendas';
-  
+import * as schemas from '../schemas/tiendas';  
   
 function* fetchTiendas(action) {
     try {
@@ -20,7 +21,6 @@ function* fetchTiendas(action) {
   
       if (isAuth) {
         const token = yield select(selectors.getAuthToken);
-        const usuario = jwtDecode(token);
         const response = yield call(
           fetch,
           `${API_BASE_URL}/tiendas/`,
@@ -35,19 +35,23 @@ function* fetchTiendas(action) {
   
         if (response.status === 200) {
           const jsonResult = yield response.json();
+          const {
+            entities: { tiendas },
+            result,
+          } = normalize(jsonResult, schemas.tienda);
           yield put(
-            actions.completeFetchingTienda(
-              jsonResult['id'],
-              jsonResult,
+            actions.completeFetchingTiendas(
+              result,
+              tiendas,
             ),
           );
         } else {
           const { non_field_errors } = yield response.json();
-          yield put(actions.failFetchingTienda(non_field_errors[0]));
+          yield put(actions.failFetchingTiendas(non_field_errors[0]));
         }
       }
     } catch (error) {
-      yield put(actions.failFetchingTienda('Falló horrible la conexión mano'));
+      yield put(actions.failFetchingTiendas('Falló horrible la conexión mano'));
       console.log("ERROR", error)
     }
 }
@@ -70,7 +74,12 @@ function* addTienda(action) {
           `${API_BASE_URL}/tiendas/`,
           {
             method: 'POST',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({
+              nombreTienda: action.payload.nombreTienda,
+              ubicacionTienda: action.payload.ubicacionTienda,
+              telefonoTienda: action.payload.telefonoTienda,
+              faxTienda: action.payload.faxTienda,
+            }),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,
@@ -115,7 +124,11 @@ function* updateTienda(action) {
           `${API_BASE_URL}/tiendas/${action.payload.id}/modificar-tienda/`,
           {
             method: 'PATCH',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({
+              direccion: action.payload.ubicacionTienda,
+              telefono: action.payload.telefonoTienda,
+              fax: action.payload.faxTienda,
+            }),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,
@@ -126,7 +139,7 @@ function* updateTienda(action) {
         if (response.status === 200) {
             const jsonResult = yield response.json();
           yield put(actions.completeUpdatingTienda(
-            jsonResult['id'],
+            action.payload.id,
             jsonResult,
           ));
         } else {

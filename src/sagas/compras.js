@@ -113,3 +113,84 @@ export function* watchAddCompra() {
     );
 }
   
+function* expireCompra(action) {
+  try {
+    const isAuth = yield select(selectors.isAuthenticated);
+
+    if (isAuth) {
+      const token = yield select(selectors.getAuthToken);
+      const response = yield call(
+        fetch,
+        `${API_BASE_URL}/compras/${action.payload.id}/expirado/`,
+        {
+          method: 'PATCH',
+          //body: JSON.stringify({}),
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        yield put(
+          actions.completeExpiringCompra(),
+        );
+      } else {
+        const { non_field_errors } = yield response.json();
+        yield put(actions.failExpiringCompra(non_field_errors[0]));
+      }
+    }
+  } catch (error) {
+    yield put(actions.failExpiringCompra('Falló horrible la conexión mano'));
+    console.log("ERROR", error)
+  }
+}
+
+export function* watchExpireCompra() {
+  yield takeEvery(
+    types.COMPRA_EXPIRE_STARTED,
+    expireCompra,
+  );
+}
+
+function* endCompras(action) {
+  try {
+    const isAuth = yield select(selectors.isAuthenticated);
+
+    if (isAuth) {
+      const token = yield select(selectors.getAuthToken);
+      const response = yield call(
+        fetch,
+        `${API_BASE_URL}/compras/completado/`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify({idCliente: action.payload.cliente}),
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        yield put(
+          actions.completeEndingCompras(),
+        );
+      } else {
+        const { non_field_errors } = yield response.json();
+        yield put(actions.failEndingCompras(non_field_errors[0]));
+      }
+    }
+  } catch (error) {
+    yield put(actions.failEndingCompras('Falló horrible la conexión mano'));
+    console.log("ERROR", error)
+  }
+}
+
+export function* watchEndCompras() {
+  yield takeEvery(
+    types.COMPRAS_END_STARTED,
+    endCompras,
+  );
+}
