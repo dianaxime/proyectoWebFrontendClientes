@@ -13,7 +13,8 @@ import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/listas';
 import * as types from '../types/listas';
-import * as schemas from '../schemas/listas';    
+import * as schemas from '../schemas/listas';
+import moment from 'moment';    
   
 function* fetchListas(action) {
     try {
@@ -21,10 +22,9 @@ function* fetchListas(action) {
   
       if (isAuth) {
         const token = yield select(selectors.getAuthToken);
-        const usuario = jwtDecode(token);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/listas/obtener-listas/`,
+          `${API_BASE_URL}/listas/`,
           {
             method: 'GET',
             headers:{
@@ -75,7 +75,13 @@ function* addLista(action) {
           `${API_BASE_URL}/listas/`,
           {
             method: 'POST',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({
+              fechaLista: moment().format('YYYY-MM-DD'),
+              cantidadLista: action.payload.cantidadLista,
+              turnoLista: action.payload.turnoLista,
+              idProducto: action.payload.idProducto,
+              idEncargado: action.payload.idEncargado,
+            }),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,

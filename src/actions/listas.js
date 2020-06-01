@@ -17,11 +17,10 @@ export const failFetchingListas = error => ({
   },
 });
 
-export const startAddingLista = (id, fechaLista, cantidadLista, turnoLista, idProducto, idEncargado) => ({
+export const startAddingLista = (id, cantidadLista, turnoLista, idProducto, idEncargado) => ({
   type: types.LISTA_ADD_STARTED,
   payload: {
     id,
-    fechaLista,
     cantidadLista,
     turnoLista,
     idProducto,

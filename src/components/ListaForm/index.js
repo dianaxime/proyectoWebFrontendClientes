@@ -19,13 +19,6 @@ const ListaForm = ({
   }
   return (
     <View >
-        <Field
-        name={'fecha'}
-        props={{
-          placeholder: 'Fecha',
-        }}
-        component={renderInput}
-      />
       <Field
         name={'cantidad'}
         props={{
@@ -54,11 +47,10 @@ export default reduxForm({form: 'Lista'})(
     dispatch => ({
       onSubmit(values, producto, empleado) {
         const {
-          fecha,
           cantidad,
           turno,
         } = values;
-        dispatch(actions.startAddingLista(uuidv4(), fecha, cantidad, turno, producto, empleado));
+        dispatch(actions.startAddingLista(uuidv4(), cantidad, turno, producto, empleado));
         dispatch(reset('Lista'));
       },
       onLoad() {

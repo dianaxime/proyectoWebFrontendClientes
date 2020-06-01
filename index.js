@@ -20,6 +20,7 @@ import ProductoList from './src/components/ProductoList';
 import CompraList from './src/components/CompraList';
 import TiendaForm from './src/components/TiendaForm';
 import TiendaList from './src/components/TiendaList';
+import ListaList from './src/components/ListaList';
 
 const Stack = createStackNavigator();
 const MainApp = ({
@@ -45,7 +46,8 @@ const MainApp = ({
             <TiendaForm />
             <TiendaList />
           */}
-          <ProductoList />
+            <ProductoList />
+            <ListaList />
           </>
         )
       }
