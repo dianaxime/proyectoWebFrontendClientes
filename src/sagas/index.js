@@ -28,6 +28,7 @@ import {
   watchAddCompra,
   watchEndCompras,
   watchExpireCompra,
+  watchPutCompras,
 } from './compras';
 
 import {
@@ -44,6 +45,19 @@ import {
 import {
   watchAddOferta,
 } from './ofertas';
+
+import {
+  watchAddRegistro,
+} from './registros';
+
+import {
+  watchAddFactura,
+} from './facturas';
+
+import {
+  watchAddPedido,
+} from './pedidos';
+
 
 import { watchFetchUsuarioStarted } from './usuarios';
 
@@ -71,6 +85,10 @@ function* mainSaga() {
     fork(watchFetchListas),
     fork(watchAddLista),
     fork(watchAddOferta),
+    fork(watchPutCompras),
+    fork(watchAddRegistro),
+    fork(watchAddFactura),
+    fork(watchAddPedido),
   ]);
 }
 

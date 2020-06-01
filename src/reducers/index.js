@@ -77,7 +77,6 @@ export const getCompra = (state, id) => comprasSelectors.getCompra(state.compras
 export const getCompras = state => comprasSelectors.getCompras(state.compras);
 export const isFetchingCompras = state => comprasSelectors.isFetchingCompras(state.compras);
 export const getFetchingComprasError = state => comprasSelectors.getFetchingComprasError(state.compras);
-export const getAddingCompraError = state => comprasSelectors.getAddingCompraError(state.compras);
 /* SelectedCompra */
 export const getSelectedCompra = state => selectedCompraSelectors.getSelectedCompra(state.selectedCompra);
 /* Factura */
@@ -85,7 +84,6 @@ export const getFactura = (state, id) => facturasSelectors.getFactura(state.fact
 export const getFacturas = state => facturasSelectors.getFacturas(state.facturas);
 export const isFetchingFacturas = state => facturasSelectors.isFetchingFacturas(state.facturas);
 export const getFetchingFacturasError = state => facturasSelectors.getFetchingFacturasError(state.facturas);
-export const getAddingFacturaError = state => facturasSelectors.getAddingFacturaError(state.facturas);
 /* Lista */
 export const getLista = (state, id) => listasSelectors.getLista(state.listas, id);
 export const getListas = state => listasSelectors.getListas(state.listas);
@@ -96,7 +94,6 @@ export const getPedido = (state, id) => pedidosSelectors.getPedido(state.pedidos
 export const getPedidos = state => pedidosSelectors.getPedidos(state.pedidos);
 export const isFetchingPedidos = state => pedidosSelectors.isFetchingPedidos(state.pedidos);
 export const getFetchingPedidosError = state => pedidosSelectors.getFetchingPedidosError(state.pedidos);
-export const getAddingPedidoError = state => pedidosSelectors.getAddingPedidoError(state.pedidos);
 /* Producto */
 export const getProducto = (state, id) => productosSelectors.getProducto(state.productos, id);
 export const getProductos = state => productosSelectors.getProductos(state.productos);
@@ -105,8 +102,8 @@ export const getFetchingProductosError = state => productosSelectors.getFetching
 /* SelectedProducto */
 export const getSelectedProducto = state => selectedProductoSelectors.getSelectedProducto(state.selectedProducto);
 /* Registro */
-export const getRegistro = state => registrosSelectors.getRegistro(state.registros);
-export const getAddingRegistroError = state => registrosSelectors.getAddingRegistroError(state.registros);
+export const getRegistro = (state, id) => registrosSelectors.getRegistro(state.registros, id);
+export const getRegistros = state => registrosSelectors.getRegistros(state.registros);
 /* Tienda */
 export const getTienda = (state, id) => tiendasSelectors.getTienda(state.productos, id);
 export const getTiendas = state => tiendasSelectors.getTiendas(state.tiendas);

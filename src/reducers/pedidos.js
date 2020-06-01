@@ -3,10 +3,9 @@ import { combineReducers } from 'redux';
 
 import * as types from '../types/pedidos';
 
-
 const byId = (state = {}, action) => {
   switch(action.type) {
-    case types.LISTAS_FETCH_COMPLETED: {
+    case types.PEDIDOS_FETCH_COMPLETED: {
       const { entities, order } = action.payload;
       const newState = { ...state };
       order.forEach(id => {
@@ -17,7 +16,7 @@ const byId = (state = {}, action) => {
       });
       return newState;
     }
-    case types.LISTA_ADD_STARTED: {
+    case types.PEDIDO_ADD_STARTED: {
       const newState = { ...state };
       newState[action.payload.id] = {
         ...action.payload,
@@ -25,11 +24,11 @@ const byId = (state = {}, action) => {
       };
       return newState;
     }
-    case types.LISTA_ADD_COMPLETED: {
-      const { oldId, lista } = action.payload;
+    case types.PEDIDO_ADD_COMPLETED: {
+      const { oldId, pedido } = action.payload;
       const newState = omit(state, oldId);
-      newState[lista.id] = {
-        ...lista,
+      newState[pedido.id] = {
+        ...pedido,
         isConfirmed: true,
       };
       return newState;
@@ -42,14 +41,32 @@ const byId = (state = {}, action) => {
 
 const isFetching = (state = false, action) => {
   switch(action.type) {
-    case types.LISTAS_FETCH_STARTED: {
+    case types.PEDIDOS_FETCH_STARTED: {
       return true;
     }
-    case types.LISTAS_FETCH_COMPLETED: {
+    case types.PEDIDOS_FETCH_COMPLETED: {
       return false;
     }
-    case types.LISTAS_FETCH_FAILED: {
+    case types.PEDIDOS_FETCH_FAILED: {
       return false;
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const order = (state = [], action) => {
+  switch(action.type) {
+    case types.PEDIDOS_FETCH_COMPLETED: {
+      return [...action.payload.order];
+    }
+    case types.PEDIDO_ADD_STARTED: {
+      return [...state, action.payload.id];
+    }
+    case types.PEDIDO_ADD_COMPLETED: {
+      const { oldId, pedido } = action.payload;
+      return state.map(id => id === oldId ? pedido.id : id);
     }
     default: {
       return state;
@@ -59,13 +76,13 @@ const isFetching = (state = false, action) => {
 
 const error = (state = null, action) => {
   switch(action.type) {
-    case types.LISTAS_FETCH_FAILED: {
+    case types.PEDIDOS_FETCH_FAILED: {
       return action.payload.error;
     }
-    case types.LISTAS_FETCH_STARTED: {
+    case types.PEDIDOS_FETCH_STARTED: {
       return null;
     }
-    case types.LISTAS_FETCH_COMPLETED: {
+    case types.PEDIDOS_FETCH_COMPLETED: {
       return null;
     }
     default: {
@@ -74,32 +91,14 @@ const error = (state = null, action) => {
   }
 };
 
-const addingError = (state = null, action) => {
-    switch(action.type) {
-      case types.LISTA_ADD_FAILED: {
-        return action.payload.error;
-      }
-      case types.LISTA_ADD_STARTED: {
-        return null;
-      }
-      case types.LISTA_ADD_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
-    }
-};
-
 export default combineReducers({
   byId,
   isFetching,
   error,
-  addingError,
+  order,
 });
 
-export const getLista = state => state.byId;
-export const isFetchingLista = state => state.isFetching;
-export const getFetchingListaError = state => state.error;
-export const getAddingListaError = state => state.addingError;
-export const getUpdatingListaError = state => state.updatingError;
+export const getPedido = (state, id) => state.byId[id];
+export const getPedidos = state => state.order.map(id => getPedido(state, id));
+export const isFetchingPedidos = state => state.isFetching;
+export const getFetchingPedidosError = state => state.error;

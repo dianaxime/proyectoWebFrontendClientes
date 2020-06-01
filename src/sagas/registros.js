@@ -24,7 +24,15 @@ function* addRegistro(action) {
           `${API_BASE_URL}/registros/`,
           {
             method: 'POST',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({
+              cantidadRegistro: action.payload.cantidadRegistro,
+              precioUnidadRegistro: action.payload.precioUnidadRegistro,
+              subtotalRegistro: action.payload.subtotalRegistro,
+              descuentoRegistro: action.payload.descuentoRegistro,
+              totalRegistro: action.payload.totalRegistro,
+              idProducto: action.payload.idProducto,
+              idPedido: action.payload.idPedido,
+            }),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,

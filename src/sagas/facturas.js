@@ -11,8 +11,11 @@ import {
 import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/facturas';
+import * as actionsPedidos from '../actions/pedidos';
 import * as types from '../types/facturas';
-  
+import { normalize } from 'normalizr';
+import * as schemas from '../schemas/facturas';
+import { v4 as uuidv4 } from 'uuid';    
   
 function* fetchFacturas(action) {
     try {
@@ -20,7 +23,6 @@ function* fetchFacturas(action) {
   
       if (isAuth) {
         const token = yield select(selectors.getAuthToken);
-        const usuario = jwtDecode(token);
         const response = yield call(
           fetch,
           `${API_BASE_URL}/facturas/`,
@@ -35,10 +37,14 @@ function* fetchFacturas(action) {
   
         if (response.status === 200) {
           const jsonResult = yield response.json();
+          const {
+            entities: { facturas },
+            result,
+          } = normalize(jsonResult, schemas.factura);
           yield put(
             actions.completeFetchingFacturas(
-              jsonResult['id'],
-              jsonResult,
+              result,
+              facturas,
             ),
           );
         } else {
@@ -70,7 +76,13 @@ function* addFactura(action) {
           `${API_BASE_URL}/facturas/`,
           {
             method: 'POST',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({
+              subtotalFactura: action.payload.subtotalFactura,
+              ivaFactura: action.payload.ivaFactura,
+              totalFactura: action.payload.totalFactura,
+              idCliente: action.payload.idCliente,
+              idTienda: action.payload.idTienda,
+            }),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,
@@ -84,6 +96,19 @@ function* addFactura(action) {
             actions.completeAddingFactura(
               action.payload.id,
               jsonResult,
+            ),
+          );
+          yield put(
+            actionsPedidos.startAddingPedido(
+              uuidv4(),
+              'pendiente',
+              'efectivo',
+              'pendiente',
+              'domicilio',
+              jsonResult['id'],
+              action.payload.idCliente,
+              action.payload.comprasById, 
+              action.payload.comprasOrder
             ),
           );
         } else {

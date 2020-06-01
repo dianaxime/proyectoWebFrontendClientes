@@ -12,8 +12,10 @@ import { normalize } from 'normalizr';
 import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/compras';
+import * as actionsFacturas from '../actions/facturas';
 import * as types from '../types/compras';
-import * as schemas from '../schemas/compras';   
+import * as schemas from '../schemas/compras';
+import { v4 as uuidv4 } from 'uuid';
   
 function* fetchCompras(action) {
     try {
@@ -192,5 +194,52 @@ export function* watchEndCompras() {
   yield takeEvery(
     types.COMPRAS_END_STARTED,
     endCompras,
+  );
+}
+
+function* putCompras(action) {
+  try {
+    const isAuth = yield select(selectors.isAuthenticated);
+
+    if (isAuth) {
+      const token = yield select(selectors.getAuthToken);
+      const response = yield call(
+        fetch,
+        `${API_BASE_URL}/compras/total/`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify({idCliente: action.payload.cliente['id']}),
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${token}`,
+          },
+        }
+      );
+      console.log(response);
+
+      if (response.status === 200) {
+        const jsonResult = yield response.json();
+        console.log(jsonResult);
+        yield put(
+          actions.completePutingCompras(),
+        );
+        yield put(
+          actionsFacturas.startAddingFactura(uuidv4(), jsonResult['subtotal'], jsonResult['iva'], jsonResult['total'], action.payload.tienda, action.payload.cliente['id'], action.payload.comprasById, action.payload.comprasOrder),
+        );
+      } else {
+        const { non_field_errors } = yield response.json();
+        yield put(actions.failPutingCompras(non_field_errors[0]));
+      }
+    }
+  } catch (error) {
+    yield put(actions.failPutingCompras('Falló horrible la conexión mano'));
+    console.log("ERROR", error)
+  }
+}
+
+export function* watchPutCompras() {
+  yield takeEvery(
+    types.COMPRAS_PUT_STARTED,
+    putCompras,
   );
 }

@@ -114,4 +114,51 @@ export function* watchAddLista() {
       addLista,
     );
 }
+
+function* decreaseLista(action) {
+  try {
+    const isAuth = yield select(selectors.isAuthenticated);
+
+    if (isAuth) {
+      const token = yield select(selectors.getAuthToken);
+      const response = yield call(
+        fetch,
+        `${API_BASE_URL}/listas/${action.payload.id}/disminuir-producto/`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify({
+            cantidad: action.payload.cantidad,
+          }),
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const jsonResult = yield response.json();
+        yield put(
+          actions.completeDecreasingLista(
+            action.payload.id,
+            jsonResult,
+          ),
+        );
+      } else {
+        const { non_field_errors } = yield response.json();
+        yield put(actions.failDecreasingLista(non_field_errors[0]));
+      }
+    }
+  } catch (error) {
+    yield put(actions.failDecreasingLista('Falló horrible la conexión mano'));
+    console.log("ERROR", error)
+  }
+}
+
+export function* watchDecreaseLista() {
+  yield takeEvery(
+    types.LISTA_DECREASE_STARTED,
+    decreaseLista,
+  );
+}
  

@@ -12,7 +12,10 @@ import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/pedidos';
 import * as types from '../types/pedidos';
-  
+import { v4 as uuidv4 } from 'uuid';    
+
+import * as actionsRegistros from '../actions/registros';
+import * as actionsComras from '../actions/compras';
   
 function* fetchPedidos(action) {
     try {
@@ -20,7 +23,6 @@ function* fetchPedidos(action) {
   
       if (isAuth) {
         const token = yield select(selectors.getAuthToken);
-        const usuario = jwtDecode(token);
         const response = yield call(
           fetch,
           `${API_BASE_URL}/pedidos/`,
@@ -70,20 +72,67 @@ function* addPedido(action) {
           `${API_BASE_URL}/pedidos/`,
           {
             method: 'POST',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({
+              estadoPedido: action.payload.estadoPedido,
+              pagoPedido: action.payload.pagoPedido,
+              entregaPedido: action.payload.entregaPedido,
+              recogerPedido: action.payload.recogerPedido,
+              idCliente: action.payload.idCliente,
+              idFactura: action.payload.idFactura,
+              idEmpleado: 1,
+            }),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,
             },
           }
         );
-  
+        console.log(response);
         if (response.status === 201) {
           const jsonResult = yield response.json();
           yield put(
             actions.completeAddingPedido(
               action.payload.id,
               jsonResult,
+            ),
+          );
+          /*yield put(
+            action.payload.comprasById.map(item => 
+              actionsRegistros.startAddingRegistro(
+                uuidv4(),
+                item.cantidadCompra,
+                item.subtotalCompra/item.cantidadCompra,
+                item.subtotalCompra,
+                item.descuentoCompra,
+                item.idProducto,
+                jsonResult['id'],
+                action.payload.idCliente,
+              ),
+            ),
+          );*/
+          yield* action.payload.comprasById.map(function*(item){
+            console.log(item);
+            yield put(
+              actionsRegistros.startAddingRegistro(
+                uuidv4(),
+                item.cantidadCompra,
+                (item.subtotalCompra/item.cantidadCompra),
+                item.subtotalCompra,
+                item.descuentoCompra,
+                (item.subtotalCompra-item.descuentoCompra),
+                item.idProducto,
+                jsonResult['id'],
+              ),
+            );
+          });
+          /*for (const item in action.payload.comprasById){
+            setTimeout(() => {
+              
+            }, 500); 
+          }*/
+          yield put(
+            actionsComras.startEndingCompras(
+              action.payload.idCliente
             ),
           );
         } else {
@@ -99,7 +148,7 @@ function* addPedido(action) {
   
 export function* watchAddPedido() {
     yield takeEvery(
-      types.COMPRA_ADD_STARTED,
+      types.PEDIDO_ADD_STARTED,
       addPedido,
     );
 }

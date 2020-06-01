@@ -3,7 +3,6 @@ import { combineReducers } from 'redux';
 
 import * as types from '../types/registros';
 
-
 const byId = (state = {}, action) => {
   switch(action.type) {
     case types.REGISTRO_ADD_STARTED: {
@@ -29,27 +28,25 @@ const byId = (state = {}, action) => {
   }
 };
 
-const addingError = (state = null, action) => {
-    switch(action.type) {
-      case types.REGISTRO_ADD_FAILED: {
-        return action.payload.error;
-      }
-      case types.REGISTRO_ADD_STARTED: {
-        return null;
-      }
-      case types.REGISTRO_ADD_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
+const order = (state = [], action) => {
+  switch(action.type) {
+    case types.REGISTRO_ADD_STARTED: {
+      return [...state, action.payload.id];
     }
+    case types.REGISTRO_ADD_COMPLETED: {
+      const { oldId, registro } = action.payload;
+      return state.map(id => id === oldId ? registro.id : id);
+    }
+    default: {
+      return state;
+    }
+  }
 };
 
 export default combineReducers({
   byId,
-  addingError,
+  order,
 });
 
-export const getRegistro = state => state.byId;
-export const getAddingRegistroError = state => state.addingError;
+export const getRegistro = (state, id) => state.byId[id];
+export const getRegistros = state => state.order.map(id => getRegistro(state, id));

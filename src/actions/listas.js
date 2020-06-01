@@ -27,6 +27,7 @@ export const startAddingLista = (id, cantidadLista, turnoLista, idProducto, idEn
     idEncargado,
   },
 });
+
 export const completeAddingLista = (oldId, lista) => ({
   type: types.LISTA_ADD_COMPLETED,
   payload: {
@@ -34,8 +35,32 @@ export const completeAddingLista = (oldId, lista) => ({
     lista,
   },
 });
+
 export const failAddingLista = error => ({
   type: types.LISTA_ADD_FAILED,
+  payload: {
+    error,
+  },
+});
+
+export const startDecreasingLista = (id, cantidad) => ({
+  type: types.LISTA_DECREASE_STARTED,
+  payload: {
+    id,
+    cantidad,
+  },
+});
+
+export const completeDecreasingLista = (oldId, lista) => ({
+  type: types.LISTA_DECREASE_COMPLETED,
+  payload: {
+    oldId,
+    lista,
+  },
+});
+
+export const failDecreasingLista = error => ({
+  type: types.LISTA_DECREASE_FAILED,
   payload: {
     error,
   },

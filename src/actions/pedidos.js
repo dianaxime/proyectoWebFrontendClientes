@@ -4,11 +4,11 @@ import * as types from '../types/pedidos';
 export const startFetchingPedidos = () => ({
   type: types.PEDIDOS_FETCH_STARTED,
 });
-export const completeFetchingPedidos = (id, pedidos) => ({
+export const completeFetchingPedidos = (order, entities) => ({
   type: types.PEDIDOS_FETCH_COMPLETED,
   payload: {
-    id,
-    pedidos,
+    order,
+    entities,
   },
 });
 export const failFetchingPedidos = error => ({
@@ -18,17 +18,18 @@ export const failFetchingPedidos = error => ({
   },
 });
 
-export const startAddingPedido = (fechaPedido, estadoPedido, pagoPedido, entregaPedido, recogerPedido, idFactura, idEmpleado, idCliente) => ({
+export const startAddingPedido = ( id, estadoPedido, pagoPedido, entregaPedido, recogerPedido, idFactura, idCliente, comprasById, comprasOrder) => ({
   type: types.PEDIDO_ADD_STARTED,
   payload: {
-    fechaPedido,
+    id, 
     pagoPedido,
     estadoPedido,
     entregaPedido, 
     recogerPedido, 
     idFactura,
-    idEmpleado,
     idCliente,
+    comprasById,
+    comprasOrder,
   },
 });
 export const completeAddingPedido = (oldId, pedido) => ({

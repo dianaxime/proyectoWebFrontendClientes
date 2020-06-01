@@ -1,15 +1,16 @@
 import * as types from '../types/registros';
 
-export const startAddingRegistro = (cantidadRegistro, precioUnidadRegistro, subtotalRegistro, descuentoRegistro, totalRegistro, idProducto, idPedido) => ({
+export const startAddingRegistro = (id, cantidadRegistro, precioUnidadRegistro, subtotalRegistro, descuentoRegistro, totalRegistro, idProducto, idPedido) => ({
     type: types.REGISTRO_ADD_STARTED,
     payload: {
+      id, 
       cantidadRegistro,
       precioUnidadRegistro,
       subtotalRegistro,
       descuentoRegistro,
       totalRegistro,
       idProducto,
-      idPedido
+      idPedido,
     },
 });
 export const completeAddingRegistro = (oldId, registro) => ({

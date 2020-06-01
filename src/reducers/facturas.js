@@ -26,10 +26,10 @@ const byId = (state = {}, action) => {
       return newState;
     }
     case types.FACTURA_ADD_COMPLETED: {
-      const { oldId, lista } = action.payload;
+      const { oldId, factura } = action.payload;
       const newState = omit(state, oldId);
-      newState[lista.id] = {
-        ...lista,
+      newState[factura.id] = {
+        ...factura,
         isConfirmed: true,
       };
       return newState;
@@ -57,6 +57,24 @@ const isFetching = (state = false, action) => {
   }
 };
 
+const order = (state = [], action) => {
+  switch(action.type) {
+    case types.FACTURAS_FETCH_COMPLETED: {
+      return [...action.payload.order];
+    }
+    case types.FACTURA_ADD_STARTED: {
+      return [...state, action.payload.id];
+    }
+    case types.FACTURA_ADD_COMPLETED: {
+      const { oldId, factura } = action.payload;
+      return state.map(id => id === oldId ? factura.id : id);
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
 const error = (state = null, action) => {
   switch(action.type) {
     case types.FACTURAS_FETCH_FAILED: {
@@ -74,32 +92,14 @@ const error = (state = null, action) => {
   }
 };
 
-const addingError = (state = null, action) => {
-    switch(action.type) {
-      case types.FACTURA_ADD_FAILED: {
-        return action.payload.error;
-      }
-      case types.FACTURA_ADD_STARTED: {
-        return null;
-      }
-      case types.FACTURA_ADD_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
-    }
-};
-
 export default combineReducers({
   byId,
   isFetching,
   error,
-  addingError,
+  order,
 });
 
-export const getFactura = state => state.byId;
-export const isFetchingFactura = state => state.isFetching;
-export const getFetchingFacturaError = state => state.error;
-export const getAddingFacturaError = state => state.addingError;
-export const getUpdatingFacturaError = state => state.updatingError;
+export const getFactura = (state, id) => state.byId[id];
+export const getFacturas = state => state.order.map(id => getFactura(state, id));
+export const isFetchingFacturas = state => state.isFetching;
+export const getFetchingFacturasError = state => state.error;

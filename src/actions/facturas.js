@@ -4,11 +4,11 @@ import * as types from '../types/facturas';
 export const startFetchingFacturas = () => ({
   type: types.FACTURAS_FETCH_STARTED,
 });
-export const completeFetchingFacturas = (id, facturas) => ({
+export const completeFetchingFacturas = (order, entities) => ({
   type: types.FACTURAS_FETCH_COMPLETED,
   payload: {
-    id,
-    facturas,
+    order,
+    entities,
   },
 });
 export const failFetchingFacturas = error => ({
@@ -18,15 +18,17 @@ export const failFetchingFacturas = error => ({
   },
 });
 
-export const startAddingFactura = (fechaFactura, subtotalFactura, ivaFactura, totalFactura, idTienda, idCliente) => ({
+export const startAddingFactura = (id, subtotalFactura, ivaFactura, totalFactura, idTienda, idCliente, comprasById, comprasOrder) => ({
   type: types.FACTURA_ADD_STARTED,
   payload: {
-    fechaFactura,
+    id,
     subtotalFactura,
     ivaFactura,
     totalFactura,
     idTienda,
     idCliente,
+    comprasById,
+    comprasOrder,
   },
 });
 export const completeAddingFactura = (oldId, factura) => ({
@@ -36,10 +38,9 @@ export const completeAddingFactura = (oldId, factura) => ({
     factura,
   },
 });
-export const failAddingFactura = (oldId, error) => ({
+export const failAddingFactura = error => ({
   type: types.FACTURA_ADD_FAILED,
   payload: {
-    oldId,
     error,
   },
 });

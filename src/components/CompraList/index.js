@@ -9,7 +9,7 @@ import * as actionsUsuarios from '../../actions/usuarios';
 import CompraRow from '../CompraRow';
 
 
-const CompraList = ({ compras, isLoading, onLoad, onExpire }) => {
+const CompraList = ({ compras, isLoading, onLoad, onExpire, onFinish }) => {
   useEffect(onLoad, []);
   return (
     <View>
@@ -34,7 +34,7 @@ const CompraList = ({ compras, isLoading, onLoad, onExpire }) => {
                 />
               ))}
             </ScrollView>
-            <Button title='Finalizar'/>
+            <Button title='Finalizar' onPress={onFinish}/>
             <Button title='Quitar Producto' onPress={onExpire}/>
           </>
         )
@@ -49,6 +49,7 @@ export default connect(
     isLoading: selectors.isFetchingCompras(state),
     cliente: selectors.getCliente(state, selectors.getAuthUserID(state)),
     selectedCompra: selectors.getSelectedCompra(state),
+    tienda: selectors.getSelectedTienda(state),
   }),
   dispatch => ({
     onLoad(cliente) {
@@ -65,6 +66,9 @@ export default connect(
     },
     onExpire(producto){
       dispatch(actions.startExpiringCompra(producto));
+    },
+    onFinish(cliente, tienda, compras){
+      dispatch(actions.startPutingCompras(cliente, tienda, compras, compras))
     },
   }),
   (stateProps, dispatchProps, ownProps) => ({
@@ -88,6 +92,9 @@ export default connect(
     },
     onExpire(){
       dispatchProps.onExpire(stateProps.selectedCompra);
+    },
+    onFinish(){
+      dispatchProps.onFinish(stateProps.cliente, stateProps.tienda, stateProps.compras);
     },
   })
 )(CompraList);
