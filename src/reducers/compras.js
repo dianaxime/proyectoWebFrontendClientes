@@ -33,7 +33,7 @@ const byId = (state = {}, action) => {
       };
       return newState;
     }
-    case types.COMPRA_EXPIRE_STARTED: {
+    case types.COMPRA_EXPIRE_COMPLETED: {
       return omit(state, action.payload.id);
     }
     case types.COMPRAS_END_STARTED: {
@@ -74,7 +74,7 @@ const order = (state = [], action) => {
       const { oldId, compra } = action.payload;
       return state.map(id => id === oldId ? compra.id : id);
     }
-    case types.COMPRA_EXPIRE_STARTED: {
+    case types.COMPRA_EXPIRE_COMPLETED: {
       return state.filter(id => id !== action.payload.id);
     }
     case types.COMPRAS_END_STARTED: {

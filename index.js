@@ -42,12 +42,12 @@ const MainApp = ({
             {/*<DataForm />
             <UpgradeForm />
             <ProductoForm />
-            <CompraList />
             <TiendaForm />
             <TiendaList />
-          */}
-            <ProductoList />
             <ListaList />
+            <ProductoList />
+          */}
+          <CompraList />
           </>
         )
       }

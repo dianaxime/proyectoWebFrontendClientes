@@ -134,7 +134,7 @@ function* expireCompra(action) {
 
       if (response.status === 200) {
         yield put(
-          actions.completeExpiringCompra(),
+          actions.completeExpiringCompra(action.payload.id),
         );
       } else {
         const { non_field_errors } = yield response.json();

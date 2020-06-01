@@ -53,8 +53,11 @@ export const startExpiringCompra = id => ({
     id,
   },
 });
-export const completeExpiringCompra = () => ({
+export const completeExpiringCompra = id => ({
   type: types.COMPRA_EXPIRE_COMPLETED,
+  payload: {
+    id,
+  }
 });
 
 export const failExpiringCompra = error => ({
