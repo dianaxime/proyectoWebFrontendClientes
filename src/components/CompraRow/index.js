@@ -9,8 +9,8 @@ const CompraRow = ({ item, producto, onSelect }) => (
     <TouchableOpacity onPress={onSelect}>
         <Text>{ producto.nombreProducto }</Text>
         <Text>{ item.cantidadCompra }</Text>
-        <Text>Q{ item.subtotalCompra }</Text>
-        <Text>Q{ item.descuentoCompra }</Text>
+        <Text>Q{ parseFloat(item.subtotalCompra).toFixed(2) }</Text>
+        <Text>Q{ parseFloat(item.descuentoCompra).toFixed(2) }</Text>
     </TouchableOpacity>
 );
 

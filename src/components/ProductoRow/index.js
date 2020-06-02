@@ -21,8 +21,8 @@ const ProductRow = ({ item, onSelect, onShop, tipo }) => {
       <TouchableOpacity onPress={onSelect}>
           <Text>{ item.nombreProducto }</Text>
           <Text>{ item.descripcionProducto }</Text>
-          <Text>Q{ item.precioProducto }</Text>
-          <Text>Q{ item.descuentoProducto}</Text>
+          <Text>Q{ parseFloat(item.precioProducto).toFixed(2) }</Text>
+          <Text>Q{ parseFloat(item.descuentoProducto).toFixed(2) }</Text>
           {
             (tipo === 'Cliente') && (
               <>
