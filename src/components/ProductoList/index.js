@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, ActivityIndicator, ScrollView } from 'react-nat
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/productos';
 import * as actionsUsuarios from '../../actions/usuarios';
+import * as actionsListas from '../../actions/listas';
 import ProductoRow from '../ProductoRow';
 import OfertaForm from '../OfertaForm';
 import ListaForm from '../ListaForm';
@@ -60,6 +61,7 @@ export default connect(
         dispatch(actionsUsuarios.startFetchingUsuario());
       }, 3000); 
       dispatch(actions.startFetchingProductos());
+      dispatch(actionsListas.startFetchingListas());
     },
   }),
 )(ProductList);

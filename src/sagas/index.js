@@ -40,6 +40,8 @@ import {
 import {
   watchFetchListas,
   watchAddLista,
+  watchDecreaseLista,
+  watchIncreaseLista,
 } from './listas';
 
 import {
@@ -93,6 +95,8 @@ function* mainSaga() {
     /* Listas */
     fork(watchFetchListas),
     fork(watchAddLista),
+    fork(watchIncreaseLista),
+    fork(watchDecreaseLista),
     /* Ofertas */
     fork(watchAddOferta),
     /* Registros */

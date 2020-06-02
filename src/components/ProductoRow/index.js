@@ -4,7 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/compras';
+import * as actionsListas from '../../actions/listas';
 import * as selectedActions from '../../actions/selectedProducto';
+import moment from 'moment';
 
 const ProductRow = ({ item, onSelect, onShop, tipo }) => {
   const [cant, changeCant] = useState(0);
@@ -43,14 +45,20 @@ export default connect(
     ...selectors.getProducto(state, item),
     cliente: selectors.getCliente(state, selectors.getAuthUserID(state)),
     tipo: selectors.getUsuario(state),
+    listas: selectors.getListas(state),
   }),
   (dispatch, { item }) => ({
     onSelect() {
       console.log(item.id);
       dispatch(selectedActions.selectProducto(item.id));
     },
-    onShop(cant, cliente ) {
+    onShop(cant, cliente, listas ) {
       dispatch(actions.startAddingCompra(uuidv4(), cant, 'activo', cant*item.precioProducto, cant*item.descuentoProducto, item.id, cliente));
+      listas.map(lista => {
+        lista.idProducto === item.id && lista.fechaLista === moment().format('YYYY-MM-DD') && (
+          dispatch(actionsListas.startDecreasingLista(lista.id, cant))
+        )
+      });
     }
   }),
   (stateProps, dispatchProps, ownProps) => ({
@@ -59,7 +67,7 @@ export default connect(
     ...dispatchProps,
     onShop(cant) {
       console.log("Hello world", cant, stateProps.cliente['id']);
-      dispatchProps.onShop(cant, stateProps.cliente['id']);
+      dispatchProps.onShop(cant, stateProps.cliente['id'], stateProps.listas);
     },
   })
 )(ProductRow);
