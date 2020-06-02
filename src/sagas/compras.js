@@ -224,7 +224,15 @@ function* putCompras(action) {
           actions.completePutingCompras(),
         );
         yield put(
-          actionsFacturas.startAddingFactura(uuidv4(), jsonResult['subtotal'], jsonResult['iva'], jsonResult['total'], action.payload.tienda, action.payload.cliente['id'], action.payload.comprasById, action.payload.comprasOrder),
+          actionsFacturas.startAddingFactura(
+            uuidv4(), 
+            jsonResult['subtotal'], 
+            jsonResult['iva'], 
+            jsonResult['total'], 
+            action.payload.tienda, 
+            action.payload.cliente['id'], 
+            action.payload.comprasById
+          ),
         );
       } else {
         const { non_field_errors } = yield response.json();

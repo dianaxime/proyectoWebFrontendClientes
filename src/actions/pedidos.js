@@ -18,7 +18,7 @@ export const failFetchingPedidos = error => ({
   },
 });
 
-export const startAddingPedido = ( id, estadoPedido, pagoPedido, entregaPedido, recogerPedido, idFactura, idCliente, comprasById, comprasOrder) => ({
+export const startAddingPedido = ( id, estadoPedido, pagoPedido, entregaPedido, recogerPedido, idFactura, idCliente, comprasById) => ({
   type: types.PEDIDO_ADD_STARTED,
   payload: {
     id, 
@@ -29,7 +29,6 @@ export const startAddingPedido = ( id, estadoPedido, pagoPedido, entregaPedido, 
     idFactura,
     idCliente,
     comprasById,
-    comprasOrder,
   },
 });
 export const completeAddingPedido = (oldId, pedido) => ({

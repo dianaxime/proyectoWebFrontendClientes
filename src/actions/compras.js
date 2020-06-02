@@ -84,13 +84,12 @@ export const failEndingCompras = error => ({
   },
 });
 
-export const startPutingCompras = (cliente, tienda, comprasById, comprasOrder)  => ({
+export const startPutingCompras = (cliente, tienda, comprasById)  => ({
   type: types.COMPRAS_PUT_STARTED,
   payload: {
     cliente,
     tienda,
     comprasById,
-    comprasOrder,
   },
 });
 export const completePutingCompras = () => ({

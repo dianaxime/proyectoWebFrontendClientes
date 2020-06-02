@@ -161,4 +161,51 @@ export function* watchDecreaseLista() {
     decreaseLista,
   );
 }
+
+function* increaseLista(action) {
+  try {
+    const isAuth = yield select(selectors.isAuthenticated);
+
+    if (isAuth) {
+      const token = yield select(selectors.getAuthToken);
+      const response = yield call(
+        fetch,
+        `${API_BASE_URL}/listas/${action.payload.id}/aumentar-producto/`,
+        {
+          method: 'PATCH',
+          body: JSON.stringify({
+            cantidad: action.payload.cantidad,
+          }),
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const jsonResult = yield response.json();
+        yield put(
+          actions.completeIncreasingLista(
+            action.payload.id,
+            jsonResult,
+          ),
+        );
+      } else {
+        const { non_field_errors } = yield response.json();
+        yield put(actions.failIncreasingLista(non_field_errors[0]));
+      }
+    }
+  } catch (error) {
+    yield put(actions.failIncreasingLista('Falló horrible la conexión mano'));
+    console.log("ERROR", error)
+  }
+}
+
+export function* watchIncreaseLista() {
+  yield takeEvery(
+    types.LISTA_INCREASE_STARTED,
+    increaseLista,
+  );
+}
  

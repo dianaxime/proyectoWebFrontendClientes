@@ -42,6 +42,15 @@ const byId = (state = {}, action) => {
       };
       return newState;
     }
+    case types.LISTA_INCREASE_COMPLETED: {
+      const { oldId, lista } = action.payload;
+      const newState = omit(state, oldId);
+      newState[lista.id] = {
+        ...lista,
+        isConfirmed: true,
+      };
+      return newState;
+    }
     default: {
       return state;
     }
@@ -95,6 +104,10 @@ const order = (state = [], action) => {
       return state.map(id => id === oldId ? lista.id : id);
     }
     case types.LISTA_DECREASE_COMPLETED: {
+      const { oldId, lista } = action.payload;
+      return state.map(id => id === oldId ? lista.id : id);
+    }
+    case types.LISTA_INCREASE_COMPLETED: {
       const { oldId, lista } = action.payload;
       return state.map(id => id === oldId ? lista.id : id);
     }

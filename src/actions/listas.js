@@ -66,3 +66,25 @@ export const failDecreasingLista = error => ({
   },
 });
 
+export const startIncreasingLista = (id, cantidad) => ({
+  type: types.LISTA_INCREASE_STARTED,
+  payload: {
+    id,
+    cantidad,
+  },
+});
+
+export const completeIncreasingLista = (oldId, lista) => ({
+  type: types.LISTA_INCREASE_COMPLETED,
+  payload: {
+    oldId,
+    lista,
+  },
+});
+
+export const failIncreasingLista = error => ({
+  type: types.LISTA_INCREASE_FAILED,
+  payload: {
+    error,
+  },
+});

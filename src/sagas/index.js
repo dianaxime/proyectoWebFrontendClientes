@@ -52,42 +52,56 @@ import {
 
 import {
   watchAddFactura,
+  watchFetchFacturas,
+  watchFetchFacturasClientes,
 } from './facturas';
 
 import {
   watchAddPedido,
 } from './pedidos';
 
-
 import { watchFetchUsuarioStarted } from './usuarios';
 
 function* mainSaga() {
   yield all([
+    /* Auth */
     fork(watchLoginStarted),
     fork(watchRefreshTokenStarted),
     fork(watchRegisterStarted),
     fork(watchFetchUsuarioStarted),
+    /* Clientes */
     fork(watchClienteFetch),
     fork(watchAddCliente),
     fork(watchUpdateCliente),
+    /* Empleados */
     fork(watchEmpleadoFetch),
     fork(watchAddEmpleado),
     fork(watchUpdateEmpleado),
+    /* Productos */
     fork(watchProductosFetch),
     fork(watchAddProducto),
+    /* Compras */
     fork(watchFetchCompras),
     fork(watchAddCompra),
     fork(watchExpireCompra),
     fork(watchEndCompras),
+    fork(watchPutCompras),
+    /* Tiendas */
     fork(watchFetchTiendas),
     fork(watchAddTienda),
     fork(watchUpdateTienda),
+    /* Listas */
     fork(watchFetchListas),
     fork(watchAddLista),
+    /* Ofertas */
     fork(watchAddOferta),
-    fork(watchPutCompras),
+    /* Registros */
     fork(watchAddRegistro),
+    /* Facturas */
     fork(watchAddFactura),
+    fork(watchFetchFacturas),
+    fork(watchFetchFacturasClientes),
+    /* Pedidos */
     fork(watchAddPedido),
   ]);
 }

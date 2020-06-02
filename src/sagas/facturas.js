@@ -34,7 +34,7 @@ function* fetchFacturas(action) {
             },
           }
         );
-  
+        console.log(response);
         if (response.status === 200) {
           const jsonResult = yield response.json();
           const {
@@ -63,6 +63,54 @@ export function* watchFetchFacturas() {
       types.FACTURAS_FETCH_STARTED,
       fetchFacturas,
     );
+}
+
+function* fetchFacturasClientes(action) {
+  try {
+    const isAuth = yield select(selectors.isAuthenticated);
+
+    if (isAuth) {
+      const token = yield select(selectors.getAuthToken);
+      const response = yield call(
+        fetch,
+        `${API_BASE_URL}/clientes/${action.payload.id}/mis-facturas/`,
+        {
+          method: 'GET',
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${token}`,
+          },
+        }
+      );
+      console.log("****", response)
+      if (response.status === 200) {
+        const jsonResult = yield response.json();
+        const {
+          entities: { facturas },
+          result,
+        } = normalize(jsonResult, schemas.factura);
+        yield put(
+          actions.completeFetchingFacturasClientes(
+            result,
+            facturas,
+          ),
+        );
+      } else {
+        const { non_field_errors } = yield response.json();
+        yield put(actions.failFetchingFacturasClientes(non_field_errors[0]));
+      }
+    }
+  } catch (error) {
+    yield put(actions.failFetchingFacturasClientes('Falló horrible la conexión mano'));
+    console.log("ERROR", error)
+  }
+}
+
+export function* watchFetchFacturasClientes() {
+  yield takeEvery(
+    types.FACTURAS_CLIENTE_FETCH_STARTED,
+    fetchFacturasClientes,
+  );
 }
   
 function* addFactura(action) {
@@ -107,8 +155,7 @@ function* addFactura(action) {
               'domicilio',
               jsonResult['id'],
               action.payload.idCliente,
-              action.payload.comprasById, 
-              action.payload.comprasOrder
+              action.payload.comprasById,
             ),
           );
         } else {

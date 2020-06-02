@@ -1,27 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, Button, TouchableOpacity } from 'react-native';
-import './styles.css';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/facturas';
+import moment from 'moment';
 
-
-const FacturaRow = ({ fechaFactura, subtotalFactura, ivaFactura, totalFactura }) => (
+const FacturaRow = ({ item }) => (
     <TouchableOpacity>
-        <Text>{ fechaFactura }</Text>
-        <Text>Q{ subtotalFactura }</Text>
-        <Text>Q{ ivaFactura }</Text>
-        <Text>Q{ totalFactura }</Text>
+        <Text>{ moment(item.fechaFactura).calendar() }</Text>
+        <Text>Q{ parseFloat(item.subtotalFactura).toFixed(2) }</Text>
+        <Text>Q{ parseFloat(item.ivaFactura).toFixed(2) }</Text>
+        <Text>Q{ parseFloat(item.totalFactura).toFixed(2) }</Text>
     </TouchableOpacity>
 );
 
 export default connect(
-  (state, { id }) => ({
-    ...selectors.getPetOwner(state, id),
+  (state, { item }) => ({
+    ...selectors.getFactura(state, item),
   }),
-  (dispatch, { id }) => ({
-    onDelete() {
-      dispatch(actions.startRemovingPetOwner(id));
-    }
-  }),
+  undefined,
 )(FacturaRow);

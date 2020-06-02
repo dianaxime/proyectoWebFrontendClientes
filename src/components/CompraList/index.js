@@ -59,9 +59,9 @@ export default connect(
       dispatch(actionsProductos.startFetchingProductos());
     },
     onPile(){
-      dispatch(actionsClientes.startFetchingCliente());
+      dispatch(actionsUsuarios.startFetchingUsuario());
       setTimeout(() => {
-        dispatch(actionsUsuarios.startFetchingUsuario());
+        dispatch(actionsClientes.startFetchingCliente());
       }, 1000);
     },
     onExpire(producto){

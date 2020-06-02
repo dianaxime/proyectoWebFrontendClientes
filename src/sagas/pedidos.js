@@ -96,20 +96,6 @@ function* addPedido(action) {
               jsonResult,
             ),
           );
-          /*yield put(
-            action.payload.comprasById.map(item => 
-              actionsRegistros.startAddingRegistro(
-                uuidv4(),
-                item.cantidadCompra,
-                item.subtotalCompra/item.cantidadCompra,
-                item.subtotalCompra,
-                item.descuentoCompra,
-                item.idProducto,
-                jsonResult['id'],
-                action.payload.idCliente,
-              ),
-            ),
-          );*/
           yield* action.payload.comprasById.map(function*(item){
             console.log(item);
             yield put(
@@ -125,11 +111,6 @@ function* addPedido(action) {
               ),
             );
           });
-          /*for (const item in action.payload.comprasById){
-            setTimeout(() => {
-              
-            }, 500); 
-          }*/
           yield put(
             actionsComras.startEndingCompras(
               action.payload.idCliente
