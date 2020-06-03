@@ -7,13 +7,17 @@ import * as actionsUsuarios from '../../actions/usuarios';
 import * as actionsListas from '../../actions/listas';
 import ProductoRow from '../ProductoRow';
 import OfertaForm from '../OfertaForm';
-import ListaForm from '../ListaForm';
 import ProductoForm from '../ProductoForm';
 
 const ProductList = ({ productos, isLoading, onLoad, tipo }) => {
   useEffect(onLoad, []);
   return (
     <View>
+      {
+        tipo === 'Empleado' && (
+          <ProductoForm />
+        )
+      }
       {
         productos.length === 0 && !isLoading && (
           <Text>{'No hay Productos'}</Text>
@@ -35,20 +39,7 @@ const ProductList = ({ productos, isLoading, onLoad, tipo }) => {
                 />
               ))}
             </ScrollView>
-            {
-              tipo === 'Empleado' && (
-                <>
-                  <ListaForm />
-                  <OfertaForm />
-                </>
-              )
-            }
           </>
-        )
-      }
-      {
-        tipo === 'Empleado' && (
-          <ProductoForm />
         )
       }
     </View>

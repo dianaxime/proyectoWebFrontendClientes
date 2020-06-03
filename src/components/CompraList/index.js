@@ -86,11 +86,9 @@ export default connect(
     ...stateProps,
     ...dispatchProps,
     onLoad() {
+      dispatchProps.onCharge();
       setTimeout(() => {
         dispatchProps.onPile();
-      }, 1000);
-      setTimeout(() => {
-        dispatchProps.onCharge();
       }, 1000);
       setTimeout(() => {
         console.log("-----",stateProps.cliente),

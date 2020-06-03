@@ -17,7 +17,7 @@ const ProductoForm = ({
     return <TextInput onChangeText={onChange} {...restInput} {...rest} />
   }
   return (
-    <View style={styles.container}>
+    <View >
       {
         error && (
           <Text>{error}</Text>

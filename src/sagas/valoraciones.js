@@ -24,7 +24,7 @@ import {
         const token = yield select(selectors.getAuthToken);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/empleados/${action.payload.id}/mis-comentarios/`,
+          `${API_BASE_URL}/empleados/${action.payload.id['id']}/mis-comentarios/`,
           {
             method: 'GET',
             headers:{
@@ -33,26 +33,27 @@ import {
             },
           }
         );
-  
+          console.log(response);
         if (response.status === 200) {
           const jsonResult = yield response.json();
+          console.log(jsonResult);
           const {
-            entities: { comentarios },
+            entities: { valoraciones },
             result,
-          } = normalize(jsonResult, schemas.valoraciones);
+          } = normalize(jsonResult, schemas.valoracion);
           yield put(
             actions.completeFetchingComentarios(
-              comentarios,
+              valoraciones,
               result,
             ),
           );
         } else {
           const { non_field_errors } = yield response.json();
-          yield put(actions.failLogin(non_field_errors[0]));
+          yield put(actions.failFetchingComentarios(non_field_errors[0]));
         }
       }
     } catch (error) {
-      yield put(actions.failLogin('Falló horrible la conexión mano'));
+      yield put(actions.failFetchingComentarios('Falló horrible la conexión mano'));
       console.log("ERROR", error)
     }
   }
@@ -122,7 +123,7 @@ import {
         const token = yield select(selectors.getAuthToken);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/empleados/${action.payload.id}/mi-puntuacion/`,
+          `${API_BASE_URL}/empleados/${action.payload.id['id']}/mi-puntuacion/`,
           {
             method: 'GET',
             headers:{

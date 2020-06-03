@@ -5,12 +5,13 @@ import * as selectors from '../../reducers';
 import * as actions from '../../actions/listas';
 import * as actionsProductos from '../../actions/productos';
 import ListaRow from '../ListaRow';
-
+import ListaForm from '../ListaForm';
 
 const ListaList = ({ listas, isLoading, onLoad }) => {
   useEffect(onLoad, []);
   return (
     <View>
+      <ListaForm />
       {
         listas.length === 0 && !isLoading && (
           <Text>{'No hay Listas'}</Text>
@@ -46,11 +47,9 @@ export default connect(
   }),
   dispatch => ({
     onLoad() {
-        setTimeout(() => {
-            dispatch(actions.startFetchingListas());
-        }, 1000);
-        setTimeout(() => {
-            dispatch(actionsProductos.startFetchingProductos());
+      dispatch(actionsProductos.startFetchingProductos());
+      setTimeout(() => {
+        dispatch(actions.startFetchingListas());
       }, 1000);
     },
   }),

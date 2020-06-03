@@ -1,7 +1,7 @@
 import { schema } from 'normalizr';
 
 
-export const comentarios = new schema.Entity(
+export const valoraciones = new schema.Entity(
   'valoraciones',
 );
-export const comentario = new schema.Array(comentarios);
+export const valoracion = new schema.Array(valoraciones);

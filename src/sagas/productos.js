@@ -35,6 +35,7 @@ function* fetchProductos(action) {
   
         if (response.status === 200) {
           const jsonResult = yield response.json();
+          console.log(jsonResult);
           const {
             entities: { productos },
             result,
