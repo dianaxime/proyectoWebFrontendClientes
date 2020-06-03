@@ -17,6 +17,8 @@ import pedidos, * as pedidosSelectors from './pedidos';
 import selectedProducto, * as selectedProductoSelectors from './selectedProducto';
 import selectedCompra, * as selectedCompraSelectors from './selectedCompra';
 import selectedTienda, * as selectedTiendaSelectors from './selectedTienda';
+import selectedPuntuacion, * as selectedPuntuacionSelectors from './selectedPuntuacion';
+import selectedPedido, * as selectedPedidoSelectors from './selectedPedido';
 
 const reducer = combineReducers({
   auth,
@@ -35,6 +37,8 @@ const reducer = combineReducers({
   selectedProducto,
   selectedCompra,
   selectedTienda,
+  selectedPuntuacion,
+  selectedPedido,
   form: formReducer,
 });
 
@@ -71,7 +75,13 @@ export const getAddingEmpleadoError = state => empleadosSelectors.getAddingEmple
 export const getOferta = (state, id) => ofertasSelectors.getOferta(state.ofertas, id);
 export const getOfertas = state => ofertasSelectors.getOfertas(state.ofertas);
 /* Valoracion */
-
+export const getComentario = (state, id) => valoracionesSelectors.getComentario(state.valoraciones, id);
+export const getComentarios = state => valoracionesSelectors.getComentarios(state.valoraciones);
+export const isFetchingComentarios = state => valoracionesSelectors.isFetchingComentarios(state.valoraciones);
+export const getFetchingComentariosError = state => valoracionesSelectors.getFetchingComentariosError(state.valoraciones);
+export const getPuntuacion = state => valoracionesSelectors.getPuntuacion(state.valoraciones);
+/* SelectedPuntuacion */
+export const getSelectedPuntuacion = state => selectedPuntuacionSelectors.getSelectedPuntuacion(state.selectedPuntuacion);
 /* Compra */
 export const getCompra = (state, id) => comprasSelectors.getCompra(state.compras, id);
 export const getCompras = state => comprasSelectors.getCompras(state.compras);
@@ -94,6 +104,8 @@ export const getPedido = (state, id) => pedidosSelectors.getPedido(state.pedidos
 export const getPedidos = state => pedidosSelectors.getPedidos(state.pedidos);
 export const isFetchingPedidos = state => pedidosSelectors.isFetchingPedidos(state.pedidos);
 export const getFetchingPedidosError = state => pedidosSelectors.getFetchingPedidosError(state.pedidos);
+/* SelectedPedido */
+export const getSelectedPedido = state => selectedPedidoSelectors.getSelectedPedido(state.selectedPedido);
 /* Producto */
 export const getProducto = (state, id) => productosSelectors.getProducto(state.productos, id);
 export const getProductos = state => productosSelectors.getProductos(state.productos);
@@ -104,6 +116,8 @@ export const getSelectedProducto = state => selectedProductoSelectors.getSelecte
 /* Registro */
 export const getRegistro = (state, id) => registrosSelectors.getRegistro(state.registros, id);
 export const getRegistros = state => registrosSelectors.getRegistros(state.registros);
+export const isFetchingRegistros = state => registrosSelectors.isFetchingRegistros(state.registros);
+export const getFetchingRegistrosError = state => registrosSelectors.getFetchingRegistrosError(state.registros);
 /* Tienda */
 export const getTienda = (state, id) => tiendasSelectors.getTienda(state.productos, id);
 export const getTiendas = state => tiendasSelectors.getTiendas(state.tiendas);

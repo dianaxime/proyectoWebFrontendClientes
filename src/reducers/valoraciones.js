@@ -3,37 +3,6 @@ import { combineReducers } from 'redux';
 
 import * as types from '../types/valoraciones';
 
-
-const comentarios = (state = {}, action) => {
-  switch(action.type) {
-    case types.COMENTARIOS_FETCH_COMPLETED: {
-      const { entities, order } = action.payload;
-      const newState = { ...state };
-      order.forEach(id => {
-        newState[id] = {
-          ...entities[id],
-          isConfirmed: true,
-        };
-      });
-      return newState;
-    }
-    default: {
-      return state;
-    }
-  }
-};
-
-const orderComentarios = (state = [], action) => {
-  switch(action.type) {
-    case types.COMENTARIOS_FETCH_COMPLETED: {
-      return [...state, ...action.payload.orderComentarios];
-    }
-    default: {
-      return state;
-    }
-  }
-};
-
 const isFetching = (state = false, action) => {
   switch(action.type) {
     case types.COMENTARIOS_FETCH_STARTED: {
@@ -69,24 +38,35 @@ const error = (state = null, action) => {
 };
 
 const puntuacion = (state = null, action) => {
-    switch(action.type) {
-      case types.PUNTUACION_FETCH_COMPLETED: {
-        return action.payload.usuario;
-      }
-      case types.PUNTUACION_FETCH_STARTED: {
-          return null;
-      }
-      case types.PUNTUACION_FETCH_FAILED: {
-          return null;
-      }
-      default: {
-        return state;
-      }
+  switch(action.type) {
+    case types.PUNTUACION_FETCH_FAILED: {
+      return null;
     }
+    case types.PUNTUACION_FETCH_STARTED: {
+      return null;
+    }
+    case types.PUNTUACION_FETCH_COMPLETED: {
+      return action.payload;
+    }
+    default: {
+      return state;
+    }
+  }
 };
 
 const byId = (state = {}, action) => {
     switch(action.type) {
+      case types.COMENTARIOS_FETCH_COMPLETED: {
+        const { entities, order } = action.payload;
+        const newState = { ...state };
+        order.forEach(id => {
+          newState[id] = {
+            ...entities[id],
+            isConfirmed: true,
+          };
+        });
+        return newState;
+      }
       case types.VALORACION_ADD_STARTED: {
         const newState = { ...state };
         newState[action.payload.id] = {
@@ -112,6 +92,9 @@ const byId = (state = {}, action) => {
   
 const order = (state = [], action) => {
     switch(action.type) {
+      case types.COMENTARIOS_FETCH_COMPLETED: {
+        return [...action.payload.order];
+      }
       case types.VALORACION_ADD_STARTED: {
         return [...state, action.payload.id];
       }
@@ -131,11 +114,10 @@ export default combineReducers({
   isFetching,
   error,
   puntuacion,
-  comentarios,
-  orderComentarios,
 });
 
-//export const getPetOwner = (state, id) => state.byId[id];
-//export const getPetOwners = state => state.order.map(id => getPetOwner(state, id));
+export const getComentario = (state, id) => state.byId[id];
+export const getComentarios = state => state.order.map(id => getComentario(state, id));
 export const isFetchingComentarios = state => state.isFetching;
 export const getFetchingComentariosError = state => state.error;
+export const getPuntuacion = state => state.puntuacion;

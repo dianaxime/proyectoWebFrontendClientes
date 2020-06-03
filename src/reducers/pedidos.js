@@ -16,6 +16,17 @@ const byId = (state = {}, action) => {
       });
       return newState;
     }
+    case types.PEDIDOS_CLIENTE_FETCH_COMPLETED: {
+      const { entities, order } = action.payload;
+      const newState = { ...state };
+      order.forEach(id => {
+        newState[id] = {
+          ...entities[id],
+          isConfirmed: true,
+        };
+      });
+      return newState;
+    }
     case types.PEDIDO_ADD_STARTED: {
       const newState = { ...state };
       newState[action.payload.id] = {
@@ -25,6 +36,24 @@ const byId = (state = {}, action) => {
       return newState;
     }
     case types.PEDIDO_ADD_COMPLETED: {
+      const { oldId, pedido } = action.payload;
+      const newState = omit(state, oldId);
+      newState[pedido.id] = {
+        ...pedido,
+        isConfirmed: true,
+      };
+      return newState;
+    }
+    case types.PEDIDO_END_COMPLETED: {
+      const { oldId, pedido } = action.payload;
+      const newState = omit(state, oldId);
+      newState[pedido.id] = {
+        ...pedido,
+        isConfirmed: true,
+      };
+      return newState;
+    }
+    case types.PEDIDO_TAKE_COMPLETED: {
       const { oldId, pedido } = action.payload;
       const newState = omit(state, oldId);
       newState[pedido.id] = {
@@ -50,6 +79,15 @@ const isFetching = (state = false, action) => {
     case types.PEDIDOS_FETCH_FAILED: {
       return false;
     }
+    case types.PEDIDOS_CLIENTE_FETCH_STARTED: {
+      return true;
+    }
+    case types.PEDIDOS_CLIENTE_FETCH_COMPLETED: {
+      return false;
+    }
+    case types.PEDIDOS_CLIENTE_FETCH_FAILED: {
+      return false;
+    }
     default: {
       return state;
     }
@@ -61,10 +99,21 @@ const order = (state = [], action) => {
     case types.PEDIDOS_FETCH_COMPLETED: {
       return [...action.payload.order];
     }
+    case types.PEDIDOS_CLIENTE_FETCH_COMPLETED: {
+      return [...action.payload.order];
+    }
     case types.PEDIDO_ADD_STARTED: {
       return [...state, action.payload.id];
     }
     case types.PEDIDO_ADD_COMPLETED: {
+      const { oldId, pedido } = action.payload;
+      return state.map(id => id === oldId ? pedido.id : id);
+    }
+    case types.PEDIDO_END_COMPLETED: {
+      const { oldId, pedido } = action.payload;
+      return state.map(id => id === oldId ? pedido.id : id);
+    }
+    case types.PEDIDO_TAKE_COMPLETED: {
       const { oldId, pedido } = action.payload;
       return state.map(id => id === oldId ? pedido.id : id);
     }
@@ -83,6 +132,15 @@ const error = (state = null, action) => {
       return null;
     }
     case types.PEDIDOS_FETCH_COMPLETED: {
+      return null;
+    }
+    case types.PEDIDOS_CLIENTE_FETCH_FAILED: {
+      return action.payload.error;
+    }
+    case types.PEDIDOS_CLIENTE_FETCH_STARTED: {
+      return null;
+    }
+    case types.PEDIDOS_CLIENTE_FETCH_COMPLETED: {
       return null;
     }
     default: {

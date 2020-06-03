@@ -1,7 +1,10 @@
 import * as types from '../types/valoraciones';
 
-export const startFetchingComentarios = () => ({
+export const startFetchingComentarios = id => ({
   type: types.COMENTARIOS_FETCH_STARTED,
+  payload: {
+    id,
+  },
 });
 export const completeFetchingComentarios = (entities, order) => ({
   type: types.COMENTARIOS_FETCH_COMPLETED,
@@ -17,14 +20,15 @@ export const failFetchingComentarios = error => ({
   },
 });
 
-export const startFetchingPuntuacion = () => ({
+export const startFetchingPuntuacion = id => ({
     type: types.PUNTUACION_FETCH_STARTED,
+    payload: {
+      id,
+    },
 });
 export const completeFetchingPuntuacion = puntuacion => ({
     type: types.PUNTUACION_FETCH_COMPLETED,
-    payload: {
-      puntuacion,
-    },
+    payload: puntuacion,
 });
 export const failFetchingPuntuacion = error => ({
     type: types.PUNTUACION_FETCH_FAILED,
@@ -33,11 +37,11 @@ export const failFetchingPuntuacion = error => ({
     },
 });
   
-export const startAddingValoracion = (comentarioValoracion, fechaValoracion, puntuacionValoracion, idEmpleado, idCliente) => ({
+export const startAddingValoracion = (id, comentarioValoracion, puntuacionValoracion, idEmpleado, idCliente) => ({
   type: types.VALORACION_ADD_STARTED,
   payload: {
+    id,
     comentarioValoracion,
-    fechaValoracion,
     puntuacionValoracion,
     idCliente,
     idEmpleado,

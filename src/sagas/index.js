@@ -50,6 +50,7 @@ import {
 
 import {
   watchAddRegistro,
+  watchFetchRegistros,
 } from './registros';
 
 import {
@@ -60,9 +61,19 @@ import {
 
 import {
   watchAddPedido,
+  watchEndPedido,
+  watchTakePedido,
+  watchFetchPedidos,
+  watchFetchPedidosClientes,
 } from './pedidos';
 
 import { watchFetchUsuarioStarted } from './usuarios';
+
+import {
+  watchAddValoracion,
+  watchFetchComentarios,
+  watchfetchPuntuacion,
+} from './valoraciones';
 
 function* mainSaga() {
   yield all([
@@ -101,12 +112,21 @@ function* mainSaga() {
     fork(watchAddOferta),
     /* Registros */
     fork(watchAddRegistro),
+    fork(watchFetchRegistros),
     /* Facturas */
     fork(watchAddFactura),
     fork(watchFetchFacturas),
     fork(watchFetchFacturasClientes),
     /* Pedidos */
     fork(watchAddPedido),
+    fork(watchFetchPedidos),
+    fork(watchFetchPedidosClientes),
+    fork(watchEndPedido),
+    fork(watchTakePedido),
+    /* Valoraciones */
+    fork(watchAddValoracion),
+    fork(watchFetchComentarios),
+    fork(watchfetchPuntuacion),
   ]);
 }
 

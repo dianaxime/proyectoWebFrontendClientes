@@ -12,6 +12,9 @@ import { API_BASE_URL } from '../settings';
 import * as selectors from '../reducers';
 import * as actions from '../actions/registros';
 import * as types from '../types/registros';
+
+import { normalize } from 'normalizr';
+import * as schemas from '../schemas/registros';
     
 function* addRegistro(action) {
     try {
@@ -65,4 +68,51 @@ export function* watchAddRegistro() {
       addRegistro,
     );
 }
- 
+
+function* fetchRegistros(action) {
+  try {
+    const isAuth = yield select(selectors.isAuthenticated);
+
+    if (isAuth) {
+      const token = yield select(selectors.getAuthToken);
+      const response = yield call(
+        fetch,
+        `${API_BASE_URL}/registros/`,
+        {
+          method: 'GET',
+          headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const jsonResult = yield response.json();
+        const {
+          entities: { registros },
+          result,
+        } = normalize(jsonResult, schemas.registro);
+        yield put(
+          actions.completeFetchingRegistros(
+            result,
+            registros,
+          ),
+        );
+      } else {
+        const { non_field_errors } = yield response.json();
+        yield put(actions.failFetchingRegistros(non_field_errors[0]));
+      }
+    }
+  } catch (error) {
+    yield put(actions.failFetchingRegistros('Falló horrible la conexión mano'));
+    console.log("ERROR", error)
+  }
+}
+
+export function* watchFetchRegistros() {
+  yield takeEvery(
+    types.REGISTROS_FETCH_STARTED,
+    fetchRegistros,
+  );
+}

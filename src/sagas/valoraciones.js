@@ -24,7 +24,7 @@ import {
         const token = yield select(selectors.getAuthToken);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/owners/`,
+          `${API_BASE_URL}/empleados/${action.payload.id}/mis-comentarios/`,
           {
             method: 'GET',
             headers:{
@@ -36,18 +36,16 @@ import {
   
         if (response.status === 200) {
           const jsonResult = yield response.json();
-          const jsonResult = yield response.json();
           const {
-             entities: { comentarios },
-             result,
-           } = normalize(jsonResult, schemas.valoraciones);
-  
+            entities: { comentarios },
+            result,
+          } = normalize(jsonResult, schemas.valoraciones);
           yield put(
-             actions.completeFetchingComentarios(
-               comentarios,
-               result,
-             ),
-           );
+            actions.completeFetchingComentarios(
+              comentarios,
+              result,
+            ),
+          );
         } else {
           const { non_field_errors } = yield response.json();
           yield put(actions.failLogin(non_field_errors[0]));
@@ -59,7 +57,7 @@ import {
     }
   }
   
-  export function* watchPetOwnersFetch() {
+  export function* watchFetchComentarios() {
     yield takeEvery(
       types.COMENTARIOS_FETCH_STARTED,
       fetchComentarios,
@@ -77,7 +75,12 @@ import {
           `${API_BASE_URL}/valoraciones/`,
           {
             method: 'POST',
-            body: JSON.stringify(action.payload),
+            body: JSON.stringify({
+              comentarioValoracion : action.payload.comentarioValoracion,
+              puntuacionValoracion : action.payload.puntuacionValoracion,
+              idCliente : action.payload.idCliente,
+              idEmpleado : action.payload.idEmpleado,
+            }),
             headers:{
               'Content-Type': 'application/json',
               'Authorization': `JWT ${token}`,
@@ -119,7 +122,7 @@ import {
         const token = yield select(selectors.getAuthToken);
         const response = yield call(
           fetch,
-          `${API_BASE_URL}/empleados/${action.payload.id}/`,
+          `${API_BASE_URL}/empleados/${action.payload.id}/mi-puntuacion/`,
           {
             method: 'GET',
             headers:{
@@ -130,7 +133,8 @@ import {
         );
   
         if (response.status === 200) {
-          yield put(actions.completeFetchingPuntuacion());
+          const jsonResult = yield response.json();
+          yield put(actions.completeFetchingPuntuacion(jsonResult['puntuacion']));
         } else {
           const { non_field_errors } = yield response.json();
           yield put(actions.failFetchingPuntuacion(non_field_errors[0]));
