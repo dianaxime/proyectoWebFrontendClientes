@@ -6,6 +6,7 @@ import * as actions from '../../actions/tiendas';
 import * as actionsUsuarios from '../../actions/usuarios';
 import TiendaRow from '../TiendaRow';
 import UpgradeTienda from '../UpgradeTienda';
+import TiendaForm from '../TiendaForm';
 
 const TiendaList = ({ tiendas, isLoading, onLoad, tipo }) => {
   useEffect(onLoad, []);
@@ -38,6 +39,11 @@ const TiendaList = ({ tiendas, isLoading, onLoad, tipo }) => {
               )
             }
           </>
+        )
+      }
+      {
+        tipo === 'Empleado' && (
+          <TiendaForm />
         )
       }
     </View>

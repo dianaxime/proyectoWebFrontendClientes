@@ -23,10 +23,18 @@ import TiendaList from './src/components/TiendaList';
 import ListaList from './src/components/ListaList';
 import FacturaList from './src/components/FacturaList';
 import PedidoList from './src/components/PedidoList';
+import Options from './src/components/Options';
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
 const MainApp = ({
-  isAuthenticated = false 
+  isAuthenticated = false,
+  fetchingCliente = false,
+  fetchingEmpleado = false,
+  tipo = null,
+  cliente = null,
+  empleado = null,
 }) => {
   return (
     <>
@@ -41,17 +49,28 @@ const MainApp = ({
           <>
             <Logout />
             <TokenRefresh />
-            {/*<DataForm />
-            <UpgradeForm />
-            <ProductoForm />
-            <TiendaForm />
-            <ListaList />
-            <TiendaList />
-            <FacturaList />
-            <CompraList />
+            <Drawer.Navigator initialRouteName="Productos">
+              <Drawer.Screen name="Productos" component={ProductoList} />
+              <Drawer.Screen name="Ubicaciones" component={TiendaList} />
+              <Drawer.Screen name="Actualizar" component={UpgradeForm} />
+              <Drawer.Screen name="Facturas" component={FacturaList} />
+              <Drawer.Screen name="Pedidos" component={PedidoList} />
+              <Drawer.Screen name="Options" component={Options} />
+            </Drawer.Navigator>
+            {/*
             <ProductoList />
+            <TiendaList />
+            <UpgradeForm />
+            <FacturaList />
+            <PedidoList />
+            <CompraList />
+            <ListaList />
           */}
-          <PedidoList />
+          {
+            !fetchingCliente && !fetchingEmpleado && !cliente && !empleado && tipo && isAuthenticated && (
+              <DataForm />
+            )
+          }
           </>
         )
       }
@@ -63,6 +82,11 @@ const MainApp = ({
 export default connect(
   state => ({
     isAuthenticated: selectors.isAuthenticated(state),
+    fetchingCliente: selectors.isFetchingCliente(state),
+    fetchingEmpleado: selectors.isFetchingEmpleado(state),
+    tipo: selectors.getUsuario(state),
+    cliente: selectors.getCliente(state, selectors.getAuthUserID(state)),
+    empleado: selectors.getEmpleado(state, selectors.getAuthUserID(state)),
   }),
   undefined
 )

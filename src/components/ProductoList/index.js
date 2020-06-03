@@ -8,6 +8,7 @@ import * as actionsListas from '../../actions/listas';
 import ProductoRow from '../ProductoRow';
 import OfertaForm from '../OfertaForm';
 import ListaForm from '../ListaForm';
+import ProductoForm from '../ProductoForm';
 
 const ProductList = ({ productos, isLoading, onLoad, tipo }) => {
   useEffect(onLoad, []);
@@ -43,6 +44,11 @@ const ProductList = ({ productos, isLoading, onLoad, tipo }) => {
               )
             }
           </>
+        )
+      }
+      {
+        tipo === 'Empleado' && (
+          <ProductoForm />
         )
       }
     </View>

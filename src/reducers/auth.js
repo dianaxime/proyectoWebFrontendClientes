@@ -84,7 +84,7 @@ const isRegistering = (state = false, action) => {
 const registeringCompleted = (state = false, action) => {
   switch(action.type) {
     case types.REGISTER_STARTED: {
-      return flase;
+      return false;
     }
     case types.REGISTER_COMPLETED: {
       return true;
