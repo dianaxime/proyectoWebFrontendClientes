@@ -3,25 +3,28 @@ import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator } from 're
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
 import { v4 as uuidv4 } from 'uuid';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/ofertas';
+
+const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
+  return <TextInput onChangeText={onChange} {...restInput} {...rest} />
+}
 
 const OfertaForm = ({
   onSubmit,
   handleSubmit,
 }) => {
-  const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
-    return <TextInput onChangeText={onChange} {...restInput} {...rest} />
-  }
   return (
-    <View >
+    <View style={styles.container}>
       <Field
         name={'vence'}
         props={{
           placeholder: 'Fecha de Vencimiento',
         }}
         component={renderInput}
+        style={styles.textboxes}
       />
       <Field
         name={'descripcion'}
@@ -29,6 +32,7 @@ const OfertaForm = ({
           placeholder: 'Descripción',
         }}
         component={ renderInput }
+        style={styles.textboxes}
       />
       <Field
         name={'descuento'}
@@ -36,8 +40,13 @@ const OfertaForm = ({
           placeholder: '% de Descuento',
         }}
         component={renderInput}
+        style={styles.textboxes}
       />
-      <Button onPress={handleSubmit(onSubmit)} title='Agregar'></Button>
+      <View style={styles.addContainer}>
+        <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.addButton}>
+          <Text style={styles.addText}>Agregar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 } 
@@ -70,11 +79,42 @@ export default reduxForm({form: 'Oferta'})(
 );
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputs: {
+    alignItems: 'baseline',
+    justifyContent: 'center',
+  },
+  textboxes: {
+    margin: 8,
+    borderBottomColor: '#0d0100',
+    color: '#0d0100',
+    borderBottomWidth: 1,
+    width: 250,
+  },
+  errors: {
+    color: '#950601',
+    margin: 20,
+  },
+  addButton: {
+    backgroundColor: '#ff9b11',
+    borderRadius: 10,
+    alignItems: 'center',
+    width: 175,
+  }, 
+  addText :{
+    fontSize: 20,
+    color: '#0d0100',
+    padding: 5,
+  },
+  addContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: 30,
+    margin: 20,
+  },
 });
-
