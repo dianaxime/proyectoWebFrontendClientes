@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,36 +19,43 @@ const ValoracionForm = ({
   onRate,
 }) => {
   return (
-    <View >
+    <View style={styles.container}>
+      <View style={styles.rowContainer}>
+        <Icon
+        reverse
+        name='emoji-sad'
+        type='entypo'
+        color='#FF1D09'
+        onPress={() => onRate(1)} 
+        />
+        <Icon
+        reverse
+        name='emoji-neutral'
+        type='entypo'
+        color='#FFC609'
+        onPress={() => onRate(3)} 
+        />
+        <Icon
+        reverse
+        name='emoji-happy'
+        type='entypo'
+        color='#8BC609'
+        onPress={() => onRate(5)} 
+        />
+      </View>
       <Field
         name={'comentarios'}
         props={{
           placeholder: 'Comentarios',
         }}
         component={renderInput}
+        style={styles.textboxes}
       />
-        <Icon
-        raised
-        name='emoji-sad'
-        type='entypo'
-        color='#f50'
-        onPress={() => onRate(1)} 
-        />
-        <Icon
-        raised
-        name='emoji-neutral'
-        type='entypo'
-        color='#f50'
-        onPress={() => onRate(3)} 
-        />
-        <Icon
-        raised
-        name='emoji-happy'
-        type='entypo'
-        color='#f50'
-        onPress={() => onRate(5)} 
-        />
-      <Button onPress={handleSubmit(onSubmit)} title='Enviar'></Button>
+      <View style={styles.addContainer}>
+          <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.addButton}>
+            <Text style={styles.addText}>Enviar</Text>
+          </TouchableOpacity>
+      </View>
     </View>
   );
 } 
@@ -85,10 +92,37 @@ export default reduxForm({form: 'Valoracion'})(
 );
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textboxes: {
+    margin: 8,
+    borderBottomColor: '#0d0100',
+    color: '#0d0100',
+    borderBottomWidth: 0.25,
+    width: 250,
+  },
+  addButton: {
+    backgroundColor: '#ff9b11',
+    borderRadius: 10,
+    alignItems: 'center',
+    width: 175,
+  }, 
+  addText :{
+    fontSize: 20,
+    color: '#0d0100',
+    padding: 5,
+  },
+  addContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: 30,
+    margin: 20,
+  },
+  rowContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 });

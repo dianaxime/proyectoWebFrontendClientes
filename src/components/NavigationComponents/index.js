@@ -340,11 +340,11 @@ const NavigationComponents = ({
     <RootStack.Navigator headerMode='none'>
       {/*
         tipo === 'Cliente' ? (
-          <RootStack.Screen name='Cliente' component={DrawerNavigatorCliente} />
           ) : (
+            <RootStack.Screen name='Empleado' component={DrawerNavigatorEmpleado} />
             )
           */}
-          <RootStack.Screen name='Empleado' component={DrawerNavigatorEmpleado} />
+          <RootStack.Screen name='Cliente' component={DrawerNavigatorCliente} />
     </RootStack.Navigator>
   );
 };

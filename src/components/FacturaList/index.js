@@ -54,7 +54,7 @@ export default connect(
   dispatch => ({
     onLoad(tipo, cliente) {
       tipo === 'Cliente' ? (
-        stateProps.cliente != null && (
+        cliente != null && (
           dispatch(actions.startFetchingFacturasClientes(cliente['id']))
         )
       ): (
