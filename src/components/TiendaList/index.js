@@ -5,37 +5,41 @@ import * as selectors from '../../reducers';
 import * as actions from '../../actions/tiendas';
 import * as actionsUsuarios from '../../actions/usuarios';
 import TiendaRow from '../TiendaRow';
-import UpgradeTienda from '../UpgradeTienda';
-import TiendaForm from '../TiendaForm';
 
 const TiendaList = ({ tiendas, isLoading, onLoad, tipo }) => {
   useEffect(onLoad, []);
   return (
-    <View>
-      {
-        tiendas.length === 0 && !isLoading && (
-          <Text>{'No hay Tiendas'}</Text>
-        )
-      }
-      {
-        isLoading && (
-          <ActivityIndicator/>
-        )
-      }
-      {
-        tiendas.length > 0 && !isLoading && (
-          <>
-            <ScrollView>
-              {tiendas && tiendas.map((item, i) => (
-                <TiendaRow
-                  key={i}
-                  item={item} 
-                />
-              ))}
-            </ScrollView>
-          </>
-        )
-      }
+    <View style={styles.container}>
+      <View>
+        {
+          tiendas.length === 0 && !isLoading && (
+            <Text style={styles.addText}>{'No hay Tiendas'}</Text>
+          )
+        }
+      </View>
+      <View>
+        {
+          isLoading && (
+            <ActivityIndicator color='#400601'/>
+          )
+        }
+      </View>
+      <View>
+        {
+          tiendas.length > 0 && !isLoading && (
+            <>
+              <ScrollView>
+                {tiendas && tiendas.map((item, i) => (
+                  <TiendaRow
+                    key={i}
+                    item={item} 
+                  />
+                ))}
+              </ScrollView>
+            </>
+          )
+        }
+      </View>
     </View>
   );
 };
@@ -55,3 +59,20 @@ export default connect(
     },
   }),
 )(TiendaList);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  scroll: {
+    paddingVertical: 5,
+  },
+  addText :{
+    fontSize: 24,
+    color: '#0d0100',
+  },
+});

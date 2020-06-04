@@ -9,15 +9,15 @@ const ListaRow = ({ item, producto }) => (
     <Text style={styles.producto}>{ producto.nombreProducto }</Text>
     <TouchableOpacity>
       <View style={styles.rowContainer}>
-        <Text style={styles.textos}>Fecha:               </Text>
+        <Text style={styles.textos}>Fecha:                               </Text>
         <Text style={styles.textos}>{ item.fechaLista }</Text>
       </View>
       <View style={styles.rowContainer}>
-        <Text style={styles.textos}>Cantidad:                        </Text>
+        <Text style={styles.textos}>Cantidad:                                        </Text>
         <Text style={styles.textos}>{ item.cantidadLista }</Text>
       </View>
       <View style={styles.rowContainer}>
-        <Text style={styles.textos}>Turno:                </Text>
+        <Text style={styles.textos}>Turno:                                </Text>
         <Text style={styles.textos}>{ item.turnoLista }</Text>
       </View>
     </TouchableOpacity>
@@ -46,11 +46,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   }, 
   textos: {
-    fontSize: 18,
+    fontSize: 14,
     color: '#0d0100',
   },
   producto: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });
