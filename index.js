@@ -26,8 +26,8 @@ const MainApp = ({
       <NavigationContainer>
         {
           !isAuthenticated ? (
-            <Stack.Navigator headerMode='none'>
-              <Stack.Screen name='LogIn' options={{ title: 'Iniciar Sesión' }} component={Login} />
+            <Stack.Navigator>
+              <Stack.Screen name='LogIn' options={{ title: 'Iniciar Sesión', headerTitleStyle: {textAlign: 'center'} }} component={Login} />
               <Stack.Screen name='SignIn' options={{ title: 'Registro' }} component={Register} />
             </Stack.Navigator>
           ) : (

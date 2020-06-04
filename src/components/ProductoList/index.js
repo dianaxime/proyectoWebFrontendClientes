@@ -21,7 +21,7 @@ const ProductList = ({ productos, isLoading, onLoad, tipo }) => {
       <View>
         {
           isLoading && (
-            <ActivityIndicator color='maroon'/>
+            <ActivityIndicator color='#400601'/>
           )
         }
       </View>

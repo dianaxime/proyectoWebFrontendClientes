@@ -19,50 +19,59 @@ const RegisterForm = ({
     <View style={styles.container}>
       {
         error && (
-          <Text>{error}</Text>
+          <Text style={styles.errors}>{error}</Text>
         )
       }
-      <Field
-        name={'email'}
-        props={{
-          placeholder: 'Correo',
-        }}
-        component={renderInput}
-      />
-      <Field
-        name={'username'}
-        props={{
-          placeholder: 'Nombre de Usuario',
-        }}
-        component={renderInput}
-      />
-      <Field
-        name={'tipo'}
-        props={{
-          placeholder: 'Cliente/Empleado',
-        }}
-        component={ renderInput }/>
-      <Field
-        name={'password'}
-        props={{
-          placeholder: 'Contraseña',
-          secureTextEntry: true,
-        }}
-        component={renderInput}
-      />
-      <Field
-        name={'password2'}
-        props={{
-          placeholder: 'Confirmar Contraseña',
-          secureTextEntry: true,
-        }}
-        component={renderInput}
-      />
+      <View style={styles.inputs}>
+        <Field
+          name={'email'}
+          props={{
+            placeholder: 'Correo',
+          }}
+          component={renderInput}
+          style={styles.textboxes}
+        />
+        <Field
+          name={'username'}
+          props={{
+            placeholder: 'Nombre de Usuario',
+          }}
+          component={renderInput}
+          style={styles.textboxes}
+        />
+        <Field
+          name={'tipo'}
+          props={{
+            placeholder: 'Cliente/Empleado',
+          }}
+          component={ renderInput }
+          style={styles.textboxes}/>
+        <Field
+          name={'password'}
+          props={{
+            placeholder: 'Contraseña',
+            secureTextEntry: true,
+          }}
+          component={renderInput}
+          style={styles.textboxes}
+        />
+        <Field
+          name={'password2'}
+          props={{
+            placeholder: 'Confirmar Contraseña',
+            secureTextEntry: true,
+          }}
+          component={renderInput}
+          style={styles.textboxes}
+        />
+      </View>
       {
         isLoading ? (
-          <ActivityIndicator/>
+          <ActivityIndicator color='#400601'/>
         ) : (
-          <Button onPress={handleSubmit(onSubmit)} title='Registrarse'></Button>
+          <View style={styles.buttonlogin}>
+              <Button onPress={handleSubmit(onSubmit)} title='Registrarse' color='#400601' />
+          </View>
         )
       }
     </View>
@@ -92,10 +101,35 @@ export default reduxForm({form: 'Register'})(
 );
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  inputs: {
+    alignItems: 'baseline',
+    justifyContent: 'center',
+  },
+  textboxes: {
+    padding: 2,
+    margin: 2,
+    marginBottom: 25,
+    borderBottomColor: '#0d0100',
+    color: '#0d0100',
+    borderBottomWidth: 1,
+    width: 200,
+  },
+  buttonlogin: {
+    padding: 10,
+    marginTop: 20,
+  },
+  buttonsignin: {
+    padding: 10,
+    marginTop: 30,
+  },
+  errors: {
+    color: '#950601',
+    margin: 20,
+  }
+});
