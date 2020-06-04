@@ -18,6 +18,7 @@ const OfertaForm = ({
 }) => {
   return (
     <View style={styles.container}>
+      <Text style={styles.titulo}>Añadir Oferta</Text>
       <Field
         name={'vence'}
         props={{
@@ -116,5 +117,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: 30,
     margin: 20,
+  },
+  titulo: {
+    color: '#950601',
+    margin: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

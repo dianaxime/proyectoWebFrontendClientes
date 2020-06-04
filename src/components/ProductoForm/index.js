@@ -19,11 +19,7 @@ const ProductoForm = ({
 }) => {
   return (
     <View style={styles.container}>
-      {
-        error && (
-          <Text style={styles.errors}>{error}</Text>
-        )
-      }
+      <Text style={styles.titulo}>Añadir Producto</Text>
       <View style={styles.inputs}>
         <Field
           name={'nombre'}
@@ -123,5 +119,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: 30,
     margin: 20,
+  },
+  titulo: {
+    color: '#950601',
+    margin: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
