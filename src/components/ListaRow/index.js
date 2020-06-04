@@ -1,16 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/listas';
 
 const ListaRow = ({ item, producto }) => (
+  <View style={styles.container}>
+    <Text style={styles.producto}>{ producto.nombreProducto }</Text>
     <TouchableOpacity>
-        <Text>{ producto.nombreProducto }</Text>
-        <Text>{ item.fechaLista }</Text>
-        <Text>{ item.cantidadLista }</Text>
-        <Text>{ item.turnoLista }</Text>
+      <View style={styles.rowContainer}>
+        <Text style={styles.textos}>Fecha:               </Text>
+        <Text style={styles.textos}>{ item.fechaLista }</Text>
+      </View>
+      <View style={styles.rowContainer}>
+        <Text style={styles.textos}>Cantidad:                        </Text>
+        <Text style={styles.textos}>{ item.cantidadLista }</Text>
+      </View>
+      <View style={styles.rowContainer}>
+        <Text style={styles.textos}>Turno:                </Text>
+        <Text style={styles.textos}>{ item.turnoLista }</Text>
+      </View>
     </TouchableOpacity>
+  </View>
 );
 
 export default connect(
@@ -20,3 +31,26 @@ export default connect(
   }),
   undefined,
 )(ListaRow);
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 0.75,
+    borderBottomColor: '#0d0100',
+    marginTop: 15,
+  },
+  rowContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  }, 
+  textos: {
+    fontSize: 18,
+    color: '#0d0100',
+  },
+  producto: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});

@@ -10,31 +10,37 @@ import ListaForm from '../ListaForm';
 const ListaList = ({ listas, isLoading, onLoad }) => {
   useEffect(onLoad, []);
   return (
-    <View>
-      {
-        listas.length === 0 && !isLoading && (
-          <Text>{'No hay Listas'}</Text>
-        )
-      }
-      {
-        isLoading && (
-          <ActivityIndicator/>
-        )
-      }
-      {
-        listas.length > 0 && !isLoading && (
-          <>
-            <ScrollView>
-              {listas && listas.map((item, i) => (
-                <ListaRow
-                  key={i}
-                  item={item} 
-                />
-              ))}
-            </ScrollView>
-          </>
-        )
-      }
+    <View style={styles.container}>
+      <View>
+        {
+          listas.length === 0 && !isLoading && (
+            <Text style={styles.addText}>{'No hay Listas'}</Text>
+          )
+        }
+      </View>
+      <View>
+        {
+          isLoading && (
+            <ActivityIndicator color='#400601'/>
+          )
+        }
+      </View>
+      <View>
+        {
+          listas.length > 0 && !isLoading && (
+            <>
+              <ScrollView style={styles.scroll}>
+                {listas && listas.map((item, i) => (
+                  <ListaRow
+                    key={i}
+                    item={item} 
+                  />
+                ))}
+              </ScrollView>
+            </>
+          )
+        }
+      </View>
     </View>
   );
 };
@@ -53,3 +59,20 @@ export default connect(
     },
   }),
 )(ListaList);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  scroll: {
+    paddingVertical: 5,
+  },
+  addText :{
+    fontSize: 24,
+    color: '#0d0100',
+  },
+});
