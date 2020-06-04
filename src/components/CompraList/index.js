@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Button, TouchableOpacity } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/compras';
 import * as actionsListas from '../../actions/listas';
@@ -13,10 +13,10 @@ import moment from 'moment';
 const CompraList = ({ compras, isLoading, onLoad, onExpire, onFinish }) => {
   useEffect(onLoad, []);
   return (
-    <View>
+    <View style={styles.container}>
       {
         compras.length === 0 && !isLoading && (
-          <Text>{'No hay Compras'}</Text>
+          <Text style={styles.addText}>{'No hay Compras'}</Text>
         )
       }
       {
@@ -35,8 +35,16 @@ const CompraList = ({ compras, isLoading, onLoad, onExpire, onFinish }) => {
                 />
               ))}
             </ScrollView>
-            <Button title='Finalizar' onPress={onFinish}/>
-            <Button title='Quitar Producto' onPress={onExpire}/>
+            <View style={styles.addContainer}>
+              <TouchableOpacity onPress={onFinish} style={styles.addButton}>
+                <Text style={styles.addText}>Finalizar Compra</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.addContainer}>
+              <TouchableOpacity onPress={onExpire} style={styles.quitButton}>
+                <Text style={styles.addText}>Quitar Producto</Text>
+              </TouchableOpacity>
+            </View>
           </>
         )
       }
@@ -106,3 +114,43 @@ export default connect(
     },
   })
 )(CompraList);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  scroll: {
+    paddingVertical: 5,
+  },
+  addText :{
+    fontSize: 24,
+    color: '#0d0100',
+  },
+  addButton: {
+    backgroundColor: '#ff9b11',
+    borderRadius: 10,
+    alignItems: 'center',
+    width: 175,
+  },
+  quitButton: {
+    backgroundColor: '#C71A0A',
+    borderRadius: 10,
+    alignItems: 'center',
+    width: 175,
+  }, 
+  addText :{
+    fontSize: 20,
+    color: '#0d0100',
+    padding: 5,
+  },
+  addContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: 30,
+    margin: 10,
+  },
+});

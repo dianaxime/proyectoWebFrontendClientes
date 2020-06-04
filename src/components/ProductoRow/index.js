@@ -37,12 +37,12 @@ const ProductRow = ({ item, onSelect, onShop, tipo }) => {
             (tipo === 'Cliente') && (
               <View style={styles.containerButton}>
               <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={sum}>
-                  <Text style={styles.textButtons}>+</Text>
-                </TouchableOpacity>
-                <Text style={styles.textboxes}>{ cant }</Text>
                 <TouchableOpacity style={styles.button} onPress={res}>
                   <Text style={styles.textButtons}>-</Text>
+                </TouchableOpacity>
+                <Text style={styles.textboxes}>{ cant }</Text>
+                <TouchableOpacity style={styles.button} onPress={sum}>
+                  <Text style={styles.textButtons}>+</Text>
                 </TouchableOpacity>
               </View>
                 <View >
