@@ -6,15 +6,16 @@ import { reset, Field, reduxForm } from 'redux-form';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/auth';
 
+const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
+  return <TextInput onChangeText={onChange} {...restInput} {...rest} />
+}
+
 const RegisterForm = ({
   onSubmit,
   isLoading,
   error = null,
   handleSubmit,
 }) => {
-  const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
-    return <TextInput onChangeText={onChange} {...restInput} {...rest} />
-  }
   return (
     <View style={styles.container}>
       {

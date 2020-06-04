@@ -33,14 +33,14 @@ const MainApp = ({
           ) : (
               <>
                 <TokenRefresh />
-                {
-                  !fetchingCliente && !fetchingEmpleado && !cliente && !empleado && tipo && (
-                    <DataForm />
-                  )
-                }
                 <NavigationComponents />
               </>
             )
+          }
+        {
+          !fetchingCliente && !fetchingEmpleado && !cliente && !empleado && tipo && isAuthenticated && (
+            <DataForm />
+          )
         }
       </NavigationContainer>
     </>

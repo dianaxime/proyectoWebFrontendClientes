@@ -8,28 +8,32 @@ import * as selectors from '../../reducers';
 import * as actionsCliente from '../../actions/clientes';
 import * as actionsEmpleado from '../../actions/empleados';
 
+const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
+  return <TextInput onChangeText={onChange} {...restInput} {...rest} />
+}
+
 const DataForm = ({
   onSubmit,
   isLoading,
   error = null,
   handleSubmit,
 }) => {
-  const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
-    return <TextInput onChangeText={onChange} {...restInput} {...rest} />
-  }
   return (
     <View style={styles.container}>
+      <Text style={styles.titulo}>Completa tus Datos</Text>
       {
         error && (
-          <Text>{error}</Text>
+          <Text style={styles.errors}>{error}</Text>
         )
       }
+      <View style={styles.inputs}>
         <Field
             name={'nombre'}
             props={{
             placeholder: 'Nombre',
             }}
             component={renderInput}
+            style={styles.textboxes}
         />
         <Field
             name={'telefono'}
@@ -37,6 +41,7 @@ const DataForm = ({
             placeholder: 'Número de telefóno',
             }}
             component={renderInput}
+            style={styles.textboxes}
         />
         <Field
             name={'direccion'}
@@ -44,6 +49,7 @@ const DataForm = ({
             placeholder: 'Dirección',
             }}
             component={ renderInput }
+            style={styles.textboxes}
         />
         <Field
             name={'nit'}
@@ -51,12 +57,16 @@ const DataForm = ({
             placeholder: 'NIT/Puesto',
             }}
             component={renderInput}
+            style={styles.textboxes}
         />
+      </View>
         {
         isLoading ? (
-          <ActivityIndicator/>
+          <ActivityIndicator color='#400601'/>
         ) : (
-          <Button onPress={handleSubmit(onSubmit)} title='Completar'></Button>
+          <View style={styles.buttonsignin}>
+            <Button onPress={handleSubmit(onSubmit)} title='Completar' color='#400601'></Button>
+          </View>
         )
       }
     </View>
@@ -98,10 +108,41 @@ export default reduxForm({form: 'Update'})(
 );
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  inputs: {
+    alignItems: 'baseline',
+    justifyContent: 'center',
+  },
+  textboxes: {
+    padding: 2,
+    margin: 2,
+    marginBottom: 25,
+    borderBottomColor: '#0d0100',
+    color: '#0d0100',
+    borderBottomWidth: 1,
+    width: 200,
+  },
+  buttonlogin: {
+    padding: 10,
+    marginTop: 20,
+  },
+  buttonsignin: {
+    padding: 10,
+    marginTop: 30,
+  },
+  errors: {
+    color: '#950601',
+    margin: 20,
+  },
+  titulo: {
+    color: '#950601',
+    margin: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 });
