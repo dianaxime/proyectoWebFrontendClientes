@@ -11,7 +11,6 @@ const ListaList = ({ listas, isLoading, onLoad }) => {
   useEffect(onLoad, []);
   return (
     <View>
-      <ListaForm />
       {
         listas.length === 0 && !isLoading && (
           <Text>{'No hay Listas'}</Text>

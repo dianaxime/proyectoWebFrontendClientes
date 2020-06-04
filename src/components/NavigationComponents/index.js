@@ -20,6 +20,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import OfertaForm from '../OfertaForm';
 import ProductoForm from '../ProductoForm';
 import ListaForm from '../ListaForm';
+import TiendaForm from '../TiendaForm';
+import UpgradeTienda from '../UpgradeTienda';
 
 const TabHomeEmpleado = createMaterialTopTabNavigator();
 function TabNavigatorEmpleado() {
@@ -102,6 +104,50 @@ function TabNavigatorInventario() {
       <TabInventario.Screen name="Listas" component={ListaList} />
       <TabInventario.Screen name="Añadir" component={ListaForm} />
     </TabInventario.Navigator>
+  );
+}
+
+const TabUbicaciones = createMaterialTopTabNavigator();
+function TabNavigatorUbicaciones() {
+  return (
+    <TabUbicaciones.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Ubicaciones') {
+            iconName = 'map-marker-alt';
+          } 
+          else if (route.name === 'Añadir') {
+            iconName = 'plus';
+          }
+          else if (route.name === 'Actualizar') {
+            iconName = 'edit';
+          }
+          return <FontAwesome5 name={iconName} size={24} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: 'maroon',
+        inactiveTintColor: 'gray',
+        indicatorStyle: {
+          height: 0,
+        },
+        showIcon: true,
+        style: {
+          borderTopWidth: 0.5,
+          borderTopColor: 'grey',
+          maxHeight: 60,
+        },
+        labelStyle: {
+          fontSize: 10,
+        }
+      }}
+      tabBarPosition='bottom'
+    >
+      <TabUbicaciones.Screen name="Ubicaciones" component={TiendaList} />
+      <TabUbicaciones.Screen name="Añadir" component={TiendaForm} />
+      <TabUbicaciones.Screen name="Actualizar" component={UpgradeTienda} />
+    </TabUbicaciones.Navigator>
   );
 }
 
@@ -277,7 +323,7 @@ function DrawerNavigatorEmpleado() {
     >
       <DrawerEmpleado.Screen name="Inicio" component={TabNavigatorEmpleado} />
       <DrawerEmpleado.Screen name="Listas" component={TabNavigatorInventario} />
-      <DrawerEmpleado.Screen name="Ubicaciones" component={TiendaList} />
+      <DrawerEmpleado.Screen name="Ubicaciones" component={TabNavigatorUbicaciones} />
       <DrawerEmpleado.Screen name="Actualizar" component={TabNavigatorProfile} />
       <DrawerEmpleado.Screen name="Facturas" component={FacturaList} />
       <DrawerEmpleado.Screen name="Pedidos" component={PedidoList} />

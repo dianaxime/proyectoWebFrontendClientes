@@ -13,11 +13,6 @@ const TiendaList = ({ tiendas, isLoading, onLoad, tipo }) => {
   return (
     <View>
       {
-        tipo === 'Empleado' && (
-          <TiendaForm />
-        )
-      }
-      {
         tiendas.length === 0 && !isLoading && (
           <Text>{'No hay Tiendas'}</Text>
         )
@@ -38,11 +33,6 @@ const TiendaList = ({ tiendas, isLoading, onLoad, tipo }) => {
                 />
               ))}
             </ScrollView>
-            {
-              tipo === 'Empleado' && (
-                <UpgradeTienda />
-              )
-            }
           </>
         )
       }
