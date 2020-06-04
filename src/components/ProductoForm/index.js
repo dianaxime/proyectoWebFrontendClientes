@@ -47,15 +47,9 @@ const ProductoForm = ({
         />
       </View>
       <View style={styles.addContainer}>
-        {
-        isLoading ? (
-          <ActivityIndicator color='#400601'/>
-        ) : (
           <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.addButton}>
             <Text style={styles.addText}>Agregar</Text>
           </TouchableOpacity>
-        )
-        }
       </View>
     </View>
   );

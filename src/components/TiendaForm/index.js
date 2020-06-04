@@ -3,50 +3,61 @@ import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator } from 're
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
 import { v4 as uuidv4 } from 'uuid';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/tiendas';
 
+const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
+  return <TextInput onChangeText={onChange} {...restInput} {...rest} />
+}
+
 const TiendaForm = ({
   onSubmit,
-  isLoading,
-  error = null,
   handleSubmit,
 }) => {
-  const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
-    return <TextInput onChangeText={onChange} {...restInput} {...rest} />
-  }
   return (
     <View style={styles.container}>
-        <Field
-            name={'nombreTienda'}
-            props={{
-            placeholder: 'Nombre de la Tienda',
-            }}
-            component={renderInput}
-        />
-        <Field
-            name={'ubicacionTienda'}
-            props={{
-            placeholder: 'Ubicación',
-            }}
-            component={ renderInput }
-        />
-        <Field
-            name={'telefonoTienda'}
-            props={{
-            placeholder: 'Telefóno',
-            }}
-            component={renderInput}
-        />
-        <Field
-            name={'faxTienda'}
-            props={{
-            placeholder: 'Fax',
-            }}
-            component={renderInput}
-        />
-        <Button onPress={handleSubmit(onSubmit)} title='Agregar'></Button>
+      <Text style={styles.titulo}>Añadir Ubicación</Text>
+      <View style={styles.inputs}>
+          <Field
+              name={'nombreTienda'}
+              props={{
+              placeholder: 'Nombre de la Tienda',
+              }}
+              component={renderInput}
+              style={styles.textboxes}
+          />
+          <Field
+              name={'ubicacionTienda'}
+              props={{
+              placeholder: 'Ubicación',
+              }}
+              component={ renderInput }
+              style={styles.textboxes}
+          />
+          <Field
+              name={'telefonoTienda'}
+              props={{
+              placeholder: 'Telefóno',
+              }}
+              component={renderInput}
+              style={styles.textboxes}
+          />
+          <Field
+              name={'faxTienda'}
+              props={{
+              placeholder: 'Fax',
+              }}
+              component={renderInput}
+              style={styles.textboxes}
+          />
+      </View>
+      <View style={styles.addContainer}>
+          <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.addButton}>
+            <Text style={styles.addText}>Agregar</Text>
+          </TouchableOpacity>
+      </View>
     </View>
   );
 } 
@@ -72,11 +83,48 @@ export default reduxForm({form: 'Tienda'})(
 );
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputs: {
+    alignItems: 'baseline',
+    justifyContent: 'center',
+  },
+  textboxes: {
+    margin: 8,
+    borderBottomColor: '#0d0100',
+    color: '#0d0100',
+    borderBottomWidth: 1,
+    width: 250,
+  },
+  errors: {
+    color: '#950601',
+    margin: 20,
+  },
+  addButton: {
+    backgroundColor: '#ff9b11',
+    borderRadius: 10,
+    alignItems: 'center',
+    width: 175,
+  }, 
+  addText :{
+    fontSize: 20,
+    color: '#0d0100',
+    padding: 5,
+  },
+  addContainer: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: 30,
+    margin: 20,
+  },
+  titulo: {
+    color: '#950601',
+    margin: 20,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 });
-
