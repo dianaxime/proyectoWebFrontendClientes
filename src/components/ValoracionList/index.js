@@ -10,7 +10,7 @@ const ValoracionList = ({ comentarios, isLoading, onLoad, puntuacion }) => {
   return (
     <View style={styles.container}>
       <View style={styles.rowContainer}>
-        <Text style={styles.addText}>Puntuacion Promedio:   </Text>
+        <Text style={styles.addText}>Puntuación Promedio:   </Text>
         <Text style={styles.addText}>{ puntuacion }</Text>
       </View>
         <View>

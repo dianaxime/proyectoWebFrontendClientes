@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Button, View } from 'react-native';
 import * as selectors from '../../reducers';
 import * as actions from '../../actions/pedidos';
 import * as selectedActions from '../../actions/selectedPedido';
@@ -9,16 +9,20 @@ import RegistroList from '../RegistroList';
 import ValoracionForm from '../ValoracionForm';
 
 const PedidoRow = ({ item, pedido, onSelect, tipo, onAccept, onComplete }) => (
-    <TouchableOpacity onPress={onSelect}>
-        <Text>{ moment(item.fechaPedido).calendar() }</Text>
-        <Text>{ item.entregaPedido }</Text>
-        {
-            pedido === item.id && (
-                <>
-                    <RegistroList
-                    key={pedido}
-                    item={pedido} 
-                    />
+    <View style={styles.container}>
+        <TouchableOpacity onPress={onSelect}>
+            <Text style={styles.fecha}>{ moment(item.fechaPedido).calendar() }</Text>
+            <View style={styles.rowContainer}>
+                <Text>Estado:                   </Text>
+                <Text>{ item.estadoPedido }</Text>
+            </View>
+            <View style={styles.rowContainer}>
+                <Text>Entrega:                   </Text>
+                <Text>{ item.entregaPedido }</Text>
+            </View>
+            {
+                pedido === item.id && (
+                    <>
                     {
                         tipo === 'Cliente' && (
                             <ValoracionForm />
@@ -26,16 +30,29 @@ const PedidoRow = ({ item, pedido, onSelect, tipo, onAccept, onComplete }) => (
                     }
                     {
                         tipo === 'Empleado' && (
-                            <>
-                                <Button title='Aceptar' onPress={onAccept}></Button>
-                                <Button title='Completar' onPress={onComplete}></Button>
-                            </>
+                            <View style={styles.rowContainer}>
+                                <TouchableOpacity onPress={onAccept} style={styles.addButton}>
+                                    <Text style={styles.addText}>Aceptar</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={onComplete} style={styles.addButton}>
+                                    <Text style={styles.addText}>Completar</Text>
+                                </TouchableOpacity>
+                            </View>
                         )
                     }
-                </>
-            )
-        }
-    </TouchableOpacity>
+                    <View style={styles.rowContainer}>
+                        <Text>Cant.     </Text>
+                        <Text>Producto</Text>
+                    </View>
+                        <RegistroList
+                        key={pedido}
+                        item={pedido} 
+                    />
+                    </>
+                )
+            }
+        </TouchableOpacity>
+    </View>
 );
 
 export default connect(
@@ -70,3 +87,38 @@ export default connect(
     },
   })
 )(PedidoRow);
+
+const styles = StyleSheet.create({
+    container: {
+      //backgroundColor: '#fff',
+      //alignItems: 'center',
+      borderBottomWidth: 0.75,
+      borderBottomColor: '#0d0100',
+      marginTop: 10,
+      marginBottom: 10,
+    },
+    rowContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+    }, 
+    textos: {
+      fontSize: 14,
+      color: '#0d0100',
+    },
+    fecha: {
+      fontSize: 18,
+      fontWeight: 'bold',
+    },
+    addButton: {
+        backgroundColor: '#ff9b11',
+        borderRadius: 10,
+        alignItems: 'center',
+        width: 125,
+        margin: 5,
+    },
+    addText: {
+        fontSize: 20,
+        color: '#0d0100',
+        padding: 5,
+    },
+});

@@ -11,29 +11,35 @@ import FacturaRow from '../FacturaRow';
 const FacturaList = ({ facturas, isLoading, onLoad }) => {
   useEffect(onLoad, []);
   return (
-    <View>
-      {
-        facturas.length === 0 && !isLoading && (
-          <Text>{'No hay Facturas'}</Text>
-        )
-      }
-      {
-        isLoading && (
-          <ActivityIndicator/>
-        )
-      }
-      {
-        facturas.length > 0 && !isLoading && (
-          <ScrollView>
-            {facturas && facturas.map((item, i) => (
-              <FacturaRow
-                key={i}
-                item={item} 
-              />
-            ))}
-          </ScrollView>
-        )
-      }
+    <View style={styles.container}>
+      <View>
+        {
+          facturas.length === 0 && !isLoading && (
+            <Text style={styles.addText}>{'No hay Facturas'}</Text>
+          )
+        }
+      </View>
+      <View>
+        {
+          isLoading && (
+            <ActivityIndicator color='#400601'/>
+          )
+        }
+      </View>
+      <View>
+        {
+          facturas.length > 0 && !isLoading && (
+            <ScrollView>
+              {facturas && facturas.map((item, i) => (
+                <FacturaRow
+                  key={i}
+                  item={item} 
+                />
+              ))}
+            </ScrollView>
+          )
+        }
+      </View>
     </View>
   );
 };
@@ -48,7 +54,9 @@ export default connect(
   dispatch => ({
     onLoad(tipo, cliente) {
       tipo === 'Cliente' ? (
-        dispatch(actions.startFetchingFacturasClientes(cliente))
+        stateProps.cliente != null && (
+          dispatch(actions.startFetchingFacturasClientes(cliente['id']))
+        )
       ): (
         dispatch(actions.startFetchingFacturas())
       )
@@ -70,11 +78,28 @@ export default connect(
       }, 1000);
       setTimeout(() => {
         console.log("-----",stateProps.cliente, stateProps.tipo),
-        stateProps.cliente != null && stateProps.tipo != null && (
+        stateProps.tipo != null && (
           console.log("Hola mundo!"),
-          dispatchProps.onLoad(stateProps.tipo, stateProps.cliente['id'])  
+          dispatchProps.onLoad(stateProps.tipo, stateProps.cliente)  
         );
       }, 3000);    
     },
   })
 )(FacturaList);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  scroll: {
+    paddingVertical: 5,
+  },
+  addText :{
+    fontSize: 24,
+    color: '#0d0100',
+  },
+});

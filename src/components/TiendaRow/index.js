@@ -7,8 +7,8 @@ import * as selectedActions from '../../actions/selectedTienda';
 
 const TiendaRow = ({ item, onSelect }) => (
   <View style={styles.container}>
+    <Text style={styles.tienda}>{ item.nombreTienda }</Text>
     <TouchableOpacity onPress={onSelect}>
-      <Text style={styles.tienda}>{ item.nombreTienda }</Text>
       <View style={styles.rowContainer}>
         <Text style={styles.textos}>Ubicacion:           </Text>
         <Text style={styles.textos}>{ item.ubicacionTienda }</Text>

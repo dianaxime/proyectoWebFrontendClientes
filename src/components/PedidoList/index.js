@@ -14,29 +14,35 @@ import PedidoRow from '../PedidoRow';
 const PedidoList = ({ pedidos, isLoading, onLoad }) => {
   useEffect(onLoad, []);
   return (
-    <View>
-      {
-        pedidos.length === 0 && !isLoading && (
-          <Text>{'No hay Pedidos'}</Text>
-        )
-      }
-      {
-        isLoading && (
-          <ActivityIndicator/>
-        )
-      }
-      {
-        pedidos.length > 0 && !isLoading && (
-          <ScrollView>
-            {pedidos && pedidos.map((item, i) => (
-              <PedidoRow
-                key={i}
-                item={item} 
-              />
-            ))}
-          </ScrollView>
-        )
-      }
+    <View style={styles.container}>
+      <View>
+        {
+          pedidos.length === 0 && !isLoading && (
+            <Text>{'No hay Pedidos'}</Text>
+          )
+        }
+      </View>
+      <View>
+        {
+          isLoading && (
+            <ActivityIndicator color='#400601'/>
+          )
+        }
+      </View>
+      <View>
+        {
+          pedidos.length > 0 && !isLoading && (
+            <ScrollView>
+              {pedidos && pedidos.map((item, i) => (
+                <PedidoRow
+                  key={i}
+                  item={item} 
+                />
+              ))}
+            </ScrollView>
+          )
+        }
+      </View>
     </View>
   );
 };
@@ -93,3 +99,20 @@ export default connect(
     },
   })
 )(PedidoList);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  scroll: {
+    paddingVertical: 5,
+  },
+  addText :{
+    fontSize: 24,
+    color: '#0d0100',
+  },
+});

@@ -9,14 +9,15 @@ import * as selectors from '../../reducers';
 import * as actions from '../../actions/valoraciones';
 import * as actionsPuntuacion from '../../actions/selectedPuntuacion';
 
+const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
+  return <TextInput onChangeText={onChange} {...restInput} {...rest} />
+}
+
 const ValoracionForm = ({
   onSubmit,
   handleSubmit,
   onRate,
 }) => {
-  const renderInput = ({ input: { onChange, ...restInput }, ...rest}) => {
-    return <TextInput onChangeText={onChange} {...restInput} {...rest} />
-  }
   return (
     <View >
       <Field

@@ -20,17 +20,17 @@ const ProductRow = ({ item, onSelect, onShop, tipo }) => {
   }
   return (
     <View style={styles.container}>
+      <Text style={styles.producto}>{ item.nombreProducto }</Text>
       <TouchableOpacity onPress={onSelect}>
         <View>
-          <Text styles={styles.textos}>{ item.nombreProducto }</Text>
-          <Text styles={styles.textos}>{ item.descripcionProducto }</Text>
+          <Text style={styles.textos}>{ item.descripcionProducto }</Text>
           <View style={styles.textContainer}>
-            <Text styles={styles.textos}>Precio:                               </Text>
-            <Text styles={styles.textos}>Q { parseFloat(item.precioProducto).toFixed(2) }</Text>
+            <Text style={styles.textos}>Precio:                               </Text>
+            <Text style={styles.textos}>Q { parseFloat(item.precioProducto).toFixed(2) }</Text>
           </View>
           <View style={styles.textContainer}>
-            <Text styles={styles.textos}>Descuento:                        </Text>
-            <Text styles={styles.textos}>Q { parseFloat(item.descuentoProducto).toFixed(2) }</Text>
+            <Text style={styles.textos}>Descuento:                        </Text>
+            <Text style={styles.textos}>Q { parseFloat(item.descuentoProducto).toFixed(2) }</Text>
           </View>
         </View>
           {
@@ -145,10 +145,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textos: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#0d0100',
   },
   containerButton: {
     alignItems: 'center',
+  },
+  producto: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

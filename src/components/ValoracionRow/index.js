@@ -13,9 +13,10 @@ const ValoracionRow = ({ item }) => (
         <Text style={styles.textos}>{ moment(item.fechaValoracion).calendar() }</Text>
       </View>
       <View style={styles.rowContainer}>
-        <Text style={styles.textos}>Puntuacion: </Text>
+        <Text style={styles.textos}>Puntuación: </Text>
         <Text style={styles.textos}>{ item.puntuacionValoracion }</Text>
       </View>
+      <Text style={styles.textos}>Comentario:</Text>
       <Text style={styles.textos}>{ item.comentarioValoracion }</Text>
     </TouchableOpacity>
   </View>

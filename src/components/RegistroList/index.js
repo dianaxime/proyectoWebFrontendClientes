@@ -9,15 +9,15 @@ import RegistroRow from '../RegistroRow';
 const RegistroList = ({ registros, isLoading, onLoad, item }) => {
   useEffect(onLoad, []);
   return (
-    <View>
-      {
-        registros.length === 0 && !isLoading && (
-          <Text>{'No hay Registros'}</Text>
-        )
-      }
+    <View style={styles.container}>
+        {
+          registros.length === 0 && !isLoading && (
+            <Text style={styles.addText}>{'No hay Registros'}</Text>
+          )
+        }
       {
         isLoading && (
-          <ActivityIndicator/>
+          <ActivityIndicator color='#400601'/>
         )
       }
       {
@@ -58,3 +58,19 @@ export default connect(
     ...dispatchProps,
   })
 )(RegistroList);
+
+const styles = StyleSheet.create({
+  container: {
+    //backgroundColor: '#fff',
+    alignItems: 'baseline',
+    justifyContent: 'flex-start',
+    marginTop: 5,
+  },
+  scroll: {
+    paddingVertical: 5,
+  },
+  addText :{
+    fontSize: 24,
+    color: '#0d0100',
+  },
+});

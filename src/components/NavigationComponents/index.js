@@ -241,7 +241,7 @@ function DrawerNavigatorCliente() {
                     } else if (route.name === 'Ubicaciones') {
                         iconName = 'map-marker-alt';
                     }
-                    else if (route.name === 'Actualizar') {
+                    else if (route.name === 'Perfil') {
                         iconName = 'user-edit';
                     }
                     else if (route.name === 'Facturas') {
@@ -270,7 +270,7 @@ function DrawerNavigatorCliente() {
         >
             <DrawerCliente.Screen name="Inicio" component={TabNavigatorCliente} />
             <DrawerCliente.Screen name="Ubicaciones" component={TiendaList} />
-            <DrawerCliente.Screen name="Actualizar" component={UpgradeForm} />
+            <DrawerCliente.Screen name="Perfil" component={UpgradeForm} />
             <DrawerCliente.Screen name="Facturas" component={FacturaList} />
             <DrawerCliente.Screen name="Pedidos" component={PedidoList} />
             <DrawerCliente.Screen name="Salir" component={Logout} />
@@ -294,7 +294,7 @@ function DrawerNavigatorEmpleado() {
                 else if (route.name === 'Ubicaciones') {
                     iconName = 'map-marker-alt';
                 }
-                else if (route.name === 'Actualizar') {
+                else if (route.name === 'Perfil') {
                     iconName = 'user-edit';
                 }
                 else if (route.name === 'Facturas') {
@@ -324,7 +324,7 @@ function DrawerNavigatorEmpleado() {
       <DrawerEmpleado.Screen name="Inicio" component={TabNavigatorEmpleado} />
       <DrawerEmpleado.Screen name="Listas" component={TabNavigatorInventario} />
       <DrawerEmpleado.Screen name="Ubicaciones" component={TabNavigatorUbicaciones} />
-      <DrawerEmpleado.Screen name="Actualizar" component={TabNavigatorProfile} />
+      <DrawerEmpleado.Screen name="Perfil" component={TabNavigatorProfile} />
       <DrawerEmpleado.Screen name="Facturas" component={FacturaList} />
       <DrawerEmpleado.Screen name="Pedidos" component={PedidoList} />
       <DrawerEmpleado.Screen name="Salir" component={Logout} />
