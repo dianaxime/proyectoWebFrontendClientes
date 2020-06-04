@@ -23,6 +23,11 @@ const MainApp = ({
 }) => {
   return (
     <>
+        {
+          !fetchingCliente && !fetchingEmpleado && !cliente && !empleado && tipo && isAuthenticated && (
+            <DataForm open={true}/>
+          ) 
+        }
       <NavigationContainer>
         {
           !isAuthenticated ? (
@@ -37,11 +42,6 @@ const MainApp = ({
               </>
             )
           }
-        {
-          !fetchingCliente && !fetchingEmpleado && !cliente && !empleado && tipo && isAuthenticated && (
-            <DataForm />
-          )
-        }
       </NavigationContainer>
     </>
   );

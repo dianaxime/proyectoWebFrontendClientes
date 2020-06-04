@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, ActivityIndicator, Modal } from 'react-native';
 import { connect } from 'react-redux';
 import { reset, Field, reduxForm } from 'redux-form';
 
@@ -17,69 +17,76 @@ const DataForm = ({
   isLoading,
   error = null,
   handleSubmit,
+  open = false,
 }) => {
+  const [modalVisible, setModalVisible] = useState(open);
+  //useEffect(setModalVisible(false), [modalVisible]);
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>Completa tus Datos</Text>
-      {
-        error && (
-          <Text style={styles.errors}>{error}</Text>
-        )
-      }
-      <View style={styles.inputs}>
-        <Field
-            name={'nombre'}
-            props={{
-            placeholder: 'Nombre',
-            }}
-            component={renderInput}
-            style={styles.textboxes}
-        />
-        <Field
-            name={'telefono'}
-            props={{
-            placeholder: 'Número de telefóno',
-            }}
-            component={renderInput}
-            style={styles.textboxes}
-        />
-        <Field
-            name={'direccion'}
-            props={{
-            placeholder: 'Dirección',
-            }}
-            component={ renderInput }
-            style={styles.textboxes}
-        />
-        <Field
-            name={'nit'}
-            props={{
-            placeholder: 'NIT/Puesto',
-            }}
-            component={renderInput}
-            style={styles.textboxes}
-        />
-      </View>
-        {
-        isLoading ? (
-          <ActivityIndicator color='#400601'/>
-        ) : (
-          <View style={styles.buttonsignin}>
-            <Button onPress={handleSubmit(onSubmit)} title='Completar' color='#400601'></Button>
+      <Modal
+        visible={modalVisible}
+      >
+          <Text style={styles.titulo}>Completa tus Datos</Text>
+          {
+            error && (
+              <Text style={styles.errors}>{error}</Text>
+            )
+          }
+          <View style={styles.inputs}>
+            <Field
+                name={'nombre'}
+                props={{
+                placeholder: 'Nombre',
+                }}
+                component={renderInput}
+                style={styles.textboxes}
+            />
+            <Field
+                name={'telefono'}
+                props={{
+                placeholder: 'Número de telefóno',
+                }}
+                component={renderInput}
+                style={styles.textboxes}
+            />
+            <Field
+                name={'direccion'}
+                props={{
+                placeholder: 'Dirección',
+                }}
+                component={ renderInput }
+                style={styles.textboxes}
+            />
+            <Field
+                name={'nit'}
+                props={{
+                placeholder: 'NIT/Puesto',
+                }}
+                component={renderInput}
+                style={styles.textboxes}
+            />
           </View>
-        )
-      }
+            {
+            isLoading ? (
+              <ActivityIndicator color='#400601'/>
+            ) : (
+              <View style={styles.buttonsignin}>
+                <Button onPress={handleSubmit(onSubmit)} title='Completar' color='#400601'></Button>
+              </View>
+            )
+          }
+      </Modal>
     </View>
   );
 } 
 
 export default reduxForm({form: 'Update'})(
   connect(
-    state => ({
+    (state, {open}) => ({
       idUsuario: selectors.getAuthUserID(state),
       tipo: selectors.getUsuario(state),
     }),
-    dispatch => ({
+    (dispatch, {open}) => ({
       onSubmit(values, tipo, idUsuario) {
         const {
           nombre,
@@ -88,11 +95,18 @@ export default reduxForm({form: 'Update'})(
           nit,
         } = values;
         tipo === 'Cliente' ? (
-            dispatch(actionsCliente.startAddingCliente(uuidv4(), nombre, telefono, direccion, nit, idUsuario))
+            dispatch(actionsCliente.startAddingCliente(uuidv4(), nombre, telefono, direccion, nit, idUsuario)),
+            setTimeout(() => {
+              dispatch(actionsCliente.startFetchingCliente());
+            }, 1000)
         ) : (
-            dispatch(actionsEmpleado.startAddingEmpleado(uuidv4(), nombre, telefono, direccion, nit, idUsuario))
+            dispatch(actionsEmpleado.startAddingEmpleado(uuidv4(), nombre, telefono, direccion, nit, idUsuario)),
+            setTimeout(() => {
+              dispatch(actionsEmpleado.startFetchingEmpleado());
+            }, 1000)
         )
         dispatch(reset('Update'));
+        open = false;
       },
     }),
     (stateProps, dispatchProps, ownProps) => ({
@@ -109,7 +123,6 @@ export default reduxForm({form: 'Update'})(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'

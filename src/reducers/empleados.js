@@ -90,31 +90,13 @@ const error = (state = null, action) => {
   }
 };
 
-const addingError = (state = null, action) => {
-    switch(action.type) {
-      case types.EMPLEADO_ADD_FAILED: {
-        return action.payload.error;
-      }
-      case types.EMPLEADO_ADD_STARTED: {
-        return null;
-      }
-      case types.EMPLEADO_ADD_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
-    }
-};
 
 export default combineReducers({
   byId,
   isFetching,
   error,
-  addingError,
 });
 
 export const getEmpleado = (state, id) => state.byId[id];
 export const isFetchingEmpleado = state => state.isFetching;
 export const getFetchingEmpleadoError = state => state.error;
-export const getAddingEmpleadoError = state => state.addingError;

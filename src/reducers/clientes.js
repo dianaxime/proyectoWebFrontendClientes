@@ -91,32 +91,14 @@ const error = (state = null, action) => {
   }
 };
 
-const addingError = (state = null, action) => {
-    switch(action.type) {
-      case types.CLIENTE_ADD_FAILED: {
-        return action.payload.error;
-      }
-      case types.CLIENTE_ADD_STARTED: {
-        return null;
-      }
-      case types.CLIENTE_ADD_COMPLETED: {
-        return null;
-      }
-      default: {
-        return state;
-      }
-    }
-};
+
 
 export default combineReducers({
   byId,
   isFetching,
   error,
-  addingError,
 });
 
 export const getCliente = (state, id) => state.byId[id];
 export const isFetchingCliente = state => state.isFetching;
 export const getFetchingClienteError = state => state.error;
-export const getAddingClienteError = state => state.addingError;
-export const getUpdatingClienteError = state => state.updatingError;
