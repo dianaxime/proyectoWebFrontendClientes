@@ -8,32 +8,41 @@ import ValoracionRow from '../ValoracionRow';;
 const ValoracionList = ({ comentarios, isLoading, onLoad, puntuacion }) => {
   useEffect(onLoad, []);
   return (
-    <View>
-        <Text>{ puntuacion }</Text>
-      {
-        comentarios.length === 0 && !isLoading && (
-          <Text>{'No hay Comentarios'}</Text>
-        )
-      }
-      {
-        isLoading && (
-          <ActivityIndicator/>
-        )
-      }
-      {
-        comentarios.length > 0 && !isLoading && (
-          <>
-            <ScrollView>
-              {comentarios && comentarios.map((item, i) => (
-                <ValoracionRow
-                  key={i}
-                  item={item} 
-                />
-              ))}
-            </ScrollView>
-          </>
-        )
-      }
+    <View style={styles.container}>
+      <View style={styles.rowContainer}>
+        <Text style={styles.addText}>Puntuacion Promedio:   </Text>
+        <Text style={styles.addText}>{ puntuacion }</Text>
+      </View>
+        <View>
+          {
+            comentarios.length === 0 && !isLoading && (
+              <Text>{'No hay Comentarios'}</Text>
+            )
+          }
+        </View>
+        <View>
+          {
+            isLoading && (
+              <ActivityIndicator color='#400601'/>
+            )
+          }
+        </View>
+        <View>
+          {
+            comentarios.length > 0 && !isLoading && (
+              <>
+                <ScrollView>
+                  {comentarios && comentarios.map((item, i) => (
+                    <ValoracionRow
+                      key={i}
+                      item={item} 
+                    />
+                  ))}
+                </ScrollView>
+              </>
+            )
+          }
+        </View>
     </View>
   );
 };
@@ -60,3 +69,25 @@ export default connect(
     },
   })
 )(ValoracionList);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  scroll: {
+    paddingVertical: 5,
+  },
+  addText :{
+    fontSize: 20,
+    color: '#ff7d09',
+    marginTop: 40,
+  },
+  rowContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+});

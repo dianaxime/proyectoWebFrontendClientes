@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderBottomWidth: 0.75,
     borderBottomColor: '#0d0100',
-    marginTop: 15,
+    marginTop: 10,
+    marginBottom: 10,
   },
   rowContainer: {
     display: 'flex',
