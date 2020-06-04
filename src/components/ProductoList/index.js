@@ -6,42 +6,41 @@ import * as actions from '../../actions/productos';
 import * as actionsUsuarios from '../../actions/usuarios';
 import * as actionsListas from '../../actions/listas';
 import ProductoRow from '../ProductoRow';
-import OfertaForm from '../OfertaForm';
-import ProductoForm from '../ProductoForm';
 
 const ProductList = ({ productos, isLoading, onLoad, tipo }) => {
   useEffect(onLoad, []);
   return (
-    <View>
-      {
-        tipo === 'Empleado' && (
-          <ProductoForm />
-        )
-      }
-      {
-        productos.length === 0 && !isLoading && (
-          <Text>{'No hay Productos'}</Text>
-        )
-      }
-      {
-        isLoading && (
-          <ActivityIndicator/>
-        )
-      }
-      {
-        productos.length > 0 && !isLoading && (
-          <>
-            <ScrollView>
-              {productos && productos.map((item, i) => (
-                <ProductoRow
-                  key={i}
-                  item={item} 
-                />
-              ))}
-            </ScrollView>
-          </>
-        )
-      }
+    <View style={styles.container}>
+      <View>
+        {
+          productos.length === 0 && !isLoading && (
+            <Text style={styles.addText}>{'No hay Productos'}</Text>
+          )
+        }
+      </View>
+      <View>
+        {
+          isLoading && (
+            <ActivityIndicator color='maroon'/>
+          )
+        }
+      </View>
+      <View>
+        {
+          productos.length > 0 && !isLoading && (
+            <>
+              <ScrollView style={styles.scroll}>
+                {productos && productos.map((item, i) => (
+                  <ProductoRow
+                    key={i}
+                    item={item} 
+                  />
+                ))}
+              </ScrollView>
+            </>
+          )
+        }
+      </View>
     </View>
   );
 };
@@ -62,3 +61,20 @@ export default connect(
     },
   }),
 )(ProductList);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 30,
+  },
+  scroll: {
+    paddingVertical: 5,
+  },
+  addText :{
+    fontSize: 24,
+    color: '#0d0100',
+  },
+});

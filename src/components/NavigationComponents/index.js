@@ -18,7 +18,8 @@ import PedidoList from '../PedidoList';
 import ValoracionList from '../ValoracionList';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import OfertaForm from '../OfertaForm';
-
+import ProductoForm from '../ProductoForm';
+import ListaForm from '../ListaForm';
 
 const TabHomeEmpleado = createMaterialTopTabNavigator();
 function TabNavigatorEmpleado() {
@@ -29,16 +30,16 @@ function TabNavigatorEmpleado() {
           let iconName;
           if (route.name === 'Productos') {
             iconName = 'th-list';
-          } else if (route.name === 'Listas') {
-            iconName = 'list-alt'
+          } else if (route.name === 'Añadir') {
+            iconName = 'plus-circle';
           } else if (route.name === 'Ofertas') {
-            iconName = 'tags'
+            iconName = 'tags';
           }
           return <FontAwesome5 name={iconName} size={24} color={color} />;
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'red',
+        activeTintColor: 'maroon',
         inactiveTintColor: 'gray',
         indicatorStyle: {
           height: 0,
@@ -56,9 +57,51 @@ function TabNavigatorEmpleado() {
       tabBarPosition='bottom'
     >
       <TabHomeEmpleado.Screen name="Productos" component={ProductoList} />
-      <TabHomeEmpleado.Screen name="Listas" component={ListaList} />
+      <TabHomeEmpleado.Screen name="Añadir" component={ProductoForm} />
       <TabHomeEmpleado.Screen name="Ofertas" component={OfertaForm} />
     </TabHomeEmpleado.Navigator>
+  );
+}
+
+const TabInventario = createMaterialTopTabNavigator();
+function TabNavigatorInventario() {
+  return (
+    <TabInventario.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Productos') {
+            iconName = 'th-list';
+          } else if (route.name === 'Listas') {
+            iconName = 'list-alt';
+          } else if (route.name === 'Añadir') {
+            iconName = 'plus';
+          }
+          return <FontAwesome5 name={iconName} size={24} color={color} />;
+        },
+      })}
+      tabBarOptions={{
+        activeTintColor: 'maroon',
+        inactiveTintColor: 'gray',
+        indicatorStyle: {
+          height: 0,
+        },
+        showIcon: true,
+        style: {
+          borderTopWidth: 0.5,
+          borderTopColor: 'grey',
+          maxHeight: 60,
+        },
+        labelStyle: {
+          fontSize: 10,
+        }
+      }}
+      tabBarPosition='bottom'
+    >
+      <TabInventario.Screen name="Productos" component={ProductoList} />
+      <TabInventario.Screen name="Listas" component={ListaList} />
+      <TabInventario.Screen name="Añadir" component={ListaForm} />
+    </TabInventario.Navigator>
   );
 }
 
@@ -72,13 +115,13 @@ function TabNavigatorProfile() {
           if (route.name === 'Actualizar') {
             iconName = 'user';
           } else if (route.name === 'Comentarios') {
-            iconName = 'comments'
+            iconName = 'comments';
           }
           return <FontAwesome5 name={iconName} size={24} color={color} />;
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'red',
+        activeTintColor: 'maroon',
         inactiveTintColor: 'gray',
         indicatorStyle: {
           height: 0,
@@ -111,13 +154,13 @@ function TabNavigatorCliente() {
           if (route.name === 'Productos') {
             iconName = 'th-list';
           } else if (route.name === 'Compras') {
-            iconName = 'shopping-cart'
+            iconName = 'shopping-cart';
           }
           return <FontAwesome5 name={iconName} size={24} color={color} />;
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'red',
+        activeTintColor: 'maroon',
         inactiveTintColor: 'gray',
         indicatorStyle: {
           height: 0,
@@ -150,25 +193,25 @@ function DrawerNavigatorCliente() {
                     if (route.name === 'Inicio') {
                         iconName = 'home';
                     } else if (route.name === 'Ubicaciones') {
-                        iconName = 'map-marker-alt'
+                        iconName = 'map-marker-alt';
                     }
                     else if (route.name === 'Actualizar') {
-                        iconName = 'user-edit'
+                        iconName = 'user-edit';
                     }
                     else if (route.name === 'Facturas') {
-                        iconName = 'money-bill'
+                        iconName = 'money-bill';
                     }
                     else if (route.name === 'Pedidos') {
-                        iconName = 'history'
+                        iconName = 'history';
                     }
                     else if (route.name === 'Salir') {
-                        iconName = 'sign-out-alt'
+                        iconName = 'sign-out-alt';
                     }
                     return <FontAwesome5 name={iconName} size={size} color={color} />;
                 },
             })}
             drawerContentOptions={{
-                activeTintColor: 'red',
+                activeTintColor: 'maroon',
                 inactiveTintColor: 'gray',
                 indicatorStyle: {
                     height: 0,
@@ -198,26 +241,30 @@ function DrawerNavigatorEmpleado() {
                 let iconName;
                 if (route.name === 'Inicio') {
                     iconName = 'home';
-                } else if (route.name === 'Ubicaciones') {
-                    iconName = 'map-marker-alt'
+                }
+                else if (route.name === 'Listas') {
+                  iconName = 'list-alt';
+                } 
+                else if (route.name === 'Ubicaciones') {
+                    iconName = 'map-marker-alt';
                 }
                 else if (route.name === 'Actualizar') {
-                    iconName = 'user-edit'
+                    iconName = 'user-edit';
                 }
                 else if (route.name === 'Facturas') {
-                    iconName = 'money-bill'
+                    iconName = 'money-bill';
                 }
                 else if (route.name === 'Pedidos') {
-                    iconName = 'history'
+                    iconName = 'history';
                 }
                 else if (route.name === 'Salir') {
-                    iconName = 'sign-out-alt'
+                    iconName = 'sign-out-alt';
                 }
                 return <FontAwesome5 name={iconName} size={size} color={color} />;
             },
         })}
         drawerContentOptions={{
-            activeTintColor: 'red',
+            activeTintColor: 'maroon',
             inactiveTintColor: 'gray',
             indicatorStyle: {
                 height: 0,
@@ -229,6 +276,7 @@ function DrawerNavigatorEmpleado() {
         }}
     >
       <DrawerEmpleado.Screen name="Inicio" component={TabNavigatorEmpleado} />
+      <DrawerEmpleado.Screen name="Listas" component={TabNavigatorInventario} />
       <DrawerEmpleado.Screen name="Ubicaciones" component={TiendaList} />
       <DrawerEmpleado.Screen name="Actualizar" component={TabNavigatorProfile} />
       <DrawerEmpleado.Screen name="Facturas" component={FacturaList} />
@@ -246,11 +294,11 @@ const NavigationComponents = ({
     <RootStack.Navigator headerMode='none'>
       {/*
         tipo === 'Cliente' ? (
-            ) : (
-                )
-                <RootStack.Screen name='Cliente' component={DrawerNavigatorCliente}/>
-            */}
-            <RootStack.Screen name='Empleado' component={DrawerNavigatorEmpleado}/>
+          <RootStack.Screen name='Cliente' component={DrawerNavigatorCliente} />
+          ) : (
+            )
+          */}
+          <RootStack.Screen name='Empleado' component={DrawerNavigatorEmpleado} />
     </RootStack.Navigator>
   );
 };

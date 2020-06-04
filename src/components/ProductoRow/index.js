@@ -21,18 +21,36 @@ const ProductRow = ({ item, onSelect, onShop, tipo }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onSelect}>
-          <Text>{ item.nombreProducto }</Text>
-          <Text>{ item.descripcionProducto }</Text>
-          <Text>Q{ parseFloat(item.precioProducto).toFixed(2) }</Text>
-          <Text>Q{ parseFloat(item.descuentoProducto).toFixed(2) }</Text>
+        <View>
+          <Text styles={styles.textos}>{ item.nombreProducto }</Text>
+          <Text styles={styles.textos}>{ item.descripcionProducto }</Text>
+          <View style={styles.textContainer}>
+            <Text styles={styles.textos}>Precio:                               </Text>
+            <Text styles={styles.textos}>Q { parseFloat(item.precioProducto).toFixed(2) }</Text>
+          </View>
+          <View style={styles.textContainer}>
+            <Text styles={styles.textos}>Descuento:                        </Text>
+            <Text styles={styles.textos}>Q { parseFloat(item.descuentoProducto).toFixed(2) }</Text>
+          </View>
+        </View>
           {
             (tipo === 'Cliente') && (
-              <>
-                <Button title='+' onPress={sum}/>
-                <Button title='-' onPress={res}/>
-                <Text>{ cant }</Text>
-                <Button title='Añadir' onPress={() => onShop(cant)}/>
-              </>
+              <View style={styles.containerButton}>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={sum}>
+                  <Text style={styles.textButtons}>+</Text>
+                </TouchableOpacity>
+                <Text style={styles.textboxes}>{ cant }</Text>
+                <TouchableOpacity style={styles.button} onPress={res}>
+                  <Text style={styles.textButtons}>-</Text>
+                </TouchableOpacity>
+              </View>
+                <View >
+                  <TouchableOpacity onPress={() => onShop(cant)} style={styles.addButton}>
+                      <Text style={styles.addText}>Añadir</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             )
           }
       </TouchableOpacity>
@@ -74,9 +92,62 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    borderBottomWidth: 0.75,
+    borderBottomColor: '#0d0100',
+    marginTop: 15,
+  },
+  button : {
+    borderRadius: 50,
+    margin: 10,
+    backgroundColor: '#d97211',
+    width: 70,
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  }, 
+  textboxes: {
+    margin: 5,
+    fontSize: 30,
+    color: '#0d0100'
+  },
+  textButtons: {
+    margin: 5,
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+  }, 
+  addButton: {
+    backgroundColor: '#ff9b11',
+    margin: 5,
+    borderRadius: 10,
+    alignItems: 'center',
+    width: 125,
+  },
+  addContainer: {
+    alignItems: 'center',
+    width: 30,
+    margin: 10,
+  }, 
+  addText :{
+    fontSize: 20,
+    color: '#0d0100',
+    padding: 5,
+  }, 
+  textContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textos: {
+    fontSize: 12,
+    color: '#0d0100',
+  },
+  containerButton: {
+    alignItems: 'center',
   },
 });
