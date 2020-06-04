@@ -7,22 +7,17 @@ import * as actions from '../../actions/auth';
 
 const Logout = ({ onClick, isHidden = false, tipo }) => (
   <View style={styles.container}>
-    {
-      !isHidden && (
-        <Button onPress={onClick} title='Cerrar sesión'>
+    <Text style={styles.errors}>¿Estas seguro que desea salir?</Text>
+    <View style={styles.buttonlogin}>
+        <Button onPress={onClick} title='Cerrar sesión' color='#400601'>
         </Button>
-      )
-    }
-    <Text>{tipo}</Text>
+    </View>
   </View>
 );
 
 
 export default connect(
-  state => ({
-    isHidden: !selectors.isAuthenticated(state),
-    tipo: selectors.getUsuario(state),
-  }),
+  undefined,
   dispatch => ({
     onClick() {
       dispatch(actions.logout());
@@ -31,10 +26,19 @@ export default connect(
 )(Logout);
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  errors: {
+    color: '#950601',
+    margin: 20,
+    fontSize: 20,
+  },
+  buttonsignin: {
+    padding: 10,
+    marginTop: 30,
+  },
 });
